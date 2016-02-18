@@ -99,57 +99,76 @@
 		var q51 = 51;
 		
 		//create the matrix
-		//TODO: deal with the space issue for id's at q0,q2,q7
+		//TODO: deal with the space issue for id's at q0,q2,q7, ADD = and NUMS
 		var matrix =
 		[
-		   // a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | # | " | { | } | ( | ) | = | $ | ! | + | @
-/*q0*/      [q51,q11,q51,q51,q51,q28,q51,q51,q7,q51,q51,q51,q51,q51,q51,q33,q51,q51,q18,q24,q51,q51,q2,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q0],
+		   // a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | # | " | { | } | ( | ) | = | ! | + | $ | @
+/*q0*/      [q51,q11,q51,q51,q51,q28,q51,q51,q7,q51,q51,q51,q51,q51,q51,q33,q51,q51,q18,q24,q51,q51,q2,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q0,q47,q38,q39,q40,q41,q44,q42,q46,q49,q51],
 			//Start of the While check
-/*q1*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q2*/      [q51,q51,q51,q51,q51,q51,q51,q3,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q3*/      [q51,q51,q51,q51,q51,q51,q51,q51,q4,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q4*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q5,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q5*/      [q51,q51,q51,q51,q6,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q6*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q6],
+/*q1*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q2*/      [q51,q51,q51,q51,q51,q51,q51,q3,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q3*/      [q51,q51,q51,q51,q51,q51,q51,q51,q4,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q4*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q5,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q5*/      [q51,q51,q51,q51,q6,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q6*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q6,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 			//End of While Check, Start of Int/If check
-/*q7*/      [q51,q51,q51,q51,q51,q10,q51,q51,q51,q51,q51,q51,q51,q8,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q8*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q9,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q9*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q9],
-/*q10*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q10],
+/*q7*/      [q51,q51,q51,q51,q51,q10,q51,q51,q51,q51,q51,q51,q51,q8,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q8*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q9,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q9*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q9,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q10*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q10,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 			//End of Int/If check, Start of Boolean check
-/*q11*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q12,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],			
-/*q12*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q13,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q13*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q14,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q14*/     [q51,q51,q51,q51,q15,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q15*/     [q16,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q16*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,  q51,q51,q17,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q17*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q17],
+/*q11*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q12,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],			
+/*q12*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q13,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q13*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q14,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q14*/     [q51,q51,q51,q51,q15,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q15*/     [q16,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q16*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,  q51,q51,q17,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q17*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q17,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 			//End of Boolean check, start of String check
-/*q18*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q19,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q19*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q20,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q20*/     [q51,q51,q51,q51,q51,q51,q51,q51,q21,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q21*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q22,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q22*/     [q51,q51,q51,q51,q51,q51,q23,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q23*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q23],
+/*q18*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q19,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q19*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q20,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q20*/     [q51,q51,q51,q51,q51,q51,q51,q51,q21,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q21*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q22,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q22*/     [q51,q51,q51,q51,q51,q51,q23,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q23*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q23,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 			//End of String check, start of True check
-/*q24*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q25,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q25*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q26,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q26*/     [q51,q51,q51,q51,q27,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q27*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q27],
+/*q24*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q25,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q25*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q26,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q26*/     [q51,q51,q51,q51,q27,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q27*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q27,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 			//End of True check, start of False check
-/*q28*/     [q29,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q29*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q30,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q30*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q31,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q31*/     [q51,q51,q51,q51,q32,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q32*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q32],
+/*q28*/     [q29,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q29*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q30,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q30*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q31,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q31*/     [q51,q51,q51,q51,q32,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q32*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q32,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 			//End of False check, start of Print check
-/*q33*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q34,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q34*/     [q51,q51,q51,q51,q51,q51,q51,q51,q35,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q35*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q36,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q36*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q37,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q37*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q37],
+/*q33*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q34,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q34*/     [q51,q51,q51,q51,q51,q51,q51,q51,q35,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q35*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q36,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q36*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q37,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q37*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q37,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 			//End of Print Check, Starting Individual state checks. Starting with {
-				
+/*q38*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q38,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+			// } token
+/*q39*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q39,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+			// ( token
+/*q40*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q40,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+			// ) token
+/*q41*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q41,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+			// != token
+/*q42*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q43,q51,q51,q51,q51],
+/*q43*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q43,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+			// == token
+/*q44*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q45,q51,q51,q51,q51],
+/*q45*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q45,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+			// + token
+/*q46*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q46,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+			//Start of String checker
+/*q47*/     [q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q48,q47,q47,q47,q47,q47,q47,q47,q47,q47],
+/*q48*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q48,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+			//Check for end of prog
+/*q49*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q49,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 		]
 		
 		//Make initial state
@@ -165,7 +184,6 @@
 				{
 					case q6:
 						putMessage("Found a While token");
-						//currState = q0;
 						break;
 					case q9:
 						putMessage("Found a INT token");
@@ -187,6 +205,33 @@
 						break;
 					case q37:
 						putMessage("Found Print token");
+						break;
+					case q38:
+						putMessage("Found { token");
+						break;
+					case q39:
+						putMessage("Found } token");
+						break;
+					case q40:
+						putMessage("Found ( token");
+						break;
+					case q41:
+						putMessage("Found ) token");
+						break;
+					case q43:
+						putMessage("Found != token");
+						break;
+					case q45:
+						putMessage("Found == token");
+						break;
+					case q46:
+						putMessage("Found + token");
+						break;
+					case q48:
+						putMessage("Found String Expression token");
+						break;
+					case q49:
+						putMessage("Found $ token")
 						break;
 				}
 			}
@@ -246,7 +291,7 @@
 						}
 						else
 						{
-							putMessage("Found a Boolean token!");
+							putMessage("Found a Boolean token");
 							currState = q0;
 							i = i-1;
 							break;
@@ -260,7 +305,7 @@
 						}
 						else
 						{
-							putMessage("Found a String token!");
+							putMessage("Found a String token");
 							currState = q0;
 							i = i-1;
 							break;
@@ -274,7 +319,7 @@
 						}
 						else
 						{
-							putMessage("Found a True token!");
+							putMessage("Found a True token");
 							currState = q0;
 							i = i-1;
 							break;
@@ -288,7 +333,7 @@
 						}
 						else
 						{
-							putMessage("Found a False token!");
+							putMessage("Found a False token");
 							currState = q0;
 							i = i-1;
 							break;
@@ -302,7 +347,133 @@
 						}
 						else
 						{
-							putMessage("Found a Print token!");
+							putMessage("Found a Print token");
+							currState = q0;
+							i = i-1;
+							break;
+						}
+					case q38:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a { token");
+							currState = q0;
+							i = i-1;
+							break;
+						}
+					case q39:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a } token");
+							currState = q0;
+							i = i-1;
+							break;
+						}
+					case q40:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a ( token");
+							currState = q0;
+							i = i-1;
+							break;
+						}
+					case q41:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a ) token");
+							currState = q0;
+							i = i-1;
+							break;
+						}
+					case q43:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a != token");
+							currState = q0;
+							i = i-1;
+							break;
+						}
+					case q45:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a == token");
+							currState = q0;
+							i = i-1;
+							break;
+						}
+					case q46:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a + token");
+							currState = q0;
+							i = i-1;
+							break;
+						}
+					case q48:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a String Expression token");
+							currState = q0;
+							i = i-1;
+							break;
+						}
+					case q49:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a $ token");
 							currState = q0;
 							i = i-1;
 							break;
@@ -459,6 +630,126 @@
 						else if(curr == 'z')
 						{
 							currState = matrix[currState][25];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '0')
+						{
+							currState = matrix[currState][26];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '1')
+						{
+							currState = matrix[currState][27];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '2')
+						{
+							currState = matrix[currState][28];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '3')
+						{
+							currState = matrix[currState][29];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '4')
+						{
+							currState = matrix[currState][30];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '5')
+						{
+							currState = matrix[currState][31];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '6')
+						{
+							currState = matrix[currState][32];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '7')
+						{
+							currState = matrix[currState][33];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '8')
+						{
+							currState = matrix[currState][34];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '9')
+						{
+							currState = matrix[currState][35];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '#')
+						{
+							currState = matrix[currState][36];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '"')
+						{
+							currState = matrix[currState][37];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '{')
+						{
+							currState = matrix[currState][38];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '}')
+						{
+							currState = matrix[currState][39];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '(')
+						{
+							currState = matrix[currState][40];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == ')')
+						{
+							currState = matrix[currState][41];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '=')
+						{
+							currState = matrix[currState][42];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '!')
+						{
+							currState = matrix[currState][43];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '+')
+						{
+							currState = matrix[currState][44];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == '$')
+						{
+							currState = matrix[currState][45];
 							//putMessage(currState);
 							break;
 						}
