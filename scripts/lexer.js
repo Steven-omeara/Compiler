@@ -102,8 +102,8 @@
 		//TODO: deal with the space issue for id's at q0,q2,q7, ADD = and NUMS
 		var matrix =
 		[
-		   // a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | # | " | { | } | ( | ) | = | ! | + | $ | @
-/*q0*/      [q51,q11,q51,q51,q51,q28,q51,q51,q7,q51,q51,q51,q51,q51,q51,q33,q51,q51,q18,q24,q51,q51,q2,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q0,q47,q38,q39,q40,q41,q44,q42,q46,q49,q51],
+		   // a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | # | " | { | } | ( | ) | = | ! | + | $ | @ | =
+/*q0*/      [q51,q11,q51,q51,q51,q28,q51,q51,q7,q51,q51,q51,q51,q51,q51,q33,q51,q51,q18,q24,q51,q51,q2,q51,q51,q51,q50,q50,q50,q50,q50,q50,q50,q50,q50,q50,q0,q47,q38,q39,q40,q41,q44,q42,q46,q49,q51],
 			//Start of the While check
 /*q1*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q2*/      [q51,q51,q51,q51,q51,q51,q51,q3,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
@@ -169,16 +169,30 @@
 /*q48*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q48,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 			//Check for end of prog
 /*q49*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q49,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+			//Check for Numbers
+/*q50*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q50,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],			
 		]
 		
 		//Make initial state
 		var currState = q0;
 		
+		//Break check
+		var breakBoolean = true;
+		
+		//Check NUM
+		var checkNum = false;
+		
 		for (i = 0; i <= SC.length; i++)
 		{
 			//curr = SC.charAt(i);
 			//putMessage(i + " and Curr is " + curr + " and the curr state is " + currState);
-			if (i == SC.length)
+			if (breakBoolean == false)
+			{
+				//SC = "nope";
+				putMessage("Woo");
+				break;
+			}
+			else if (i == SC.length)
 			{
 				switch (currState)
 				{
@@ -231,7 +245,10 @@
 						putMessage("Found String Expression token");
 						break;
 					case q49:
-						putMessage("Found $ token")
+						putMessage("Found $ token");
+						break;
+					case q50:
+						putMessage("Found a number");
 						break;
 				}
 			}
@@ -474,6 +491,27 @@
 						else
 						{
 							putMessage("Found a $ token");
+							currState = q0;
+							i = i-1;
+							break;
+						}
+					case q50:
+						lookAhead = SC.charAt(i + 1);
+						lookBehind = SC.charAt(i - 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						//Its late and im not sure how this works but it does
+						else if (lookBehind == '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' && curr != '#')
+						{
+							breakBoolean = false;
+							break;
+						}
+						else
+						{
+							putMessage("Found a Number token");
 							currState = q0;
 							i = i-1;
 							break;
@@ -756,11 +794,6 @@
 				}
 			}
 		}
-	}
-	
-	function whatCharWeAt(matrix, currAlpha, currState)
-	{
-	
 	}
 	
     function putMessage(msg) 
