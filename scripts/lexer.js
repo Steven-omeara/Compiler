@@ -97,15 +97,17 @@
 		var q49 = 49;
 		var q50 = 50;
 		var q51 = 51;
+		var q52 = 52;
 		
 		//create the matrix
-		//TODO: deal with the space issue for id's at q0,q2,q7,q11,q18,q24,q28,q33 ADD = , IDS
+		//TODO: deal with the space issue for id's at q0,q2,q7,q11,q18,q24,q28,q33 ADD =
 		var matrix =
 		[
 		   // a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | # | " | { | } | ( | ) | = | ! | + | $ | @ | =
-/*q0*/      [q51,q11,q51,q51,q51,q28,q51,q51,q7,q51,q51,q51,q51,q51,q51,q33,q51,q51,q18,q24,q51,q51,q2,q51,q51,q51,q50,q50,q50,q50,q50,q50,q50,q50,q50,q50,q0,q47,q38,q39,q40,q41,q44,q42,q46,q49,q51],
-			//Start of the While check
-/*q1*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q0*/      [q1,q11,q1,q1,q1,q28,q1,q1,q7,q1,q1,q1,q1,q1,q1,q33,q1,q1,q18,q24,q1,q1,q2,q1,q1,q1,q50,q50,q50,q50,q50,q50,q50,q50,q50,q50,q0,q47,q38,q39,q40,q41,q44,q42,q46,q49,q51],
+			//Start of ID check
+/*q1*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q1,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+			//End of ID check, start of While check
 /*q2*/      [q51,q51,q51,q51,q51,q51,q51,q3,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q3*/      [q51,q51,q51,q51,q51,q51,q51,q51,q4,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q4*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q5,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
@@ -160,7 +162,7 @@
 /*q42*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q43,q51,q51,q51,q51],
 /*q43*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q43,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 			// == token
-/*q44*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q45,q51,q51,q51,q51],
+/*q44*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q52,q51,q51,q51,q51,q51,q45,q51,q51,q51,q51],
 /*q45*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q45,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 			// + token
 /*q46*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q46,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
@@ -170,7 +172,11 @@
 			//Check for end of prog
 /*q49*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q49,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 			//Check for Numbers
-/*q50*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q50,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],			
+/*q50*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q50,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+			//Error State
+/*q51*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+			//Check for one equals
+/*q52*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q52,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 		]
 		
 		//Make initial state
@@ -181,6 +187,9 @@
 		
 		//Check NUM
 		var checkNum = false;
+		
+		//Check for White Space
+		var whiteSpace = 1;
 		
 		for (i = 0; i <= SC.length; i++)
 		{
@@ -196,6 +205,9 @@
 			{
 				switch (currState)
 				{
+					case q1:
+						putMessage("You found a ID token " + SC.charAt(i - 1));
+						break;
 					case q6:
 						putMessage("Found a While token");
 						break;
@@ -250,6 +262,9 @@
 					case q50:
 						putMessage("Found a number");
 						break;
+					case q52:
+						putMessage("Found a single =");
+						break;
 				}
 			}
 			else
@@ -257,6 +272,23 @@
 				curr = SC.charAt(i);
 				switch (currState)
 				{
+					case q1:
+						lookAhead = SC.charAt(i + 1);
+						//putMessage("You are here");
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							whiteSpace = whiteSpace + 1;
+							break;
+						}
+						else
+						{
+							putMessage("Found a ID token " + SC.charAt(i - whiteSpace));
+							whiteSpace = 1;
+							currState = q0;
+							i = i-1;
+							break;
+						}
 					case q6:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
@@ -516,8 +548,23 @@
 							i = i-1;
 							break;
 						}
+					//Can you have =3?
+					case q52:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a = token");
+							currState = q0;
+							i = i-1;
+							break;
+						}
 					default:
-						//curr = SC.charAt(i);
+						curr = SC.charAt(i);
 						//putMessage(curr);
 						if(curr == 'a')
 						{
