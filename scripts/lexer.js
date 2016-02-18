@@ -103,7 +103,7 @@
 		var matrix =
 		[
 		   // a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | # | " | { | } | ( | ) | = | $ | ! | + | @
-/*q0*/      [q51,q51,q51,q51,q51,q51,q51,q51,q7,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q2,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q0],
+/*q0*/      [q51,q11,q51,q51,q51,q51,q51,q51,q7,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q2,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q0],
 			//Start of the While check
 /*q1*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q2*/      [q51,q51,q51,q51,q51,q51,q51,q3,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
@@ -116,6 +116,14 @@
 /*q8*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q9,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q9*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q9],
 /*q10*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q10],
+			//End of Int/If check, Start of Boolean check
+/*q11*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q12,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],			
+/*q12*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q13,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q13*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q14,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q14*/     [q51,q51,q51,q51,q15,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q15*/     [q16,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q16*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q17,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q17*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q17],			
 		]
 		
 		//Make initial state
@@ -123,42 +131,47 @@
 		
 		for (i = 0; i <= SC.length; i++)
 		{
-			putMessage(i + " and Curr is ");
+			//putMessage(i + " and Curr is " + curr + " and the curr state is " + currState);
 			if (i == SC.length)
 			{
 				switch (currState)
 				{
 					case q6:
-						putMessage("Found a While token!");
+						putMessage("Found a While token");
 						//currState = q0;
 						break;
 					case q9:
-						putMessage("Found a INT token!");
+						putMessage("Found a INT token");
 						break;
 					case q10:
 						putMessage("Found IF token");
+						break;
+					case q17:
+						putMessage("Found Boolean token");
 						break;
 				}
 			}
 			else
 			{
+				curr = SC.charAt(i);
 				switch (currState)
 				{
 					case q6:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead = '#')
+						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
+							putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a While token!");
 							currState = q0;
+							break;
 						}
 					case q9:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead = '#')
+						if (lookAhead == '#')
 						{
 							//putMessage("You are at the space loop");
 							break;
@@ -171,7 +184,7 @@
 						}
 					case q10:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead = '#')
+						if (lookAhead == '#')
 						{
 							//putMessage("You are at the space loop");
 							break;
@@ -182,13 +195,39 @@
 							currState = q0;
 							break;
 						}
+					case q17:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a Boolean token!");
+							currState = q0;
+							break;
+						}
 					default:
-						curr = SC.charAt(i);
-						putMessage(curr);
-						if(curr == 'e')
+						//curr = SC.charAt(i);
+						//putMessage(curr);
+						if(curr == 'a')
+						{
+							currState = matrix[currState][0];
+							//putMessage(currState);
+							putMessage(currState);
+							break;
+						}
+						else if(curr == 'b')
+						{
+							currState = matrix[currState][1];
+							putMessage(currState);
+							break;
+						}
+						else if(curr == 'e')
 						{
 							currState = matrix[currState][4];
-							//putMessage(currState);
+							putMessage(currState);
 							break;
 						}
 						else if(curr == 'f')
@@ -205,18 +244,24 @@
 						else if(curr == 'i')
 						{
 							currState = matrix[currState][8];
-							putMessage("You are at I");
 							break;
 						}
 						else if(curr == 'l')
 						{
 							currState = matrix[currState][11];
-							//putMessage(currState);
+							putMessage(currState);
 							break;
 						}
 						else if(curr == 'n')
 						{
 							currState = matrix[currState][13];
+							putMessage(currState);
+							break;
+						}
+						else if(curr == 'o')
+						{
+							currState = matrix[currState][14];
+							putMessage(currState);
 							break;
 						}
 						else if(curr == 't')
@@ -233,6 +278,11 @@
 				}
 			}
 		}
+	}
+	
+	function whatCharWeAt(matrix, currAlpha, currState)
+	{
+	
 	}
 	
     function putMessage(msg) 
