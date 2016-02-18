@@ -103,7 +103,7 @@
 		var matrix =
 		[
 		   // a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | # | " | { | } | ( | ) | = | $ | ! | + | @
-/*q0*/      [q51,q11,q51,q51,q51,q51,q51,q51,q7,q51,q51,q51,q51,q51,q51,q51,q51,q51,q18,q51,q51,q51,q2,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q0],
+/*q0*/      [q51,q11,q51,q51,q51,q28,q51,q51,q7,q51,q51,q51,q51,q51,q51,q33,q51,q51,q18,q24,q51,q51,q2,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q0],
 			//Start of the While check
 /*q1*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q2*/      [q51,q51,q51,q51,q51,q51,q51,q3,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
@@ -132,6 +132,24 @@
 /*q22*/     [q51,q51,q51,q51,q51,q51,q23,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q23*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q23],
 			//End of String check, start of True check
+/*q24*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q25,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q25*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q26,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q26*/     [q51,q51,q51,q51,q27,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q27*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q27],
+			//End of True check, start of False check
+/*q28*/     [q29,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q29*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q30,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q30*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q31,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q31*/     [q51,q51,q51,q51,q32,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q32*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q32],
+			//End of False check, start of Print check
+/*q33*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q34,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q34*/     [q51,q51,q51,q51,q51,q51,q51,q51,q35,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q35*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q36,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q36*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q37,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q37*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q37],
+			//End of Print Check, Starting Individual state checks. Starting with {
+				
 		]
 		
 		//Make initial state
@@ -160,6 +178,15 @@
 						break;
 					case q23:
 						putMessage("Found String token");
+						break;
+					case q27:
+						putMessage("Found True token");
+						break;
+					case q32:
+						putMessage("Found False token");
+						break;
+					case q37:
+						putMessage("Found Print token");
 						break;
 				}
 			}
@@ -238,6 +265,48 @@
 							i = i-1;
 							break;
 						}
+					case q27:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a True token!");
+							currState = q0;
+							i = i-1;
+							break;
+						}
+					case q32:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a False token!");
+							currState = q0;
+							i = i-1;
+							break;
+						}
+					case q37:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead == '#')
+						{
+							//putMessage("You are at the space loop");
+							break;
+						}
+						else
+						{
+							putMessage("Found a Print token!");
+							currState = q0;
+							i = i-1;
+							break;
+						}
 					default:
 						//curr = SC.charAt(i);
 						//putMessage(curr);
@@ -250,6 +319,18 @@
 						else if(curr == 'b')
 						{
 							currState = matrix[currState][1];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == 'c')
+						{
+							currState = matrix[currState][2];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == 'd')
+						{
+							currState = matrix[currState][3];
 							//putMessage(currState);
 							break;
 						}
@@ -281,9 +362,27 @@
 							currState = matrix[currState][8];
 							break;
 						}
+						else if(curr == 'j')
+						{
+							currState = matrix[currState][9];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == 'k')
+						{
+							currState = matrix[currState][10];
+							//putMessage(currState);
+							break;
+						}
 						else if(curr == 'l')
 						{
 							currState = matrix[currState][11];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == 'm')
+						{
+							currState = matrix[currState][12];
 							//putMessage(currState);
 							break;
 						}
@@ -296,6 +395,18 @@
 						else if(curr == 'o')
 						{
 							currState = matrix[currState][14];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == 'p')
+						{
+							currState = matrix[currState][15];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == 'q')
+						{
+							currState = matrix[currState][16];
 							//putMessage(currState);
 							break;
 						}
@@ -316,9 +427,38 @@
 							currState = matrix[currState][19];
 							break;
 						}
+						else if(curr == 'u')
+						{
+							currState = matrix[currState][20];
+							break;
+						}
+						else if(curr == 'v')
+						{
+							currState = matrix[currState][21];
+							//putMessage(currState);
+							break;
+						}
 						else if (curr == 'w')
 						{
 							currState = matrix[currState][22];
+							//putMessage(currState);
+							break;
+						}
+						else if (curr == 'x')
+						{
+							currState = matrix[currState][23];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == 'y')
+						{
+							currState = matrix[currState][24];
+							//putMessage(currState);
+							break;
+						}
+						else if(curr == 'z')
+						{
+							currState = matrix[currState][25];
 							//putMessage(currState);
 							break;
 						}
