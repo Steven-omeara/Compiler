@@ -99,7 +99,7 @@
 		var q51 = 51;
 		
 		//create the matrix
-		//TODO: deal with the space issue for id's at q0,q2,q7, ADD = and NUMS
+		//TODO: deal with the space issue for id's at q0,q2,q7,q11,q18,q24,q28,q33 ADD = , IDS
 		var matrix =
 		[
 		   // a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | # | " | { | } | ( | ) | = | ! | + | $ | @ | =
@@ -189,7 +189,7 @@
 			if (breakBoolean == false)
 			{
 				//SC = "nope";
-				putMessage("Woo");
+				putMessage("Invalid Number");
 				break;
 			}
 			else if (i == SC.length)
