@@ -189,24 +189,167 @@
 		var checkNum = false;
 		
 		//Check for White Space
-		var whiteSpace = 1;
+		var whiteSpace = 0;
 		
-		for (i = 0; i <= SC.length; i++)
+		for (i = 0; i < SC.length; i++)
 		{
-			//curr = SC.charAt(i);
-			//putMessage(i + " and Curr is " + curr + " and the curr state is " + currState);
+			curr = SC.charAt(i);
+			switch (curr)
+			{
+				//putMessage(curr);
+				case 'a':
+					currState = matrix[currState][0];
+					//putMessage(currState);
+					break;
+				case 'b':
+					currState = matrix[currState][1];
+					break;
+				case 'c':
+					currState = matrix[currState][2];
+					break;
+				case 'd':
+					currState = matrix[currState][3];
+					break;
+				case 'e':
+					currState = matrix[currState][4];
+					break;
+				case 'f':
+					currState = matrix[currState][5];
+					break;
+				case 'g':
+					currState = matrix[currState][6];
+					break;
+				case 'h':
+					currState = matrix[currState][7];
+					break;
+				case 'i':
+					currState = matrix[currState][8];
+					break;
+				case 'j':
+					currState = matrix[currState][9];
+					break;
+				case 'k':
+					currState = matrix[currState][10];
+					break;
+				case 'l':
+					currState = matrix[currState][11];
+					break;
+				case 'm':
+					currState = matrix[currState][12];
+					break;
+				case 'n':
+					currState = matrix[currState][13];
+					break;
+				case 'o':
+					currState = matrix[currState][14];
+					break;
+				case 'p':
+					currState = matrix[currState][15];
+					break;
+				case 'q':
+					currState = matrix[currState][16];
+					break;
+				case 'r':
+					currState = matrix[currState][17];
+					break;
+				case 's':
+					currState = matrix[currState][18];
+					break;
+				case 't':
+					currState = matrix[currState][19];
+					break;
+				case 'u':
+					currState = matrix[currState][20];
+					break;
+				case 'v':
+					currState = matrix[currState][21];
+					break;
+				case 'w':
+					currState = matrix[currState][22];
+					break;
+				case 'x':
+					currState = matrix[currState][23];
+					break;
+				case 'y':
+					currState = matrix[currState][24];
+					break;
+				case 'z':
+					currState = matrix[currState][25];
+					break;
+				case '0':
+					currState = matrix[currState][26];
+					break;
+				case '1':
+					currState = matrix[currState][27];
+					break;
+				case '2':
+					currState = matrix[currState][28];
+					break;
+				case '3':
+					currState = matrix[currState][29];
+					break;
+				case '4':
+					currState = matrix[currState][30];
+					break;
+				case '5':
+					currState = matrix[currState][31];
+					break;
+				case '6':
+					currState = matrix[currState][32];
+					break;
+				case '7':
+					currState = matrix[currState][33];
+					break;
+				case '8':
+					currState = matrix[currState][34];
+					break;
+				case '9':
+					currState = matrix[currState][35];
+					break;
+				case '#':
+					currState = matrix[currState][36];
+					break;
+				case '"':
+					currState = matrix[currState][37];
+					break;
+				case '{':
+					currState = matrix[currState][38];
+					break;
+				case '}':
+					currState = matrix[currState][39];
+					break;
+				case '(':
+					currState = matrix[currState][40];
+					break;
+				case ')':
+					currState = matrix[currState][41];
+					break;
+				case '=':
+					currState = matrix[currState][42];
+					break;
+				case '!':
+					currState = matrix[currState][43];
+					break;
+				case '+':
+					currState = matrix[currState][44];
+					break;
+				case '$':
+					currState = matrix[currState][45];
+					break;
+			}
+			putMessage(i + " and Curr is " + curr + " and the curr state is " + currState);
 			if (breakBoolean == false)
 			{
 				//SC = "nope";
 				putMessage("Invalid Number");
 				break;
 			}
-			else if (i == SC.length)
+			else if (i == (SC.length - 1))
 			{
 				switch (currState)
 				{
 					case q1:
-						putMessage("You found a ID token " + SC.charAt(i - 1));
+						putMessage("You found a ID token " + SC.charAt(i));
 						break;
 					case q6:
 						putMessage("Found a While token");
@@ -267,238 +410,225 @@
 						break;
 				}
 			}
+			
 			else
 			{
-				curr = SC.charAt(i);
 				switch (currState)
 				{
 					case q1:
 						lookAhead = SC.charAt(i + 1);
-						//putMessage("You are here");
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							whiteSpace = whiteSpace + 1;
 							break;
 						}
 						else
 						{
 							putMessage("Found a ID token " + SC.charAt(i - whiteSpace));
-							whiteSpace = 1;
+							whiteSpace = 0;
 							currState = q0;
-							i = i-1;
 							break;
 						}
+					
 					case q6:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a While token!");
 							currState = q0;
-							i = i-1;
 							break;
 						}
+					
 					case q9:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a INT token!");
 							currState = q0;
-							i = i-1;
 							break;
 						}
+					
 					case q10:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a IF token!");
 							currState = q0;
-							i = i-1;
 							break;
 						}
+					
 					case q17:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a Boolean token");
 							currState = q0;
-							i = i-1;
 							break;
 						}
 					case q23:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a String token");
 							currState = q0;
-							i = i-1;
 							break;
 						}
 					case q27:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a True token");
 							currState = q0;
-							i = i-1;
 							break;
 						}
+					
 					case q32:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a False token");
 							currState = q0;
-							i = i-1;
 							break;
 						}
 					case q37:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a Print token");
 							currState = q0;
-							i = i-1;
 							break;
 						}
 					case q38:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a { token");
 							currState = q0;
-							i = i-1;
 							break;
 						}
 					case q39:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a } token");
 							currState = q0;
-							i = i-1;
 							break;
 						}
 					case q40:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a ( token");
 							currState = q0;
-							i = i-1;
 							break;
 						}
 					case q41:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a ) token");
 							currState = q0;
-							i = i-1;
 							break;
 						}
+					
 					case q43:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a != token");
 							currState = q0;
-							i = i-1;
+							break;
+						}
+					case q44:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead != '=')
+						{
+							putMessage("Found a = token");
+							currState = q0;
+							break;
+						}
+						else
+						{
 							break;
 						}
 					case q45:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a == token");
 							currState = q0;
-							i = i-1;
 							break;
 						}
+					
 					case q46:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a + token");
 							currState = q0;
-							i = i-1;
 							break;
 						}
+					/* Need to change this, need to get rid of numbers
 					case q48:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
@@ -513,30 +643,29 @@
 							i = i-1;
 							break;
 						}
+					*/
+					
 					case q49:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a $ token");
 							currState = q0;
-							i = i-1;
 							break;
 						}
+					
 					case q50:
 						lookAhead = SC.charAt(i + 1);
 						lookBehind = SC.charAt(i - 1);
 						if (lookAhead == '#')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
-						//Its late and im not sure how this works but it does
-						else if (lookBehind == '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' && curr != '#')
+						else if (lookBehind == '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' && curr != '#' && i != 0)
 						{
 							breakBoolean = false;
 							break;
@@ -545,9 +674,9 @@
 						{
 							putMessage("Found a Number token");
 							currState = q0;
-							i = i-1;
 							break;
 						}
+					/*
 					//Can you have =3?
 					case q52:
 						lookAhead = SC.charAt(i + 1);
@@ -563,281 +692,7 @@
 							i = i-1;
 							break;
 						}
-					default:
-						curr = SC.charAt(i);
-						//putMessage(curr);
-						if(curr == 'a')
-						{
-							currState = matrix[currState][0];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'b')
-						{
-							currState = matrix[currState][1];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'c')
-						{
-							currState = matrix[currState][2];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'd')
-						{
-							currState = matrix[currState][3];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'e')
-						{
-							currState = matrix[currState][4];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'f')
-						{
-							currState = matrix[currState][5];
-							break;
-						}
-						else if(curr == 'g')
-						{
-							currState = matrix[currState][6];
-							//putMessage(currState);
-							break;
-						}
-						else if (curr == 'h')
-						{
-							currState = matrix[currState][7];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'i')
-						{
-							currState = matrix[currState][8];
-							break;
-						}
-						else if(curr == 'j')
-						{
-							currState = matrix[currState][9];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'k')
-						{
-							currState = matrix[currState][10];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'l')
-						{
-							currState = matrix[currState][11];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'm')
-						{
-							currState = matrix[currState][12];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'n')
-						{
-							currState = matrix[currState][13];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'o')
-						{
-							currState = matrix[currState][14];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'p')
-						{
-							currState = matrix[currState][15];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'q')
-						{
-							currState = matrix[currState][16];
-							//putMessage(currState);
-							break;
-						}
-						else if (curr == 'r')
-						{
-							currState = matrix[currState][17];
-							//putMessage(currState);
-							break;
-						}
-						else if (curr == 's')
-						{
-							currState = matrix[currState][18];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 't')
-						{
-							currState = matrix[currState][19];
-							break;
-						}
-						else if(curr == 'u')
-						{
-							currState = matrix[currState][20];
-							break;
-						}
-						else if(curr == 'v')
-						{
-							currState = matrix[currState][21];
-							//putMessage(currState);
-							break;
-						}
-						else if (curr == 'w')
-						{
-							currState = matrix[currState][22];
-							//putMessage(currState);
-							break;
-						}
-						else if (curr == 'x')
-						{
-							currState = matrix[currState][23];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'y')
-						{
-							currState = matrix[currState][24];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == 'z')
-						{
-							currState = matrix[currState][25];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '0')
-						{
-							currState = matrix[currState][26];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '1')
-						{
-							currState = matrix[currState][27];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '2')
-						{
-							currState = matrix[currState][28];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '3')
-						{
-							currState = matrix[currState][29];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '4')
-						{
-							currState = matrix[currState][30];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '5')
-						{
-							currState = matrix[currState][31];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '6')
-						{
-							currState = matrix[currState][32];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '7')
-						{
-							currState = matrix[currState][33];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '8')
-						{
-							currState = matrix[currState][34];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '9')
-						{
-							currState = matrix[currState][35];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '#')
-						{
-							currState = matrix[currState][36];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '"')
-						{
-							currState = matrix[currState][37];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '{')
-						{
-							currState = matrix[currState][38];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '}')
-						{
-							currState = matrix[currState][39];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '(')
-						{
-							currState = matrix[currState][40];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == ')')
-						{
-							currState = matrix[currState][41];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '=')
-						{
-							currState = matrix[currState][42];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '!')
-						{
-							currState = matrix[currState][43];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '+')
-						{
-							currState = matrix[currState][44];
-							//putMessage(currState);
-							break;
-						}
-						else if(curr == '$')
-						{
-							currState = matrix[currState][45];
-							//putMessage(currState);
-							break;
-						}
+					*/
 				}
 			}
 		}
