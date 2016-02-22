@@ -4,43 +4,16 @@
     {
         // Grab the "raw" source code.
         var sourceCode = document.getElementById("taSourceCode").value;
-        putMessage("Checking the source code against the alphabet...");
         // Trim the leading and trailing spaces.
         sourceCode = trim(sourceCode);
 		// TODO: remove all spaces in the middle; remove line breaks too.
 		sourceCode = sourceCode.replace(/(?:\r\n|\r|\n)/g, '@');
 		sourceCode = sourceCode.replace(/ /g,"#");
-		//Check String off alphabet
-		sourceCode = checkAlpha(sourceCode);
+		sourceCode = sourceCode.replace(/\t/g,"#");
 		//Start the lex with the given source code
 		tokenize(sourceCode);
         return sourceCode;
     }
-	
-	function checkAlpha(SC)
-	{
-		//current alphabet of the grammar
-        var alpha = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','1','2','3','4','5','6','7','8','9','0','#','"','{','}','$','(',')','=','!','+','@'];
-        //run through the source code to see if it fits the alphabet
-        for(i = 0; i < SC.length; i++)
-        {
-            curr = SC.charAt(i);
-            for(j = 0; j < alpha.length; j++)
-            {
-              if(curr == alpha[j])
-              {
-                //putMessage(curr);
-                //putMessage(curr + " is in the alphabet!");
-                break;
-              }
-              if(j == alpha.length - 1 && curr != alpha[j])
-              {
-                putMessage("ERROR " + curr + " is NOT in the alphabet.");
-              }
-            }
-        }
-		return SC;
-	}
  
 	function tokenize(SC)
 	{
@@ -99,25 +72,24 @@
 		var q51 = 51;
 		var q52 = 52;
 		
-		//create the matrix
-		//TODO: deal with the space issue for id's at q0,q2,q7,q11,q18,q24,q28,q33 ADD =
+		//TODO: add returns/tokens
 		var matrix =
 		[
-		   // a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | # | " | { | } | ( | ) | = | ! | + | $ | @ | =
-/*q0*/      [q1,q11,q1,q1,q1,q28,q1,q1,q7,q1,q1,q1,q1,q1,q1,q33,q1,q1,q18,q24,q1,q1,q2,q1,q1,q1,q50,q50,q50,q50,q50,q50,q50,q50,q50,q50,q0,q47,q38,q39,q40,q41,q44,q42,q46,q49,q51],
+		   // a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | # | " | { | } | ( | ) | = | ! | + | $ | @ 
+/*q0*/      [q1,q11,q1,q1,q1,q28,q1,q1,q7,q1,q1,q1,q1,q1,q1,q33,q1,q1,q18,q24,q1,q1,q2,q1,q1,q1,q50,q50,q50,q50,q50,q50,q50,q50,q50,q50,q0,q47,q38,q39,q40,q41,q44,q42,q46,q49,q0],
 			//Start of ID check
-/*q1*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q1,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q1*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q1,q51,q51,q51,q51,q51,q51,q51,q51,q51,q1],
 			//End of ID check, start of While check
 /*q2*/      [q51,q51,q51,q51,q51,q51,q51,q3,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q3*/      [q51,q51,q51,q51,q51,q51,q51,q51,q4,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q4*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q5,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q5*/      [q51,q51,q51,q51,q6,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q6*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q6,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q6*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q6,q51,q51,q51,q51,q51,q51,q51,q51,q51,q6],
 			//End of While Check, Start of Int/If check
 /*q7*/      [q51,q51,q51,q51,q51,q10,q51,q51,q51,q51,q51,q51,q51,q8,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q8*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q9,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q9*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q9,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q10*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q10,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q9*/      [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q9,q51,q51,q51,q51,q51,q51,q51,q51,q51,q9],
+/*q10*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q10,q51,q51,q51,q51,q51,q51,q51,q51,q51,q10],
 			//End of Int/If check, Start of Boolean check
 /*q11*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q12,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],			
 /*q12*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q13,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
@@ -125,58 +97,56 @@
 /*q14*/     [q51,q51,q51,q51,q15,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q15*/     [q16,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q16*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,  q51,q51,q17,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q17*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q17,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q17*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q17,q51,q51,q51,q51,q51,q51,q51,q51,q51,q17],
 			//End of Boolean check, start of String check
 /*q18*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q19,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q19*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q20,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q20*/     [q51,q51,q51,q51,q51,q51,q51,q51,q21,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q21*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q22,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q22*/     [q51,q51,q51,q51,q51,q51,q23,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q23*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q23,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q23*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q23,q51,q51,q51,q51,q51,q51,q51,q51,q51,q23],
 			//End of String check, start of True check
 /*q24*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q25,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q25*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q26,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q26*/     [q51,q51,q51,q51,q27,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q27*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q27,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q27*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q27,q51,q51,q51,q51,q51,q51,q51,q51,q51,q27],
 			//End of True check, start of False check
 /*q28*/     [q29,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q29*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q30,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q30*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q31,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q31*/     [q51,q51,q51,q51,q32,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q32*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q32,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q32*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q32,q51,q51,q51,q51,q51,q51,q51,q51,q51,q32],
 			//End of False check, start of Print check
 /*q33*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q34,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q34*/     [q51,q51,q51,q51,q51,q51,q51,q51,q35,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q35*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q36,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q36*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q37,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-/*q37*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q37,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q37*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q37,q51,q51,q51,q51,q51,q51,q51,q51,q51,q37],
 			//End of Print Check, Starting Individual state checks. Starting with {
-/*q38*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q38,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q38*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q38,q51,q51,q51,q51,q51,q51,q51,q51,q51,q38],
 			// } token
-/*q39*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q39,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q39*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q39,q51,q51,q51,q51,q51,q51,q51,q51,q51,q39],
 			// ( token
-/*q40*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q40,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q40*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q40,q51,q51,q51,q51,q51,q51,q51,q51,q51,q40],
 			// ) token
-/*q41*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q41,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q41*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q41,q51,q51,q51,q51,q51,q51,q51,q51,q51,q41],
 			// != token
 /*q42*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q43,q51,q51,q51,q51],
-/*q43*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q43,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q43*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q43,q51,q51,q51,q51,q51,q51,q51,q51,q51,q43],
 			// == token
-/*q44*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q52,q51,q51,q51,q51,q51,q45,q51,q51,q51,q51],
-/*q45*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q45,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q44*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q44,q51,q51,q51,q51,q51,q45,q51,q51,q51,q44],
+/*q45*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q45,q51,q51,q51,q51,q51,q51,q51,q51,q51,q45],
 			// + token
-/*q46*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q46,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q46*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q46,q51,q51,q51,q51,q51,q51,q51,q51,q51,q46],
 			//Start of String checker
-/*q47*/     [q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q48,q47,q47,q47,q47,q47,q47,q47,q47,q47],
+/*q47*/     [q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q47,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q47,q48,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 /*q48*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q48,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 			//Check for end of prog
-/*q49*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q49,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q49*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q49,q51,q51,q51,q51,q51,q51,q51,q51,q51,q49],
 			//Check for Numbers
-/*q50*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q50,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
+/*q50*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q50,q51,q51,q51,q51,q51,q51,q51,q51,q51,q50],
 			//Error State
 /*q51*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
-			//Check for one equals
-/*q52*/     [q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51,q52,q51,q51,q51,q51,q51,q51,q51,q51,q51,q51],
 		]
 		
 		//Make initial state
@@ -188,11 +158,23 @@
 		//Check NUM
 		var checkNum = false;
 		
+		//check for line
+		var lineNumber = 0;
+		
 		//Check for White Space
 		var whiteSpace = 0;
 		
+		var errorState = false;
+		
+		var nonValidChar = false;
+		
 		for (i = 0; i < SC.length; i++)
 		{
+			if (errorState == true)
+			{
+				putMessage("ERROR on line " + lineNumber + " with character " + SC.charAt(i-1));
+				break;
+			}
 			curr = SC.charAt(i);
 			switch (curr)
 			{
@@ -336,20 +318,26 @@
 				case '$':
 					currState = matrix[currState][45];
 					break;
+				case '@':
+					currState = matrix[currState][46];
+					lineNumber++;
+					break;
+				default:
+					nonValidChar = true;
+					break;
 			}
-			putMessage(i + " and Curr is " + curr + " and the curr state is " + currState);
-			if (breakBoolean == false)
+			//putMessage(i + " and Curr is " + curr + " and the curr state is " + currState);
+			if (nonValidChar == true)
 			{
-				//SC = "nope";
-				putMessage("Invalid Number");
+				putMessage("You have a non valid character, " + SC.charAt(i) + " on line number " + lineNumber );
 				break;
-			}
-			else if (i == (SC.length - 1))
+			} 
+			if (i == (SC.length - 1))
 			{
 				switch (currState)
 				{
 					case q1:
-						putMessage("You found a ID token " + SC.charAt(i));
+						putMessage("You found a ID token " + SC.charAt(i - whiteSpace));
 						break;
 					case q6:
 						putMessage("Found a While token");
@@ -390,6 +378,9 @@
 					case q43:
 						putMessage("Found != token");
 						break;
+					case q44:
+						putMessage("Found = token");
+						break;
 					case q45:
 						putMessage("Found == token");
 						break;
@@ -403,21 +394,23 @@
 						putMessage("Found $ token");
 						break;
 					case q50:
-						putMessage("Found a number");
+						putMessage("Found a number " + SC.charAt(i));
 						break;
-					case q52:
-						putMessage("Found a single =");
+					case q51:
+						putMessage("Error on line " + lineNumber + " with character " + SC.charAt(i));
+						break;
+					default:
+						putMessage("You are currently in the middle of a phrase on line " + lineNumber + " at character " + SC.charAt(i));
 						break;
 				}
 			}
-			
 			else
 			{
 				switch (currState)
 				{
 					case q1:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							whiteSpace = whiteSpace + 1;
 							break;
@@ -429,10 +422,31 @@
 							currState = q0;
 							break;
 						}
-					
+					case q2:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead != 'h')
+						{
+							if(lookAhead == '#')
+							{
+								
+								whiteSpace = whiteSpace + 1;
+								currState = q1;
+								break;
+							}
+							else
+							{
+								putMessage("Found w id");
+								currState = q0;
+								break;
+							}
+						}
+						else
+						{
+							break;
+						}
 					case q6:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -442,10 +456,31 @@
 							currState = q0;
 							break;
 						}
-					
+					case q7:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead != 'n' && lookAhead != 'f')
+						{
+							if(lookAhead == '#' || lookAhead == '@')
+							{
+								
+								whiteSpace = whiteSpace + 1;
+								currState = q1;
+								break;
+							}
+							else
+							{
+								putMessage("Found i id");
+								currState = q0;
+								break;
+							}
+						}
+						else 
+						{
+							break;
+						}
 					case q9:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -455,10 +490,9 @@
 							currState = q0;
 							break;
 						}
-					
 					case q10:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -468,10 +502,31 @@
 							currState = q0;
 							break;
 						}
-					
+					case q11:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead != 'o')
+						{
+							if(lookAhead == '#' || lookAhead == '@')
+							{
+								
+								whiteSpace = whiteSpace + 1;
+								currState = q1;
+								break;
+							}
+							else
+							{
+								putMessage("Found b id");
+								currState = q0;
+								break;
+							}
+						}
+						else
+						{
+							break;
+						}
 					case q17:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -483,7 +538,7 @@
 						}
 					case q23:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -493,9 +548,31 @@
 							currState = q0;
 							break;
 						}
+					case q24:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead != 'r')
+						{
+							if(lookAhead == '#' || lookAhead == '@')
+							{
+								
+								whiteSpace = whiteSpace + 1;
+								currState = q1;
+								break;
+							}
+							else
+							{
+								putMessage("Found t id");
+								currState = q0;
+								break;
+							}
+						}
+						else
+						{
+							break;
+						}
 					case q27:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -505,10 +582,31 @@
 							currState = q0;
 							break;
 						}
-					
+					case q28:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead != 'a')
+						{
+							if(lookAhead == '#' || lookAhead == '@')
+							{
+								
+								whiteSpace = whiteSpace + 1;
+								currState = q1;
+								break;
+							}
+							else
+							{
+								putMessage("Found f id");
+								currState = q0;
+								break;
+							}
+						}
+						else
+						{
+							break;
+						}
 					case q32:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -518,9 +616,31 @@
 							currState = q0;
 							break;
 						}
+					case q33:
+						lookAhead = SC.charAt(i + 1);
+						if (lookAhead != 'r')
+						{
+							if(lookAhead == '#' || lookAhead == '@')
+							{
+								
+								whiteSpace = whiteSpace + 1;
+								currState = q1;
+								break;
+							}
+							else
+							{
+								putMessage("Found p id");
+								currState = q0;
+								break;
+							}
+						}
+						else
+						{
+							break;
+						}
 					case q37:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -532,7 +652,7 @@
 						}
 					case q38:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -544,7 +664,7 @@
 						}
 					case q39:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -556,7 +676,7 @@
 						}
 					case q40:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -568,7 +688,7 @@
 						}
 					case q41:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -581,7 +701,7 @@
 					
 					case q43:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -605,7 +725,7 @@
 						}
 					case q45:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -618,7 +738,7 @@
 					
 					case q46:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -628,26 +748,21 @@
 							currState = q0;
 							break;
 						}
-					/* Need to change this, need to get rid of numbers
 					case q48:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
-							//putMessage("You are at the space loop");
 							break;
 						}
 						else
 						{
 							putMessage("Found a String Expression token");
 							currState = q0;
-							i = i-1;
 							break;
-						}
-					*/
-					
+						}	
 					case q49:
 						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
+						if (lookAhead == '#' || lookAhead == '@')
 						{
 							break;
 						}
@@ -660,39 +775,19 @@
 					
 					case q50:
 						lookAhead = SC.charAt(i + 1);
-						lookBehind = SC.charAt(i - 1);
-						if (lookAhead == '#')
+						if (lookAhead != '1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' || '0')
 						{
-							break;
-						}
-						else if (lookBehind == '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' && curr != '#' && i != 0)
-						{
-							breakBoolean = false;
+							putMessage("Found a Number token " + SC.charAt(i));
+							currState = q0;
 							break;
 						}
 						else
 						{
-							putMessage("Found a Number token");
-							currState = q0;
 							break;
 						}
-					/*
-					//Can you have =3?
-					case q52:
-						lookAhead = SC.charAt(i + 1);
-						if (lookAhead == '#')
-						{
-							//putMessage("You are at the space loop");
-							break;
-						}
-						else
-						{
-							putMessage("Found a = token");
-							currState = q0;
-							i = i-1;
-							break;
-						}
-					*/
+					case q51:
+						errorState = true;
+						break;
 				}
 			}
 		}
