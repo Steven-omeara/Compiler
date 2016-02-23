@@ -38,7 +38,7 @@
     <script type="text/javascript" src="scripts/lexer.js"></script>	
     <script type="text/javascript">
     // Global variables
-    var tokens = "";
+    var tokens = [];
     var tokenIndex = 0;
     var currentToken = "";
     var errorCount = 0;
@@ -48,7 +48,7 @@
         // Clear the message box.
         document.getElementById("taOutput").value = "";
         // Set the initial values for our globals.
-        tokens = "";
+        tokens = [];
         tokenIndex = 0;
         currentToken = ' ';
         errorCount = 0;        
@@ -63,9 +63,15 @@
         putMessage("Compilation Started");
         // Grab the tokens from the lexer . . .
         tokens = lex();
-        putMessage("Lex returned [" + tokens + "]");
+        /*for (i = 0; i < tokens.size(); i++)
+        {
+            var currT = tokens[i];
+            putMessage(tokens.getType());
+        };*/   
+        //ADD THE STUFF BELOW BACK IN
+        //putMessage("Lex returned [" + tokens + "]");
         // . . . and parse!
-        parse();
+        //parse();
     }
     
     function putMessage(msg) {
