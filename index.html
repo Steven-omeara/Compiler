@@ -39,6 +39,7 @@
     <script type="text/javascript">
     // Global variables
     var tokens = [];
+    var lexCheck;
     var tokenIndex = 0;
     var currentToken = "";
     var errorCount = 0;
@@ -49,6 +50,7 @@
         document.getElementById("taOutput").value = "";
         // Set the initial values for our globals.
         tokens = [];
+        lexCheck = true;
         tokenIndex = 0;
         currentToken = ' ';
         errorCount = 0;        
@@ -62,16 +64,23 @@
         init();
         putMessage("Compilation Started");
         // Grab the tokens from the lexer . . .
-        tokens = lex();
-        /*for (i = 0; i < tokens.size(); i++)
+        var SClex = lex();
+        var tokenLength = tokens.length;
+        /*for (i = 0; i < tokenLength; i++)
         {
-            var currT = tokens[i];
-            putMessage(tokens.getType());
-        };*/   
-        //ADD THE STUFF BELOW BACK IN
-        //putMessage("Lex returned [" + tokens + "]");
-        // . . . and parse!
-        //parse();
+            var currToken = tokens.shift();
+            putMessage(currToken.getType());
+        }; */
+        if (lexCheck != false)
+        {
+            putMessage("Lex returned [" + SClex + "]");
+            // . . . and parse!
+            //parse();
+        };
+        if(lexCheck == false)
+        {
+            putMessage("An error occured in lex. See error message above")
+        };
     }
     
     function putMessage(msg) {

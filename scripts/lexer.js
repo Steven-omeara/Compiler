@@ -12,7 +12,6 @@
 		sourceCode = sourceCode.replace(/\t/g,"#");
 		//Start the lex with the given source code
 		tokenize(sourceCode);
-		//tokenize(sourceCode);
         return sourceCode;
     }
  
@@ -176,6 +175,7 @@
 			if (errorState == true)
 			{
 				putMessage("ERROR on line " + lineNumber + " with character " + SC.charAt(i-1));
+				lexCheck = false;
 				break;
 			}
 			curr = SC.charAt(i);
@@ -386,7 +386,6 @@
 					case q6:
 						putMessage("Found a While token");
 						tokens.push(Token(null,"WhileToken",lineNumber));
-						//return tokens;
 						break;
 					/*
 					case q8:
@@ -477,9 +476,11 @@
 						break;
 					case q51:
 						putMessage("Error on line " + lineNumber + " with character " + SC.charAt(i));
+						lexCheck = false;
 						break;
 					default:
 						putMessage("You are currently in the middle of a phrase on line " + lineNumber + " at character " + SC.charAt(i));
+						lexCheck = false;
 						break;
 				}
 			}
