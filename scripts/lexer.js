@@ -11,7 +11,15 @@
 		sourceCode = sourceCode.replace(/ /g,"#");
 		sourceCode = sourceCode.replace(/\t/g,"#");
 		//Start the lex with the given source code
-		tokenize(sourceCode);
+		if(sourceCode.length > 0)
+		{
+			tokenize(sourceCode);
+		}
+		else
+		{
+			putMessage("Please input some code. No code was found.");
+			lexCheck = false;
+		}
         return sourceCode;
     }
  
@@ -72,7 +80,7 @@
 		var q51 = 51;
 		var q52 = 52;
 		
-		//TODO: add returns/tokens
+		//TODO: keywords in keywords, comments, fail states
 		var matrix =
 		[
 		   // a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | # | " | { | } | ( | ) | = | ! | + | $ | @ 
