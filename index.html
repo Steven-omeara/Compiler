@@ -21,13 +21,12 @@
         <input type="button" id="Program5" value="Program 5" onclick="currProgramPush(this.id);"/>
     </div>    
     <div>
-        <textarea id="taSourceCode" cols="32" rows="18"></textarea>
+        <textarea id="taSourceCode" cols="40" rows="25"></textarea>
+        <textarea id="taOutput" cols="60" rows="25"></textarea>
         <br>
         <input type="button" id="btnCompile" value="Compile" onclick="btnCompile_click();"/>
         <input type="checkbox"  id="verboseoutput" value="Verbose Output"/> Verbose Output
         <input type="checkbox"  id="rickandmorty" value="RickandMorty"/> Rick and Morty Mode
-        <br>
-        <textarea id="taOutput" cols="32" rows="18"></textarea>
     </div>
     <!-- Footer -->
     <p>
@@ -69,13 +68,15 @@
         init();
         putMessage("Compilation Started");
         // Grab the tokens from the lexer . . .
+        putMessage("Starting Lex...\n")
         var SClex = lex();
         var tokenLength = tokens.length;
         if (lexCheck != false)
         {
             putMessage("Successfully Lexed");
-            putMessage("Lex returned [" + SClex + "]");
+            putMessage("Lex returned [" + SClex + "]\n");
             // . . . and parse!
+            putMessage("Starting Parse...\n");
             parse();
         };
         if(lexCheck == false)
@@ -309,7 +310,7 @@
             }
             else if(document.getElementById("rickandmorty").checked == true && errorCount < 1)
             {
-                putMessage("A " +currentToken.getType() + " token? I-I-I-I don't even know what that- what is that? Is that a lot?");    
+                putMessage("A " +currentToken.getType() + " token? I-I-I-I don't even know what that- what is that? Is that a lot?\n");    
             }
             currentToken = tokens.shift();
         }

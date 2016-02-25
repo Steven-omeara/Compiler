@@ -334,6 +334,7 @@
 			if (nonValidChar == true)
 			{
 				putMessage("You have a non valid character, " + SC.charAt(i) + " on line number " + lineNumber );
+				lexCheck = false;
 				break;
 			} 
 			if (i == (SC.length - 1))
