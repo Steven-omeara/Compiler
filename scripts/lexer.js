@@ -418,11 +418,11 @@
 						break;
 					case q27:
 						putMessage("Found True token");
-						tokens.push(new Token(null,"TrueToken",lineNumber));
+						tokens.push(new Token("True","BoolVal",lineNumber));
 						break;
 					case q32:
 						putMessage("Found False token");
-						tokens.push(new Token(null,"FalseToken",lineNumber));
+						tokens.push(new Token("False","BoolVal",lineNumber));
 						break;
 					case q37:
 						putMessage("Found Print token");
@@ -446,7 +446,7 @@
 						break;
 					case q43:
 						putMessage("Found != token");
-						tokens.push(new Token(null,"NotEqualToken",lineNumber));
+						tokens.push(new Token("NotEqualToken","BoolOp",lineNumber));
 						break;
 					case q44:
 						putMessage("Found = token");
@@ -454,7 +454,7 @@
 						break;
 					case q45:
 						putMessage("Found == token");
-						tokens.push(new Token(null,"EquivlentToken",lineNumber));
+						tokens.push(new Token("EquivlentToken","BoolOp",lineNumber));
 						break;
 					case q46:
 						putMessage("Found + token");
@@ -743,7 +743,7 @@
 						else
 						{
 							putMessage("Found a True token");
-							tokens.push(new Token(null,"TrueToken",lineNumber));
+							tokens.push(new Token("True","BoolVal",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -779,7 +779,7 @@
 						else
 						{
 							putMessage("Found a False token");
-							tokens.push(new Token(null,"FalseToken",lineNumber));
+							tokens.push(new Token("False","BoolVal",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -881,7 +881,7 @@
 						else
 						{
 							putMessage("Found a != token");
-							tokens.push(new Token(null,"NotEqualToken",lineNumber));
+							tokens.push(new Token("NotEqualToken","BoolOp",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -907,7 +907,7 @@
 						else
 						{
 							putMessage("Found a == token");
-							tokens.push(new Token(null,"EquivlentToken",lineNumber));
+							tokens.push(new Token("EquivlentToken","BoolOp",lineNumber));
 							currState = q0;
 							break;
 						}

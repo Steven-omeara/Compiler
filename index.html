@@ -41,7 +41,8 @@
     var tokens = [];
     var lexCheck;
     var tokenIndex = 0;
-    var currentToken = "";
+    var currentToken;
+    var lookaheadToken;
     var errorCount = 0;
     var EOF = "$";
 
@@ -52,7 +53,8 @@
         tokens = [];
         lexCheck = true;
         tokenIndex = 0;
-        currentToken = ' ';
+        currentToken;
+        lookaheadToken;
         errorCount = 0;        
     }
     
@@ -70,12 +72,12 @@
         {
             var currToken = tokens.shift();
             putMessage(currToken.getType());
-        }; */
+        };*/ 
         if (lexCheck != false)
         {
             putMessage("Lex returned [" + SClex + "]");
             // . . . and parse!
-            //parse();
+            parse();
         };
         if(lexCheck == false)
         {
@@ -89,26 +91,50 @@
     
     
     function parse() {
-        putMessage("Parsing [" + tokens + "]");
+        //putMessage("Parsing [" + SClex + "]");
         // Grab the next token.
-        currentToken = getNextToken();
+        currentToken = tokens.shift();
         // A valid parse derives the G(oal) production, so begin there.
-        parseG();
+        parseProg();
         // Report the results.
         putMessage("Parsing found " + errorCount + " error(s).");        
     }
     
-    function parseG() {
+    function parseProg() {
         // A G(oal) production can only be an E(xpression), so parse the E production.
-        parseE();
+        parseBlock();
+        if (currentToken.getType() == "$Token")
+        {
+            match("$Token");
+            putMessage("You have parsed succesfully");
+        }
+        else
+        {
+            putMessage("Error on line " + currentToken.getLN());
+            errorCount++;
+        }
     }
 
-    function parseE() {
+    function parseBlock() {
         // All E productions begin with a digit, so make sure that we have one.
-        checkToken("digit");
+        //checkToken("digit");
+        if (currentToken.getType() == "LBraceToken")
+        {
+            match("LBraceToken");
+            if(currentToken.getType() != "RBraceToken")
+            {
+                parseStmtList();
+            }
+            match("RBraceToken");
+            return;
+        }
+        else
+        {
+            return
+        }
         // Look ahead 1 char (which is now in currentToken because checkToken 
         // consumes another one) and see which E production to follow.
-        if (currentToken != EOF) {
+        /*if (currentToken != EOF) {
             // We're not done, we we expect to have an op.
             checkToken("op");
             parseE();
@@ -116,6 +142,127 @@
             // There is nothing else in the token stream, 
             // and that's cool since E --> digit is valid.
             putMessage("EOF reached");
+        }*/
+    }
+
+    function parseStmtList()
+    {
+        if (currentToken.getType() == "PrintToken")
+        {
+            match("PrintToken");
+            parsePrint();
+            parseStmtList();
+        }
+        else if (currentToken.getType() == "IdToken")
+        {
+            parseId();
+            match("SetEqualsToken");
+            parseExpr();
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    function parsePrint()
+    {
+        if(currentToken.getType() == "LParenToken")
+        {
+                match("LParenToken");
+                parseExpr();
+                match("RParenToken");
+                return;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    function parseExpr()
+    {
+        if(currentToken.getType() == "IdToken")
+        {
+            parseId();
+            return;
+        }
+        else if (currentToken.getType() == "NumberToken")
+        {
+            parseIntExp();
+        }
+        else if (currentToken.getType() == "StringExpToken")
+        {
+            match("StringExpToken");
+            return;
+        }
+        else if (currentToken.getType() == "LParenToken" || currentToken.getType() == "BoolVal")
+        {
+            parseBooleanExpr();
+            return;
+        }
+        else
+        {
+            return
+        }
+
+    }
+
+    function parseId()
+    {
+        match("IdToken");
+        return;
+    }
+
+    function parseIntExp()
+    {
+        match("NumberToken");
+        if (currentToken.getType() == "PlusToken")
+        {
+            match("PlusToken");
+            parseExpr();
+            return;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    function parseBooleanExpr()
+    {
+        if (currentToken.getType() == "LParenToken")
+        {
+            match("LParenToken");
+            parseExpr();
+            if (currentToken.getType() == "BoolOp")
+            {
+                match("BoolOp");
+            }
+            parseBoolOp();
+            parseExpr();
+            return;
+        }
+        else if (currentToken.getType() == "BoolVal")
+        {
+            match("BoolVal");
+            return;
+        }
+    }
+
+    function match(type)
+    {
+        
+        if (currentToken.getType() == type)
+        {
+            putMessage(currentToken.getType());
+            currentToken = tokens.shift();
+        }
+        else
+        {
+            putMessage("Error on line " + currentToken.getLN());
+            putMessage("On " + currentToken.getType());
+            errorCount++;
         }
     }
 
