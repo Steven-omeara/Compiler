@@ -402,7 +402,7 @@
 					*/
 					case q9:
 						putMessage("Found a INT token");
-						tokens.push(new Token(null,"IntToken",lineNumber));
+						tokens.push(new Token("Int","TypeToken",lineNumber));
 						break;
 					case q10:
 						putMessage("Found IF token");
@@ -410,11 +410,11 @@
 						break;
 					case q17:
 						putMessage("Found Boolean token");
-						tokens.push(new Token(null,"BooleanToken",lineNumber));
+						tokens.push(new Token("Boolean","TypeToken",lineNumber));
 						break;
 					case q23:
 						putMessage("Found String token");
-						tokens.push(new Token(null,"StringToken",lineNumber));
+						tokens.push(new Token("String","TypeToken",lineNumber));
 						break;
 					case q27:
 						putMessage("Found True token");
@@ -622,7 +622,7 @@
 						else
 						{
 							putMessage("Found a INT token!");
-							tokens.push(new Token(null,"IntToken",lineNumber));
+							tokens.push(new Token("Int","TypeToken",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -671,7 +671,7 @@
 						else
 						{
 							putMessage("Found a Boolean token");
-							tokens.push(new Token(null,"BooleanToken",lineNumber));
+							tokens.push(new Token("Boolean","TypeToken",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -707,7 +707,7 @@
 						else
 						{
 							putMessage("Found a String token");
-							tokens.push(new Token(null,"StringToken",lineNumber));
+							tokens.push(new Token("String","TypeToken",lineNumber));
 							currState = q0;
 							break;
 						}

@@ -152,12 +152,48 @@
             match("PrintToken");
             parsePrint();
             parseStmtList();
+            return;
         }
         else if (currentToken.getType() == "IdToken")
         {
             parseId();
             match("SetEqualsToken");
             parseExpr();
+            /*if(tokens.pop().getType() != "RBraceToken")
+            {
+                parseStatementList
+            }*/
+            parseStmtList();
+            return;
+        }
+        else if (currentToken.getType() == "TypeToken")
+        {
+            match("TypeToken");
+            parseId();
+            parseStmtList();
+            return;
+        }
+        else if(currentToken.getType() == "LBraceToken")
+        {
+            parseBlock();
+            parseStmtList();
+            return;
+        }
+        else if(currentToken.getType() == "WhileToken")
+        {
+            match("WhileToken");
+            parseBooleanExpr();
+            parseBlock();
+            parseStmtList();
+            return;
+        }
+        else if (currentToken.getType() == "IfToken")
+        {
+            match("IfToken");
+            parseBooleanExpr();
+            parseBlock();
+            parseStmtList();
+            return;
         }
         else
         {
@@ -190,6 +226,7 @@
         else if (currentToken.getType() == "NumberToken")
         {
             parseIntExp();
+            return;
         }
         else if (currentToken.getType() == "StringExpToken")
         {
@@ -203,7 +240,7 @@
         }
         else
         {
-            return
+            return;
         }
 
     }
@@ -223,10 +260,7 @@
             parseExpr();
             return;
         }
-        else
-        {
-            return;
-        }
+        return;
     }
 
     function parseBooleanExpr()
@@ -239,8 +273,8 @@
             {
                 match("BoolOp");
             }
-            parseBoolOp();
             parseExpr();
+            match("RParenToken");
             return;
         }
         else if (currentToken.getType() == "BoolVal")
@@ -255,13 +289,13 @@
         
         if (currentToken.getType() == type)
         {
-            putMessage(currentToken.getType());
+            //putMessage(currentToken.getType());
             currentToken = tokens.shift();
         }
         else
         {
             putMessage("Error on line " + currentToken.getLN());
-            putMessage("On " + currentToken.getType());
+            //putMessage("On " + currentToken.getType());
             errorCount++;
         }
     }
