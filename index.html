@@ -138,11 +138,18 @@
         if (currentToken.getType() == "$Token")
         {
             match("$Token");
-            putMessage("You have parsed successfully");
+            if (tokens.length > 0)
+            {
+                parseProg();
+            }
+            else
+            {
+                putMessage("You have parsed successfully");
+            }
         }
         else
         {
-            putMessage("Error on line " + currentToken.getLN());
+            putMessage("Error on line " + currentToken.getLN() + " expected $" );
             errorCount++;
         }
     }
@@ -301,8 +308,7 @@
 
     function match(type)
     {
-        
-        if (currentToken.getType() == type)
+         if (currentToken.getType() == type)
         {
             if(document.getElementById("verboseoutput").checked == true && errorCount < 1)
             {
@@ -312,15 +318,17 @@
             {
                 putMessage("A " +currentToken.getType() + " token? I-I-I-I don't even know what that- what is that? Is that a lot?\n");    
             }
-            currentToken = tokens.shift();
+            if (tokens.length != 0)
+            {
+                currentToken = tokens.shift();
+            }
         }
         else
         {
             if (errorCount < 1)
             {
-                putMessage("Error on line " + currentToken.getLN());
+                putMessage("Error on line " + currentToken.getLN() + "at token " + currentToken.getType() + "expecting " + type + " token after " + currentToken.getType());
             }
-            //putMessage("On " + currentToken.getType());
             errorCount++;
         }
     }
