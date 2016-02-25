@@ -11,26 +11,26 @@
        <!-- . . . <em>a simple parser for a simple grammar</em>: -->
     </p>
     <pre>
-<!-- G ::== E -->
-<!-- E ::== D O E | D -->
-<!-- D ::== 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 -->
-<!-- O ::== + | - -->
+        
     </pre>
     <div>
-        <img style="float:right;" src="images/CompilerPhases.png" alt="Compiler Phases diagram" />
+        <input type="button" id="Program1" value="Program 1" onclick="currProgramPush(this.id);"/>
+        <input type="button" id="Program2" value="Program 2" onclick="currProgramPush(this.id);"/>
+        <input type="button" id="Program3" value="Program 3" onclick="currProgramPush(this.id);"/>
+        <input type="button" id="Program4" value="Program 4" onclick="currProgramPush(this.id);"/>
+        <input type="button" id="Program5" value="Program 5" onclick="currProgramPush(this.id);"/>
     </div>    
     <div>
         <textarea id="taSourceCode" cols="32" rows="18"></textarea>
         <br>
         <input type="button" id="btnCompile" value="Compile" onclick="btnCompile_click();"/>
+        <input type="checkbox" name = "Verbose Output" id="verboseoutput" value="Verbose Output" /> Verbose Output
         <br>
         <textarea id="taOutput" cols="32" rows="18"></textarea>
     </div>
     <!-- Footer -->
     <p>
-        <a href="http://validator.w3.org/check?uri=referer">
-            <img src="images/w3cvalidhtml5.jpg" alt="Valid HTML5" width="88" height="31" />
-        </a>
+        
     </p>
     <!-- Client-side code down here, per the YSlow advice. 
     // (http://developer.yahoo.com/performance/rules.html#js_bottom) -->
@@ -68,11 +68,6 @@
         // Grab the tokens from the lexer . . .
         var SClex = lex();
         var tokenLength = tokens.length;
-        /*for (i = 0; i < tokenLength; i++)
-        {
-            var currToken = tokens.shift();
-            putMessage(currToken.getType());
-        };*/ 
         if (lexCheck != false)
         {
             putMessage("Lex returned [" + SClex + "]");
@@ -85,8 +80,41 @@
         };
     }
     
+    function currProgramPush (clicked)
+    {
+        if (clicked == "Program1")
+        {
+            document.getElementById("taSourceCode").value = "";
+            putProgram("{}$");
+        }    
+        else if (clicked == "Program2")
+        {
+            document.getElementById("taSourceCode").value = "";
+            putProgram("{\n\tint a\n\ta = 1\n\n\tint b\n\tb = 2\n\n\ta = b\n\tb = n\n}$");
+        }
+        else if (clicked == "Program3")
+        {
+            document.getElementById("taSourceCode").value = "";
+            putProgram("{\n\tint a\n\ta = 1\n\n\tif(a == 1) {\n\t\ta = 2\n\t}\n\n\tif(a != 1) {\n\t\ta = 3\n\t}\n} $")
+        }
+        else if (clicked == "Program4")
+        {
+            document.getElementById("taSourceCode").value = "";
+            putProgram("{\n\tint x\n\tx = 0\n\n\twhile (x != 5)\n\t{\n\t\tprint(x)\n\t\tx = 1 + x\n\t}\n} $");
+        }
+        else if (clicked == "Program5")
+        {
+            document.getElementById("taSourceCode").value = "";
+            putProgram("{\n\tint x\n\tx = 1\n\n\t{\n\n\t\tint x\n\t\tx = 2\n\t\t{\n\t\t\tx = 5\n\t\t}\n\n\t\tprint(x)\n\t}\n\tprint(x)\n} $")
+        }
+    }
+
     function putMessage(msg) {
         document.getElementById("taOutput").value += msg + "\n";
+    }
+
+    function putProgram(msg) {
+        document.getElementById("taSourceCode").value += msg + "\n";
     }
     
     
@@ -116,8 +144,6 @@
     }
 
     function parseBlock() {
-        // All E productions begin with a digit, so make sure that we have one.
-        //checkToken("digit");
         if (currentToken.getType() == "LBraceToken")
         {
             match("LBraceToken");
@@ -132,17 +158,6 @@
         {
             return
         }
-        // Look ahead 1 char (which is now in currentToken because checkToken 
-        // consumes another one) and see which E production to follow.
-        /*if (currentToken != EOF) {
-            // We're not done, we we expect to have an op.
-            checkToken("op");
-            parseE();
-        } else {
-            // There is nothing else in the token stream, 
-            // and that's cool since E --> digit is valid.
-            putMessage("EOF reached");
-        }*/
     }
 
     function parseStmtList()
@@ -159,10 +174,6 @@
             parseId();
             match("SetEqualsToken");
             parseExpr();
-            /*if(tokens.pop().getType() != "RBraceToken")
-            {
-                parseStatementList
-            }*/
             parseStmtList();
             return;
         }
@@ -294,58 +305,13 @@
         }
         else
         {
-            putMessage("Error on line " + currentToken.getLN());
+            if (errorCount < 1)
+            {
+                putMessage("Error on line " + currentToken.getLN());
+            }
             //putMessage("On " + currentToken.getType());
             errorCount++;
         }
-    }
-
-    function checkToken(expectedKind) {
-        // Validate that we have the expected token kind and et the next token.
-        switch(expectedKind) {
-            case "digit":   putMessage("Expecting a digit");
-                            if (currentToken=="0" || currentToken=="1" || currentToken=="2" || 
-                                currentToken=="3" || currentToken=="4" || currentToken=="5" || 
-                                currentToken=="6" || currentToken=="7" || currentToken=="8" || 
-                                currentToken=="9")
-                            {
-                                putMessage("Got a digit!");
-                            }
-                            else
-                            {
-                                errorCount++;
-                                putMessage("NOT a digit.  Error at position " + tokenIndex + ".");
-                            }
-                            break;
-            case "op":      putMessage("Expecting an operator");
-                            if (currentToken=="+" || currentToken=="-")
-                            {
-                                putMessage("Got an operator!");
-                            }
-                            else
-                            {
-                                errorCount++;
-                                putMessage("NOT an operator.  Error at position " + tokenIndex + ".");
-                            }
-                            break;
-            default:        putMessage("Parse Error: Invalid Token Type at position " + tokenIndex + ".");
-                            break;			
-        }
-        // Consume another token, having just checked this one, because that 
-        // will allow the code to see what's coming next... a sort of "look-ahead".
-        currentToken = getNextToken();
-    }
-
-    function getNextToken() {
-        var thisToken = EOF;    // Let's assume that we're at the EOF.
-        if (tokenIndex < tokens.length)
-        {
-            // If we're not at EOF, then return the next token in the stream and advance the index.
-            thisToken = tokens[tokenIndex];
-            putMessage("Current token:" + thisToken);
-            tokenIndex++;
-        }
-        return thisToken;
     }
     </script>
 </body>
