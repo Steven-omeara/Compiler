@@ -24,7 +24,8 @@
         <textarea id="taSourceCode" cols="32" rows="18"></textarea>
         <br>
         <input type="button" id="btnCompile" value="Compile" onclick="btnCompile_click();"/>
-        <input type="checkbox"  id="verboseoutput" value="Verbose Output" onchange="verboseornot(this.id)"/> Verbose Output
+        <input type="checkbox"  id="verboseoutput" value="Verbose Output"/> Verbose Output
+        <input type="checkbox"  id="rickandmorty" value="RickandMorty"/> Rick and Morty Mode
         <br>
         <textarea id="taOutput" cols="32" rows="18"></textarea>
     </div>
@@ -81,13 +82,6 @@
         {
             putMessage("An error occured in lex. See error message above")
         };
-    }
-
-    function verboseornot(checkid)
-    {
-         var isChecked = document.getElementById("verboseoutput").checked;
-         verboseCheck = isChecked;
-         putMessage(verboseCheck);
     }
     
     function currProgramPush (clicked)
@@ -309,9 +303,13 @@
         
         if (currentToken.getType() == type)
         {
-            if(verboseCheck == true)
+            if(document.getElementById("verboseoutput").checked == true && errorCount < 1)
             {
-                putMessage(currentToken.getType());
+                putMessage("Got " +currentToken.getType() + " token.");
+            }
+            else if(document.getElementById("rickandmorty").checked == true && errorCount < 1)
+            {
+                putMessage("A " +currentToken.getType() + " token? I-I-I-I don't even know what that- what is that? Is that a lot?");    
             }
             currentToken = tokens.shift();
         }
