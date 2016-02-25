@@ -24,7 +24,7 @@
         <textarea id="taSourceCode" cols="32" rows="18"></textarea>
         <br>
         <input type="button" id="btnCompile" value="Compile" onclick="btnCompile_click();"/>
-        <input type="checkbox" name = "Verbose Output" id="verboseoutput" value="Verbose Output" /> Verbose Output
+        <input type="checkbox"  id="verboseoutput" value="Verbose Output" onchange="verboseornot(this.id)"/> Verbose Output
         <br>
         <textarea id="taOutput" cols="32" rows="18"></textarea>
     </div>
@@ -43,6 +43,7 @@
     var tokenIndex = 0;
     var currentToken;
     var lookaheadToken;
+    var verboseCheck;
     var errorCount = 0;
     var EOF = "$";
 
@@ -52,6 +53,7 @@
         // Set the initial values for our globals.
         tokens = [];
         lexCheck = true;
+        verboseCheck = false;
         tokenIndex = 0;
         currentToken;
         lookaheadToken;
@@ -70,6 +72,7 @@
         var tokenLength = tokens.length;
         if (lexCheck != false)
         {
+            putMessage("Successfully Lexed");
             putMessage("Lex returned [" + SClex + "]");
             // . . . and parse!
             parse();
@@ -78,6 +81,13 @@
         {
             putMessage("An error occured in lex. See error message above")
         };
+    }
+
+    function verboseornot(checkid)
+    {
+         var isChecked = document.getElementById("verboseoutput").checked;
+         verboseCheck = isChecked;
+         putMessage(verboseCheck);
     }
     
     function currProgramPush (clicked)
@@ -119,7 +129,6 @@
     
     
     function parse() {
-        //putMessage("Parsing [" + SClex + "]");
         // Grab the next token.
         currentToken = tokens.shift();
         // A valid parse derives the G(oal) production, so begin there.
@@ -134,7 +143,7 @@
         if (currentToken.getType() == "$Token")
         {
             match("$Token");
-            putMessage("You have parsed succesfully");
+            putMessage("You have parsed successfully");
         }
         else
         {
@@ -300,7 +309,10 @@
         
         if (currentToken.getType() == type)
         {
-            //putMessage(currentToken.getType());
+            if(verboseCheck == true)
+            {
+                putMessage(currentToken.getType());
+            }
             currentToken = tokens.shift();
         }
         else

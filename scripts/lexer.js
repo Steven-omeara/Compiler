@@ -343,7 +343,6 @@
 					case q1:
 						putMessage("You found a ID token " + SC.charAt(i - whiteSpace));
 						tokens.push(Token(SC.charAt(i - whiteSpace),"IdToken",lineNumber));
-						//return tokens;
 						break;
 					/*
 					case q3:
