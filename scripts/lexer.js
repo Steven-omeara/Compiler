@@ -6,7 +6,7 @@
         var sourceCode = document.getElementById("taSourceCode").value;
         // Trim the leading and trailing spaces.
         sourceCode = trim(sourceCode);
-		// TODO: remove all spaces in the middle; remove line breaks too.
+		// Removed spaces and replaced newlines, spaces and tabs in the source code
 		sourceCode = sourceCode.replace(/(?:\r\n|\r|\n)/g, '@');
 		sourceCode = sourceCode.replace(/ /g,"#");
 		sourceCode = sourceCode.replace(/\t/g,"~");
@@ -772,6 +772,7 @@
 						break;
 				}
 			}
+			//Checks the character when it isn't at the end of the length of the string, so you can account for spaces and other things
 			else
 			{
 				switch (currState)
@@ -1516,16 +1517,12 @@
 					case q51:
 						errorState = true;
 						break;
-					/*default:
-						checkThings = checkThings + SC.charAt(i);
-						putMessage(checkThings);
-						break;
-					*/
 				}
 			}
 		}
 	};
 
+	//A function to make a token, taking in value type and current line. The current value is for digits and characters, the type of token so it can be used in parse and the line number to help with parse errors
 	function Token(value,type,currLineNumber)
 	{
 		this.value = value;
@@ -1545,7 +1542,7 @@
 		};
 	};
 
-	
+	//Taken from index, helped in testing the lex
     function putMessage(msg) 
     {
         document.getElementById("taOutput").value += msg + "\n";
