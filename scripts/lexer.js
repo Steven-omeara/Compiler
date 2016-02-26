@@ -80,7 +80,7 @@
 		var q51 = 51;
 		var q52 = 52;
 		
-		//TODO: keywords in keywords, comments, fail programs
+		//TODO: comments, fail programs
 		var matrix =
 		[
 		   // a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | # | " | { | } | ( | ) | = | ! | + | $ | @ | ~ 
@@ -181,7 +181,8 @@
 
 		//For keywords, may use later
 		var checkThings = "";
-		
+
+		//for loop that loops through the entire source code to tokenize it		
 		for (i = 0; i < SC.length; i++)
 		{
 			if (errorState == true)
@@ -190,7 +191,9 @@
 				lexCheck = false;
 				break;
 			}
+			//get the current character
 			curr = SC.charAt(i);
+			//Put it into the switch case to compare to the matrix, taking the current state and where the char is located on the matrix
 			switch (curr)
 			{
 				//putMessage(curr);
@@ -350,23 +353,25 @@
 				putMessage("You have a non valid character, " + SC.charAt(i) + " on line number " + lineNumber );
 				lexCheck = false;
 				break;
-			} 
+			}
+			//Checks the end character of SC, makes it so that dealing with spaces is unnecessary
 			if (i == (SC.length - 1))
 			{
 				switch (currState)
 				{
 					case q1:
-						putMessage("You found a ID token " + SC.charAt(i - whiteSpace));
+						//putMessage("You found a ID token " + SC.charAt(i - whiteSpace));
 						tokens.push(Token(SC.charAt(i - whiteSpace),"IdToken",lineNumber));
 						break;
-					/*
 					case q3:
 						lookAhead = SC.charAt(i + 1);
 						checkThings = "wh";
 						if(lookAhead != 'i')
 						{
-							putMessage("Found w id");
-							putMessage("Found h id");
+							//putMessage("Found w id");
+							tokens.push(new Token('w',"IdToken",lineNumber));
+							//putMessage("Found h id");
+							tokens.push(new Token('h',"IdToken",lineNumber));
 							checkThings = "";
 							currState = q0;
 						}
@@ -376,9 +381,12 @@
 						checkThings = "whi";
 						if(lookAhead != 'l')
 						{
-							putMessage("Found w id");
-							putMessage("Found h id");
-							putMessage("Found i id")
+							//putMessage("Found w id");
+							tokens.push(new Token('w',"IdToken",lineNumber));
+							//putMessage("Found h id");
+							tokens.push(new Token('h',"IdToken",lineNumber));
+							//putMessage("Found i id");
+							tokens.push(new Token('i',"IdToken",lineNumber));
 							checkThings = "";
 							currState = q0;
 						}
@@ -388,22 +396,23 @@
 						checkThings = "whil";
 						if(lookAhead != 'e')
 						{
-							putMessage("Found w id");
-							putMessage("Found h id");
-							putMessage("Found i id");
-							putMessage("Found l id");
+							//putMessage("Found w id");
+							tokens.push(new Token('w',"IdToken",lineNumber));
+							//putMessage("Found h id");
+							tokens.push(new Token('h',"IdToken",lineNumber));
+							//putMessage("Found i id");
+							tokens.push(new Token('i',"IdToken",lineNumber));
+							//putMessage("Found l id");
+							tokens.push(new Token('l',"IdToken",lineNumber));
 							checkThings = "";
 							currState = q0;
-
 						}
 						break;
-					*/
 					case q6:
-						putMessage("Found a While token");
+						//putMessage("Found a While token");
 						tokens.push(Token(null,"WhileToken",lineNumber));
 						break;
-					/*
-					case q8:
+					/*case q8:
 						lookAhead = SC.charAt(i + 1);
 						checkThings = "in";
 						if(lookAhead != 't')
@@ -413,80 +422,344 @@
 							checkThings = "";
 							currState = q0;
 							break;
-						}
-					*/
+						}*/
 					case q9:
-						putMessage("Found a INT token");
+						//putMessage("Found a INT token");
 						tokens.push(new Token("Int","TypeToken",lineNumber));
 						break;
 					case q10:
-						putMessage("Found IF token");
+						//putMessage("Found IF token");
 						tokens.push(new Token(null,"IfToken",lineNumber));
 						break;
+					case q12:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "bo";
+						if(lookAhead != 'o')
+						{
+							//putMessage("Found b id");
+							tokens.push(new Token('b',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q13:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "boo";
+						if(lookAhead != 'l')
+						{
+							//putMessage("Found b id");
+							tokens.push(new Token('b',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q14:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "bool";
+						if(lookAhead != 'e')
+						{
+							//putMessage("Found b id");
+							tokens.push(new Token('b',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found l id");
+							tokens.push(new Token('l',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q15:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "boole";
+						if(lookAhead != 'a')
+						{
+							//putMessage("Found b id");
+							tokens.push(new Token('b',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found l id");
+							tokens.push(new Token('l',"IdToken",lineNumber));
+							//putMessage("Found e id");
+							tokens.push(new Token('e',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q16:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "boolea";
+						if(lookAhead != 'n')
+						{
+							//putMessage("Found b id");
+							tokens.push(new Token('b',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found l id");
+							tokens.push(new Token('l',"IdToken",lineNumber));
+							//putMessage("Found e id");
+							tokens.push(new Token('e',"IdToken",lineNumber));
+							//putMessage("Found a id");
+							tokens.push(new Token('a',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;	
 					case q17:
-						putMessage("Found Boolean token");
+						//putMessage("Found Boolean token");
 						tokens.push(new Token("Boolean","TypeToken",lineNumber));
 						break;
+					case q19:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "st";
+						if(lookAhead != 'r')
+						{
+							//putMessage("Found s id");
+							tokens.push(new Token('s',"IdToken",lineNumber));
+							//putMessage("Found t id");
+							tokens.push(new Token('t',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q20:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "str";
+						if(lookAhead != 'i')
+						{
+							//putMessage("Found s id");
+							tokens.push(new Token('s',"IdToken",lineNumber));
+							//putMessage("Found t id");
+							tokens.push(new Token('t',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q21:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "stri";
+						if(lookAhead != 'n')
+						{
+							//putMessage("Found s id");
+							tokens.push(new Token('s',"IdToken",lineNumber));
+							//putMessage("Found t id");
+							tokens.push(new Token('t',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							//putMessage("Found i id");
+							tokens.push(new Token('i',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q22:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "strin";
+						if(lookAhead != 'g')
+						{
+							//putMessage("Found s id");
+							tokens.push(new Token('s',"IdToken",lineNumber));
+							//putMessage("Found t id");
+							tokens.push(new Token('t',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							//putMessage("Found i id");
+							tokens.push(new Token('i',"IdToken",lineNumber));
+							//putMessage("Found n id");
+							tokens.push(new Token('n',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
 					case q23:
-						putMessage("Found String token");
+						//putMessage("Found String token");
 						tokens.push(new Token("String","TypeToken",lineNumber));
 						break;
+					case q25:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "tr";
+						if(lookAhead != 'u')
+						{
+							//putMessage("Found t id");
+							tokens.push(new Token('t',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q26:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "tru";
+						if(lookAhead != 'e')
+						{
+							//putMessage("Found t id");
+							tokens.push(new Token('t',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							//putMessage("Found u id");
+							tokens.push(new Token('u',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
 					case q27:
-						putMessage("Found True token");
+						//putMessage("Found True token");
 						tokens.push(new Token("True","BoolVal",lineNumber));
 						break;
+					case q29:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "fa";
+						if(lookAhead != 'l')
+						{
+							//putMessage("Found f id");
+							tokens.push(new Token('f',"IdToken",lineNumber));
+							//putMessage("Found a id");
+							tokens.push(new Token('a',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q30:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "fal";
+						if(lookAhead != 's')
+						{
+							//putMessage("Found f id");
+							tokens.push(new Token('f',"IdToken",lineNumber));
+							//putMessage("Found a id");
+							tokens.push(new Token('a',"IdToken",lineNumber));
+							//putMessage("Found l id");
+							tokens.push(new Token('l',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q31:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "fals";
+						if(lookAhead != 'e')
+						{
+							//putMessage("Found f id");
+							tokens.push(new Token('f',"IdToken",lineNumber));
+							//putMessage("Found a id");
+							tokens.push(new Token('a',"IdToken",lineNumber));
+							//putMessage("Found l id");
+							tokens.push(new Token('l',"IdToken",lineNumber));
+							//putMessage("Found s id");
+							tokens.push(new Token('s',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
 					case q32:
-						putMessage("Found False token");
+						//putMessage("Found False token");
 						tokens.push(new Token("False","BoolVal",lineNumber));
 						break;
+					case q34:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "pr";
+						if(lookAhead != 'i')
+						{
+							//putMessage("Found p id");
+							tokens.push(new Token('p',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q35:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "pri";
+						if(lookAhead != 'n')
+						{
+							//putMessage("Found p id");
+							tokens.push(new Token('p',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							//putMessage("Found i id");
+							tokens.push(new Token('i',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q36:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "prin";
+						if(lookAhead != 't')
+						{
+							//putMessage("Found p id");
+							tokens.push(new Token('p',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							//putMessage("Found i id");
+							tokens.push(new Token('i',"IdToken",lineNumber));
+							//putMessage("Found n id");
+							tokens.push(new Token('n',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
 					case q37:
-						putMessage("Found Print token");
+						//putMessage("Found Print token");
 						tokens.push(new Token(null,"PrintToken",lineNumber));
 						break;
 					case q38:
-						putMessage("Found { token");
+						//putMessage("Found { token");
 						tokens.push(new Token(null,"LBraceToken",lineNumber));
 						break;
 					case q39:
-						putMessage("Found } token");
+						//putMessage("Found } token");
 						tokens.push(new Token(null,"RBraceToken",lineNumber));
 						break;
 					case q40:
-						putMessage("Found ( token");
+						//putMessage("Found ( token");
 						tokens.push(new Token(null,"LParenToken",lineNumber));
 						break;
 					case q41:
-						putMessage("Found ) token");
+						//putMessage("Found ) token");
 						tokens.push(new Token(null,"RParenToken",lineNumber));
 						break;
 					case q43:
-						putMessage("Found != token");
+						//putMessage("Found != token");
 						tokens.push(new Token("NotEqualToken","BoolOp",lineNumber));
 						break;
 					case q44:
-						putMessage("Found = token");
+						//putMessage("Found = token");
 						tokens.push(new Token(null,"SetEqualsToken",lineNumber));
 						break;
 					case q45:
-						putMessage("Found == token");
+						//putMessage("Found == token");
 						tokens.push(new Token("EquivlentToken","BoolOp",lineNumber));
 						break;
 					case q46:
-						putMessage("Found + token");
+						//putMessage("Found + token");
 						tokens.push(new Token(null,"PlusToken",lineNumber));
 						break;
 					case q48:
-						putMessage("Found String Expression token");
+						//putMessage("Found String Expression token");
 						tokens.push(new Token(null,"StringExpToken",lineNumber));
 						break;
 					case q49:
-						putMessage("Found $ token");
+						//putMessage("Found $ token");
 						tokens.push(new Token(null,"$Token",lineNumber));
-						//var currToken = tokens.pop();
-						//putMessage(currToken.getType());
 						break;
 					case q50:
-						putMessage("Found a number " + SC.charAt(i));
+						//putMessage("Found a number " + SC.charAt(i));
 						tokens.push(Token(SC.charAt(i),"NumberToken",lineNumber));
 						break;
 					case q51:
@@ -512,13 +785,12 @@
 						}
 						else
 						{
-							putMessage("Found a ID token " + SC.charAt(i - whiteSpace));
+							//putMessage("Found a ID token " + SC.charAt(i - whiteSpace));
 							tokens.push(new Token(SC.charAt(i - whiteSpace),"IdToken",lineNumber));
 							whiteSpace = 0;
 							currState = q0;
 							break;
 						}
-					/*
 					case q2:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead != 'h')
@@ -532,7 +804,7 @@
 							}
 							else
 							{
-								putMessage("Found w id");
+								//putMessage("Found w id");
 								currState = q0;
 								break;
 							}
@@ -546,8 +818,10 @@
 						checkThings = "wh";
 						if(lookAhead != 'i')
 						{
-							putMessage("Found w id");
-							putMessage("Found h id");
+							//putMessage("Found w id");
+							tokens.push(new Token('w',"IdToken",lineNumber));
+							//putMessage("Found h id");
+							tokens.push(new Token('h',"IdToken",lineNumber));
 							checkThings = "";
 							currState = q0;
 						}
@@ -557,9 +831,12 @@
 						checkThings = "whi";
 						if(lookAhead != 'l')
 						{
-							putMessage("Found w id");
-							putMessage("Found h id");
-							putMessage("Found i id")
+							//putMessage("Found w id");
+							tokens.push(new Token('w',"IdToken",lineNumber));
+							//putMessage("Found h id");
+							tokens.push(new Token('h',"IdToken",lineNumber));
+							//putMessage("Found i id");
+							tokens.push(new Token('i',"IdToken",lineNumber));
 							checkThings = "";
 							currState = q0;
 						}
@@ -569,16 +846,19 @@
 						checkThings = "whil";
 						if(lookAhead != 'e')
 						{
-							putMessage("Found w id");
-							putMessage("Found h id");
-							putMessage("Found i id");
-							putMessage("Found l id");
+							//putMessage("Found w id");
+							tokens.push(new Token('w',"IdToken",lineNumber));
+							//putMessage("Found h id");
+							tokens.push(new Token('h',"IdToken",lineNumber));
+							//putMessage("Found i id");
+							tokens.push(new Token('i',"IdToken",lineNumber));
+							//putMessage("Found l id");
+							tokens.push(new Token('l',"IdToken",lineNumber));
 							checkThings = "";
 							currState = q0;
 
 						}
 						break;
-					*/
 					case q6:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#' || lookAhead == '@')
@@ -587,7 +867,7 @@
 						}
 						else
 						{
-							putMessage("Found a While token!");
+							//putMessage("Found a While token!");
 							tokens.push(new Token(null,"WhileToken",lineNumber));
 							currState = q0;
 							break;
@@ -605,7 +885,7 @@
 							}
 							else
 							{
-								putMessage("Found i id");
+								//putMessage("Found i id");
 								tokens.push(new Token('i',"IdToken",lineNumber));
 								currState = q0;
 								break;
@@ -615,19 +895,6 @@
 						{
 							break;
 						}
-					/*
-					case q8:
-						lookAhead = SC.charAt(i + 1);
-						checkThings = "in";
-						if(lookAhead != 't')
-						{
-							putMessage("Found i id");
-							putMessage("Found n id");
-							checkThings = "";
-							currState = q0;
-							break;
-						}
-					*/
 					case q9:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#' || lookAhead == '@')
@@ -636,7 +903,7 @@
 						}
 						else
 						{
-							putMessage("Found a INT token!");
+							//putMessage("Found a INT token!");
 							tokens.push(new Token("Int","TypeToken",lineNumber));
 							currState = q0;
 							break;
@@ -649,7 +916,7 @@
 						}
 						else
 						{
-							putMessage("Found a IF token!");
+							//putMessage("Found a IF token!");
 							tokens.push(new Token(null,"IfToken",lineNumber));
 							currState = q0;
 							break;
@@ -667,7 +934,7 @@
 							}
 							else
 							{
-								putMessage("Found b id");
+								//putMessage("Found b id");
 								tokens.push(new Token('b',"IdToken",lineNumber));
 								currState = q0;
 								break;
@@ -677,6 +944,91 @@
 						{
 							break;
 						}
+					case q12:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "bo";
+						if(lookAhead != 'o')
+						{
+							//putMessage("Found b id");
+							tokens.push(new Token('b',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q13:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "boo";
+						if(lookAhead != 'l')
+						{
+							//putMessage("Found b id");
+							tokens.push(new Token('b',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q14:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "bool";
+						if(lookAhead != 'e')
+						{
+							//putMessage("Found b id");
+							tokens.push(new Token('b',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found l id");
+							tokens.push(new Token('l',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q15:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "boole";
+						if(lookAhead != 'a')
+						{
+							//putMessage("Found b id");
+							tokens.push(new Token('b',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found l id");
+							tokens.push(new Token('l',"IdToken",lineNumber));
+							//putMessage("Found e id");
+							tokens.push(new Token('e',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q16:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "boolea";
+						if(lookAhead != 'n')
+						{
+							//putMessage("Found b id");
+							tokens.push(new Token('b',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found o id");
+							tokens.push(new Token('o',"IdToken",lineNumber));
+							//putMessage("Found l id");
+							tokens.push(new Token('l',"IdToken",lineNumber));
+							//putMessage("Found e id");
+							tokens.push(new Token('e',"IdToken",lineNumber));
+							//putMessage("Found a id");
+							tokens.push(new Token('a',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;	
 					case q17:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#' || lookAhead == '@')
@@ -685,7 +1037,7 @@
 						}
 						else
 						{
-							putMessage("Found a Boolean token");
+							//putMessage("Found a Boolean token");
 							tokens.push(new Token("Boolean","TypeToken",lineNumber));
 							currState = q0;
 							break;
@@ -703,7 +1055,7 @@
 							}
 							else
 							{
-								putMessage("Found s id");
+								//putMessage("Found s id");
 								tokens.push(new Token('s',"IdToken",lineNumber));
 								currState = q0;
 								break;
@@ -713,6 +1065,70 @@
 						{
 							break;
 						}
+					case q19:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "st";
+						if(lookAhead != 'r')
+						{
+							//putMessage("Found s id");
+							tokens.push(new Token('s',"IdToken",lineNumber));
+							//putMessage("Found t id");
+							tokens.push(new Token('t',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q20:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "str";
+						if(lookAhead != 'i')
+						{
+							//putMessage("Found s id");
+							tokens.push(new Token('s',"IdToken",lineNumber));
+							//putMessage("Found t id");
+							tokens.push(new Token('t',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q21:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "stri";
+						if(lookAhead != 'n')
+						{
+							//putMessage("Found s id");
+							tokens.push(new Token('s',"IdToken",lineNumber));
+							//putMessage("Found t id");
+							tokens.push(new Token('t',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							//putMessage("Found i id");
+							tokens.push(new Token('i',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q22:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "strin";
+						if(lookAhead != 'g')
+						{
+							//putMessage("Found s id");
+							tokens.push(new Token('s',"IdToken",lineNumber));
+							//putMessage("Found t id");
+							tokens.push(new Token('t',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							//putMessage("Found i id");
+							tokens.push(new Token('i',"IdToken",lineNumber));
+							//putMessage("Found n id");
+							tokens.push(new Token('n',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
 					case q23:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#' || lookAhead == '@')
@@ -721,7 +1137,7 @@
 						}
 						else
 						{
-							putMessage("Found a String token");
+							//putMessage("Found a String token");
 							tokens.push(new Token("String","TypeToken",lineNumber));
 							currState = q0;
 							break;
@@ -739,7 +1155,7 @@
 							}
 							else
 							{
-								putMessage("Found t id");
+								//putMessage("Found t id");
 								tokens.push(new Token('t',"IdToken",lineNumber));
 								currState = q0;
 								break;
@@ -749,6 +1165,34 @@
 						{
 							break;
 						}
+					case q25:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "tr";
+						if(lookAhead != 'u')
+						{
+							//putMessage("Found t id");
+							tokens.push(new Token('t',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q26:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "tru";
+						if(lookAhead != 'e')
+						{
+							//putMessage("Found t id");
+							tokens.push(new Token('t',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							//putMessage("Found u id");
+							tokens.push(new Token('u',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
 					case q27:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#' || lookAhead == '@')
@@ -757,7 +1201,7 @@
 						}
 						else
 						{
-							putMessage("Found a True token");
+							//putMessage("Found a True token");
 							tokens.push(new Token("True","BoolVal",lineNumber));
 							currState = q0;
 							break;
@@ -775,7 +1219,7 @@
 							}
 							else
 							{
-								putMessage("Found f id");
+								//putMessage("Found f id");
 								tokens.push(new Token('f',"IdToken",lineNumber));
 								currState = q0;
 								break;
@@ -785,6 +1229,51 @@
 						{
 							break;
 						}
+					case q29:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "fa";
+						if(lookAhead != 'l')
+						{
+							//putMessage("Found f id");
+							tokens.push(new Token('f',"IdToken",lineNumber));
+							//putMessage("Found a id");
+							tokens.push(new Token('a',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q30:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "fal";
+						if(lookAhead != 's')
+						{
+							//putMessage("Found f id");
+							tokens.push(new Token('f',"IdToken",lineNumber));
+							//putMessage("Found a id");
+							tokens.push(new Token('a',"IdToken",lineNumber));
+							//putMessage("Found l id");
+							tokens.push(new Token('l',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q31:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "fals";
+						if(lookAhead != 'e')
+						{
+							//putMessage("Found f id");
+							tokens.push(new Token('f',"IdToken",lineNumber));
+							//putMessage("Found a id");
+							tokens.push(new Token('a',"IdToken",lineNumber));
+							//putMessage("Found l id");
+							tokens.push(new Token('l',"IdToken",lineNumber));
+							//putMessage("Found s id");
+							tokens.push(new Token('s',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
 					case q32:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#' || lookAhead == '@')
@@ -793,7 +1282,7 @@
 						}
 						else
 						{
-							putMessage("Found a False token");
+							//putMessage("Found a False token");
 							tokens.push(new Token("False","BoolVal",lineNumber));
 							currState = q0;
 							break;
@@ -811,7 +1300,7 @@
 							}
 							else
 							{
-								putMessage("Found p id");
+								//putMessage("Found p id");
 								tokens.push(new Token('p',"IdToken",lineNumber));
 								currState = q0;
 								break;
@@ -821,6 +1310,51 @@
 						{
 							break;
 						}
+					case q34:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "pr";
+						if(lookAhead != 'i')
+						{
+							//putMessage("Found p id");
+							tokens.push(new Token('p',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q35:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "pri";
+						if(lookAhead != 'n')
+						{
+							//putMessage("Found p id");
+							tokens.push(new Token('p',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							//putMessage("Found i id");
+							tokens.push(new Token('i',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
+					case q36:
+						lookAhead = SC.charAt(i + 1);
+						checkThings = "prin";
+						if(lookAhead != 't')
+						{
+							//putMessage("Found p id");
+							tokens.push(new Token('p',"IdToken",lineNumber));
+							//putMessage("Found r id");
+							tokens.push(new Token('r',"IdToken",lineNumber));
+							//putMessage("Found i id");
+							tokens.push(new Token('i',"IdToken",lineNumber));
+							//putMessage("Found n id");
+							tokens.push(new Token('n',"IdToken",lineNumber));
+							checkThings = "";
+							currState = q0;
+						}
+						break;
 					case q37:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#' || lookAhead == '@')
@@ -829,7 +1363,7 @@
 						}
 						else
 						{
-							putMessage("Found a Print token");
+							//putMessage("Found a Print token");
 							tokens.push(new Token(null,"PrintToken",lineNumber));
 							currState = q0;
 							break;
@@ -842,7 +1376,7 @@
 						}
 						else
 						{
-							putMessage("Found a { token");
+							//putMessage("Found a { token");
 							tokens.push(new Token(null,"LBraceToken",lineNumber));
 							currState = q0;
 							break;
@@ -855,7 +1389,7 @@
 						}
 						else
 						{
-							putMessage("Found a } token");
+							//putMessage("Found a } token");
 							tokens.push(new Token(null,"RBraceToken",lineNumber));
 							currState = q0;
 							break;
@@ -868,7 +1402,7 @@
 						}
 						else
 						{
-							putMessage("Found a ( token");
+							//putMessage("Found a ( token");
 							tokens.push(new Token(null,"LParenToken",lineNumber));
 							currState = q0;
 							break;
@@ -881,7 +1415,7 @@
 						}
 						else
 						{
-							putMessage("Found a ) token");
+							//putMessage("Found a ) token");
 							tokens.push(new Token(null,"RParenToken",lineNumber));
 							currState = q0;
 							break;
@@ -895,7 +1429,7 @@
 						}
 						else
 						{
-							putMessage("Found a != token");
+							//putMessage("Found a != token");
 							tokens.push(new Token("NotEqualToken","BoolOp",lineNumber));
 							currState = q0;
 							break;
@@ -904,7 +1438,7 @@
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead != '=')
 						{
-							putMessage("Found a = token");
+							//putMessage("Found a = token");
 							tokens.push(new Token(null,"SetEqualsToken",lineNumber));
 							currState = q0;
 							break;
@@ -921,7 +1455,7 @@
 						}
 						else
 						{
-							putMessage("Found a == token");
+							//putMessage("Found a == token");
 							tokens.push(new Token("EquivlentToken","BoolOp",lineNumber));
 							currState = q0;
 							break;
@@ -935,7 +1469,7 @@
 						}
 						else
 						{
-							putMessage("Found a + token");
+							//putMessage("Found a + token");
 							tokens.push(new Token(null,"PlusToken",lineNumber));
 							currState = q0;
 							break;
@@ -948,7 +1482,7 @@
 						}
 						else
 						{
-							putMessage("Found a String Expression token");
+							//putMessage("Found a String Expression token");
 							tokens.push(new Token(null,"StringExpToken",lineNumber));
 							currState = q0;
 							break;
@@ -961,7 +1495,7 @@
 						}
 						else
 						{
-							putMessage("Found a $ token");
+							//putMessage("Found a $ token");
 							tokens.push(new Token(null,"$Token",lineNumber));
 							currState = q0;
 							break;
@@ -970,7 +1504,7 @@
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead != '1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' || '0')
 						{
-							putMessage("Found a Number token " + SC.charAt(i));
+							//putMessage("Found a Number token " + SC.charAt(i));
 							tokens.push(new Token(SC.charAt(i),"NumberToken",lineNumber));
 							currState = q0;
 							break;
