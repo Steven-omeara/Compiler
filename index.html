@@ -24,18 +24,18 @@
         <textarea id="taSourceCode" cols="40" rows="25"></textarea>
         <textarea id="taOutput" cols="60" rows="25"></textarea>
         <br>
+        <textarea id="taCST" cols="50" rows="25"></textarea>
+        <br>
         <input type="button" id="btnCompile" value="Compile" onclick="btnCompile_click();"/>
         <input type="checkbox"  id="verboseoutput" value="Verbose Output"/> Verbose Output
         <input type="checkbox"  id="rickandmorty" value="RickandMorty"/> Rick and Morty Mode
     </div>
     <!-- Footer -->
-    <p>
-        
-    </p>
     <!-- Client-side code down here, per the YSlow advice. 
     // (http://developer.yahoo.com/performance/rules.html#js_bottom) -->
     <script type="text/javascript" src="scripts/utils.js"></script>	
-    <script type="text/javascript" src="scripts/lexer.js"></script>	
+    <script type="text/javascript" src="scripts/lexer.js"></script>
+    <script type="text/javascript" src="scripts/lexer.js"></script>
     <script type="text/javascript">
     // Global variables
     var tokens = [];
