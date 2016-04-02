@@ -35,7 +35,7 @@
     // (http://developer.yahoo.com/performance/rules.html#js_bottom) -->
     <script type="text/javascript" src="scripts/utils.js"></script>	
     <script type="text/javascript" src="scripts/lexer.js"></script>
-    <script type="text/javascript" src="scripts/lexer.js"></script>
+    <script type="text/javascript" src="scripts/tree.js"></script>
     <script type="text/javascript">
     // Global variables
     var tokens = [];
@@ -45,11 +45,13 @@
     var lookaheadToken;
     var verboseCheck;
     var errorCount = 0;
+    var tree;
     var EOF = "$";
 
     function init() {
         // Clear the message box.
         document.getElementById("taOutput").value = "";
+        document.getElementById("taCST").value = "";
         // Set the initial values for our globals.
         tokens = [];
         lexCheck = true;
@@ -57,6 +59,7 @@
         tokenIndex = 0;
         currentToken;
         lookaheadToken;
+        tree = new Tree();
         errorCount = 0;        
     }
     
@@ -121,6 +124,10 @@
     function putProgram(msg) {
         document.getElementById("taSourceCode").value += msg + "\n";
     }
+
+    function putCST(msg) {
+        document.getElementById("taCST").value += msg + "\n";
+    }
     
     
     function parse() {
@@ -134,6 +141,7 @@
     
     function parseProg() {
         // A G(oal) production can only be an E(xpression), so parse the E production.
+        tree.addNode("Block","branch");
         parseBlock();
         if (currentToken.getType() == "$Token")
         {
@@ -145,6 +153,7 @@
             else
             {
                 putMessage("You have parsed successfully");
+                putCST(tree.toString());
             }
         }
         else
@@ -175,50 +184,63 @@
     {
         if (currentToken.getType() == "PrintToken")
         {
+            tree.addNode("StmtList","branch");
             match("PrintToken");
             parsePrint();
             parseStmtList();
+            tree.endChildren();
             return;
         }
         else if (currentToken.getType() == "IdToken")
         {
+            tree.addNode("StmtList","branch");
             parseId();
             match("SetEqualsToken");
             parseExpr();
             parseStmtList();
+            tree.endChildren();
             return;
         }
         else if (currentToken.getType() == "TypeToken")
         {
+            tree.addNode("StmtList","branch");
             match("TypeToken");
             parseId();
             parseStmtList();
+            tree.endChildren();
             return;
         }
         else if(currentToken.getType() == "LBraceToken")
         {
+            tree.addNode("StmtList","branch");
             parseBlock();
             parseStmtList();
+            tree.endChildren();
             return;
         }
         else if(currentToken.getType() == "WhileToken")
         {
+            tree.addNode("StmtList","branch");
             match("WhileToken");
             parseBooleanExpr();
             parseBlock();
             parseStmtList();
+            tree.endChildren();
             return;
         }
         else if (currentToken.getType() == "IfToken")
         {
+            tree.addNode("StmtList","branch");
             match("IfToken");
             parseBooleanExpr();
             parseBlock();
             parseStmtList();
+            tree.endChildren();
             return;
         }
         else
         {
+            tree.endChildren();
             return;
         }
     }
@@ -227,10 +249,12 @@
     {
         if(currentToken.getType() == "LParenToken")
         {
-                match("LParenToken");
-                parseExpr();
-                match("RParenToken");
-                return;
+            tree.addNode("PrintStmt","branch")
+            match("LParenToken");
+            parseExpr();
+            match("RParenToken");
+            tree.endChildren();
+            return;
         }
         else
         {
@@ -240,24 +264,29 @@
 
     function parseExpr()
     {
+        tree.addNode("Expr","branch");
         if(currentToken.getType() == "IdToken")
         {
             parseId();
+            tree.endChildren();
             return;
         }
         else if (currentToken.getType() == "NumberToken")
         {
             parseIntExp();
+            tree.endChildren();
             return;
         }
         else if (currentToken.getType() == "StringExpToken")
         {
             match("StringExpToken");
+            tree.endChildren();
             return;
         }
         else if (currentToken.getType() == "LParenToken" || currentToken.getType() == "BoolVal")
         {
             parseBooleanExpr();
+            tree.endChildren();
             return;
         }
         else
@@ -269,24 +298,30 @@
 
     function parseId()
     {
+        tree.addNode("Id","branch");
         match("IdToken");
+        tree.endChildren();
         return;
     }
 
     function parseIntExp()
     {
+        tree.addNode("IntExpr","branch");
         match("NumberToken");
         if (currentToken.getType() == "PlusToken")
         {
             match("PlusToken");
             parseExpr();
+            tree.endChildren();
             return;
         }
+        tree.endChildren();
         return;
     }
 
     function parseBooleanExpr()
     {
+        tree.addNode("BooleanExpr","branch");
         if (currentToken.getType() == "LParenToken")
         {
             match("LParenToken");
@@ -297,11 +332,13 @@
             }
             parseExpr();
             match("RParenToken");
+            tree.endChildren();
             return;
         }
         else if (currentToken.getType() == "BoolVal")
         {
             match("BoolVal");
+            tree.endChildren();
             return;
         }
     }
@@ -318,6 +355,7 @@
             {
                 putMessage("A " +currentToken.getType() + " token? I-I-I-I don't even know what that- what is that? Is that a lot?\n");    
             }
+            tree.addNode(currentToken.getValue(),"leaf")
             if (tokens.length != 0)
             {
                 currentToken = tokens.shift();

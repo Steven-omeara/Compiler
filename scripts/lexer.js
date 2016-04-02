@@ -410,7 +410,7 @@
 						break;
 					case q6:
 						//putMessage("Found a While token");
-						tokens.push(Token(null,"WhileToken",lineNumber));
+						tokens.push(Token("WhileToken","WhileToken",lineNumber));
 						break;
 					/*case q8:
 						lookAhead = SC.charAt(i + 1);
@@ -429,7 +429,7 @@
 						break;
 					case q10:
 						//putMessage("Found IF token");
-						tokens.push(new Token(null,"IfToken",lineNumber));
+						tokens.push(new Token("IfToken","IfToken",lineNumber));
 						break;
 					case q12:
 						lookAhead = SC.charAt(i + 1);
@@ -716,39 +716,39 @@
 						break;
 					case q37:
 						//putMessage("Found Print token");
-						tokens.push(new Token(null,"PrintToken",lineNumber));
+						tokens.push(new Token("PrintToken","PrintToken",lineNumber));
 						break;
 					case q38:
 						//putMessage("Found { token");
-						tokens.push(new Token(null,"LBraceToken",lineNumber));
+						tokens.push(new Token('{',"LBraceToken",lineNumber));
 						break;
 					case q39:
 						//putMessage("Found } token");
-						tokens.push(new Token(null,"RBraceToken",lineNumber));
+						tokens.push(new Token('}',"RBraceToken",lineNumber));
 						break;
 					case q40:
 						//putMessage("Found ( token");
-						tokens.push(new Token(null,"LParenToken",lineNumber));
+						tokens.push(new Token('(',"LParenToken",lineNumber));
 						break;
 					case q41:
 						//putMessage("Found ) token");
-						tokens.push(new Token(null,"RParenToken",lineNumber));
+						tokens.push(new Token(')',"RParenToken",lineNumber));
 						break;
 					case q43:
 						//putMessage("Found != token");
-						tokens.push(new Token("NotEqualToken","BoolOp",lineNumber));
+						tokens.push(new Token("!=","BoolOp",lineNumber));
 						break;
 					case q44:
 						//putMessage("Found = token");
-						tokens.push(new Token(null,"SetEqualsToken",lineNumber));
+						tokens.push(new Token('=',"SetEqualsToken",lineNumber));
 						break;
 					case q45:
 						//putMessage("Found == token");
-						tokens.push(new Token("EquivlentToken","BoolOp",lineNumber));
+						tokens.push(new Token("==","BoolOp",lineNumber));
 						break;
 					case q46:
 						//putMessage("Found + token");
-						tokens.push(new Token(null,"PlusToken",lineNumber));
+						tokens.push(new Token('+',"PlusToken",lineNumber));
 						break;
 					case q48:
 						//putMessage("Found String Expression token");
@@ -756,7 +756,7 @@
 						break;
 					case q49:
 						//putMessage("Found $ token");
-						tokens.push(new Token(null,"$Token",lineNumber));
+						tokens.push(new Token('$',"$Token",lineNumber));
 						break;
 					case q50:
 						//putMessage("Found a number " + SC.charAt(i));
@@ -869,7 +869,7 @@
 						else
 						{
 							//putMessage("Found a While token!");
-							tokens.push(new Token(null,"WhileToken",lineNumber));
+							tokens.push(new Token("WhileToken","WhileToken",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -918,7 +918,7 @@
 						else
 						{
 							//putMessage("Found a IF token!");
-							tokens.push(new Token(null,"IfToken",lineNumber));
+							tokens.push(new Token("IfToken","IfToken",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -1365,7 +1365,7 @@
 						else
 						{
 							//putMessage("Found a Print token");
-							tokens.push(new Token(null,"PrintToken",lineNumber));
+							tokens.push(new Token("PrintToken","PrintToken",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -1378,7 +1378,7 @@
 						else
 						{
 							//putMessage("Found a { token");
-							tokens.push(new Token(null,"LBraceToken",lineNumber));
+							tokens.push(new Token('{',"LBraceToken",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -1391,7 +1391,7 @@
 						else
 						{
 							//putMessage("Found a } token");
-							tokens.push(new Token(null,"RBraceToken",lineNumber));
+							tokens.push(new Token('}',"RBraceToken",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -1404,7 +1404,7 @@
 						else
 						{
 							//putMessage("Found a ( token");
-							tokens.push(new Token(null,"LParenToken",lineNumber));
+							tokens.push(new Token('(',"LParenToken",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -1417,7 +1417,7 @@
 						else
 						{
 							//putMessage("Found a ) token");
-							tokens.push(new Token(null,"RParenToken",lineNumber));
+							tokens.push(new Token(')',"RParenToken",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -1431,7 +1431,7 @@
 						else
 						{
 							//putMessage("Found a != token");
-							tokens.push(new Token("NotEqualToken","BoolOp",lineNumber));
+							tokens.push(new Token("!=","BoolOp",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -1440,7 +1440,7 @@
 						if (lookAhead != '=')
 						{
 							//putMessage("Found a = token");
-							tokens.push(new Token(null,"SetEqualsToken",lineNumber));
+							tokens.push(new Token('=',"SetEqualsToken",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -1457,7 +1457,7 @@
 						else
 						{
 							//putMessage("Found a == token");
-							tokens.push(new Token("EquivlentToken","BoolOp",lineNumber));
+							tokens.push(new Token("==","BoolOp",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -1471,7 +1471,7 @@
 						else
 						{
 							//putMessage("Found a + token");
-							tokens.push(new Token(null,"PlusToken",lineNumber));
+							tokens.push(new Token('+',"PlusToken",lineNumber));
 							currState = q0;
 							break;
 						}
@@ -1497,7 +1497,7 @@
 						else
 						{
 							//putMessage("Found a $ token");
-							tokens.push(new Token(null,"$Token",lineNumber));
+							tokens.push(new Token('$',"$Token",lineNumber));
 							currState = q0;
 							break;
 						}
