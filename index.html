@@ -134,6 +134,7 @@
         // Grab the next token.
         currentToken = tokens.shift();
         // A valid parse derives the G(oal) production, so begin there.
+        tree.addNode("Program","branch");
         parseProg();
         // Report the results.
         putMessage("Parsing found " + errorCount + " error(s).");        
@@ -146,6 +147,7 @@
         if (currentToken.getType() == "$Token")
         {
             match("$Token");
+            tree.endChildren();
             if (tokens.length > 0)
             {
                 parseProg();
@@ -172,11 +174,13 @@
                 parseStmtList();
             }
             match("RBraceToken");
+            tree.endChildren();
             return;
         }
         else
         {
-            return
+            tree.endChildren();
+            return;
         }
     }
 
