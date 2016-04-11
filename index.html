@@ -21,11 +21,12 @@
         <input type="button" id="Program5" value="Program 5" onclick="currProgramPush(this.id);"/>
     </div>    
     <div>
-        <textarea id="taSourceCode" cols="45" rows="25"></textarea>
-        <textarea id="taOutput" cols="60" rows="25"></textarea>
+        <textarea id="taSourceCode" cols="50" rows="25"></textarea>
+        <textarea id="taOutput" cols="80" rows="25"></textarea>
         <br>
         <textarea id="taCST" cols="45" rows="25"></textarea>
         <textarea id="taAST" cols="45" rows="25"></textarea>
+        <textarea id="taSymbolTable" cols="45" rows="25"></textarea>
         <br>
         <input type="button" id="btnCompile" value="Compile" onclick="btnCompile_click();"/>
         <input type="checkbox"  id="verboseoutput" value="Verbose Output"/> Verbose Output
@@ -80,7 +81,7 @@
         var tokenLength = tokens.length;
         if (lexCheck != false)
         {
-            putMessage("Successfully Lexed");
+            putMessage("All Programs Successfully Lexed");
             putMessage("Lex returned [" + SClex + "]\n");
             // . . . and parse!
             putMessage("Starting Parse...\n");
@@ -143,12 +144,13 @@
         // A valid parse derives the G(oal) production, so begin there.
         tree.addNode("Program","branch");
         var programCount = 1;
-        parseProg(programCount);
+        var endCount = parseProg(programCount);
         // Report the results.
         putMessage("Parsing found " + errorCount + " error(s).");  
         // Start Parsing CST and get AST 
         ast = tree.DFS();
         putAST(ast.toString());
+        putMessage("\nStarting Semantic Analysis...");
     }
     
     function parseProg(programCount) {
@@ -166,6 +168,8 @@
                 putAST("AST for Program " + programCount + " :");
                 ast = tree.DFS();
                 putAST(tree.toString());
+                putMessage("Parsing Program " + programCount + " found " + errorCount + " error(s).");  
+                putMessage("\nStarting Semantic Analysis on program " + programCount + "...\n");
                 tree = new Tree();
                 tree.addNode("Program","branch");
                 programCount++;  
@@ -177,6 +181,7 @@
                 putMessage("You have parsed successfully");
                 putCST("CST for Program " + programCount + " :")
                 putCST(tree.toString());
+                putAST("AST for Program " + programCount + " :");
             }
         }
         else
