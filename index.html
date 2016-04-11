@@ -21,10 +21,11 @@
         <input type="button" id="Program5" value="Program 5" onclick="currProgramPush(this.id);"/>
     </div>    
     <div>
-        <textarea id="taSourceCode" cols="40" rows="25"></textarea>
+        <textarea id="taSourceCode" cols="45" rows="25"></textarea>
         <textarea id="taOutput" cols="60" rows="25"></textarea>
         <br>
-        <textarea id="taCST" cols="50" rows="25"></textarea>
+        <textarea id="taCST" cols="45" rows="25"></textarea>
+        <textarea id="taAST" cols="45" rows="25"></textarea>
         <br>
         <input type="button" id="btnCompile" value="Compile" onclick="btnCompile_click();"/>
         <input type="checkbox"  id="verboseoutput" value="Verbose Output"/> Verbose Output
@@ -46,12 +47,14 @@
     var verboseCheck;
     var errorCount = 0;
     var tree;
+    var ast;
     var EOF = "$";
 
     function init() {
         // Clear the message box.
         document.getElementById("taOutput").value = "";
         document.getElementById("taCST").value = "";
+        document.getElementById("taAST").value = "";
         // Set the initial values for our globals.
         tokens = [];
         lexCheck = true;
@@ -60,6 +63,7 @@
         currentToken;
         lookaheadToken;
         tree = new Tree();
+        ast = new Tree();
         errorCount = 0;        
     }
     
@@ -129,6 +133,9 @@
         document.getElementById("taCST").value += msg + "\n";
     }
     
+    function putAST(msg) {
+        document.getElementById("taAST").value += msg + "\n";
+    }
     
     function parse() {
         // Grab the next token.
@@ -137,12 +144,14 @@
         tree.addNode("Program","branch");
         parseProg();
         // Report the results.
-        putMessage("Parsing found " + errorCount + " error(s).");        
+        putMessage("Parsing found " + errorCount + " error(s).");  
+        // Start Parsing CST and get AST 
+        ast = tree.DFS();
+        putAST(ast.toString());
     }
     
     function parseProg() {
         // A G(oal) production can only be an E(xpression), so parse the E production.
-        tree.addNode("Block","branch");
         parseBlock();
         if (currentToken.getType() == "$Token")
         {
@@ -150,6 +159,7 @@
             tree.endChildren();
             if (tokens.length > 0)
             {
+                tree.addNode("Program","branch");
                 parseProg();
             }
             else
@@ -166,6 +176,7 @@
     }
 
     function parseBlock() {
+        tree.addNode("Block","branch");
         if (currentToken.getType() == "LBraceToken")
         {
             match("LBraceToken");
@@ -189,7 +200,6 @@
         if (currentToken.getType() == "PrintToken")
         {
             tree.addNode("StmtList","branch");
-            match("PrintToken");
             parsePrint();
             parseStmtList();
             tree.endChildren();
@@ -198,9 +208,11 @@
         else if (currentToken.getType() == "IdToken")
         {
             tree.addNode("StmtList","branch");
+            tree.addNode("Assign","branch");
             parseId();
             match("SetEqualsToken");
             parseExpr();
+            tree.endChildren();
             parseStmtList();
             tree.endChildren();
             return;
@@ -208,8 +220,10 @@
         else if (currentToken.getType() == "TypeToken")
         {
             tree.addNode("StmtList","branch");
+            tree.addNode("varDecl","branch");
             match("TypeToken");
             parseId();
+            tree.endChildren();
             parseStmtList();
             tree.endChildren();
             return;
@@ -225,9 +239,11 @@
         else if(currentToken.getType() == "WhileToken")
         {
             tree.addNode("StmtList","branch");
+            tree.addNode("While","branch");
             match("WhileToken");
             parseBooleanExpr();
             parseBlock();
+            tree.endChildren();
             parseStmtList();
             tree.endChildren();
             return;
@@ -235,25 +251,27 @@
         else if (currentToken.getType() == "IfToken")
         {
             tree.addNode("StmtList","branch");
+            tree.addNode("If","branch");
             match("IfToken");
             parseBooleanExpr();
             parseBlock();
+            tree.endChildren();
             parseStmtList();
             tree.endChildren();
             return;
         }
         else
         {
-            tree.endChildren();
             return;
         }
     }
 
     function parsePrint()
     {
-        if(currentToken.getType() == "LParenToken")
+        if(currentToken.getType() == "PrintToken")
         {
-            tree.addNode("PrintStmt","branch")
+            tree.addNode("PrintStmt","branch");
+            match("PrintToken");
             match("LParenToken");
             parseExpr();
             match("RParenToken");
@@ -283,7 +301,7 @@
         }
         else if (currentToken.getType() == "StringExpToken")
         {
-            match("StringExpToken");
+        	parseStringExp();
             tree.endChildren();
             return;
         }
@@ -305,6 +323,14 @@
         tree.addNode("Id","branch");
         match("IdToken");
         tree.endChildren();
+        return;
+    }
+
+    function parseStringExp()
+    {
+    	tree.addNode("StringExpr","branch");
+    	match("StringExpToken");
+    	tree.endChildren();
         return;
     }
 
@@ -369,10 +395,15 @@
         {
             if (errorCount < 1)
             {
-                putMessage("Error on line " + currentToken.getLN() + "at token " + currentToken.getType() + "expecting " + type + " token after " + currentToken.getType());
+                putMessage("Error on line " + currentToken.getLN() + " at token " + currentToken.getType() + " expecting " + type + " token after " + currentToken.getType());
             }
             errorCount++;
         }
+    }
+
+    function CSTtoAST()
+    {
+       putAST("Congrats Faggot, you are here");
     }
     </script>
 </body>
