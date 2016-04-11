@@ -144,7 +144,7 @@ function Tree() {
                     //addBlock();
                     //checkStatementList(node.children[2].children[1].children[0]);
                     //AST.endChildren();
-                    console.log(node.children[2].children[1].children[0].name);
+                    //console.log(node.children[2].children[1].children[0].name);
                 }
                 else if(node.name == "While")
                 {
@@ -153,7 +153,7 @@ function Tree() {
                     //addBlock();
                     //checkStatementList(node.children[2].children[1].children[0]);
                     //AST.endChildren();
-                    console.log(node.children[2].children[1].children[0].name);
+                    //console.log(node.children[2].children[1].children[0].name);
                 }
                 // && notFirst == false
                 else if (node.name == "Block")
@@ -243,6 +243,7 @@ function Tree() {
                 if(node.name == "}")
                 {
                     AST.endChildren();
+                    //god forbid, i could recurisbly do this by checking if the num is greater then one, but it seems to work rn
                     if (ifwhileCheck == true)
                     {
                         AST.endChildren();

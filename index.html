@@ -142,7 +142,8 @@
         currentToken = tokens.shift();
         // A valid parse derives the G(oal) production, so begin there.
         tree.addNode("Program","branch");
-        parseProg();
+        var programCount = 1;
+        parseProg(programCount);
         // Report the results.
         putMessage("Parsing found " + errorCount + " error(s).");  
         // Start Parsing CST and get AST 
@@ -150,7 +151,7 @@
         putAST(ast.toString());
     }
     
-    function parseProg() {
+    function parseProg(programCount) {
         // A G(oal) production can only be an E(xpression), so parse the E production.
         parseBlock();
         if (currentToken.getType() == "$Token")
@@ -159,12 +160,22 @@
             tree.endChildren();
             if (tokens.length > 0)
             {
+                putMessage("You have parsed program " + programCount  + " successfully!");
+                putCST("CST for Program " + programCount + " :");   
+                putCST(tree.toString());
+                putAST("AST for Program " + programCount + " :");
+                ast = tree.DFS();
+                putAST(tree.toString());
+                tree = new Tree();
                 tree.addNode("Program","branch");
-                parseProg();
+                programCount++;  
+                parseProg(programCount);
             }
             else
             {
+                putMessage("You have parsed program " + programCount  + " successfully!");
                 putMessage("You have parsed successfully");
+                putCST("CST for Program " + programCount + " :")
                 putCST(tree.toString());
             }
         }
