@@ -26,7 +26,7 @@
         <br>
         <textarea id="taCST" cols="45" rows="25"></textarea>
         <textarea id="taAST" cols="45" rows="25"></textarea>
-        <textarea id="taSymbolTable" cols="45" rows="25"></textarea>
+        <textarea id="taSA" cols="45" rows="25"></textarea>
         <br>
         <input type="button" id="btnCompile" value="Compile" onclick="btnCompile_click();"/>
         <input type="checkbox"  id="verboseoutput" value="Verbose Output"/> Verbose Output
@@ -38,6 +38,8 @@
     <script type="text/javascript" src="scripts/utils.js"></script>	
     <script type="text/javascript" src="scripts/lexer.js"></script>
     <script type="text/javascript" src="scripts/tree.js"></script>
+    <script type="text/javascript" src="scripts/semanticanalysis.js"></script>
+    <script type="text/javascript" src="scripts/symbolTable.js"></script>
     <script type="text/javascript">
     // Global variables
     var tokens = [];
@@ -56,6 +58,7 @@
         document.getElementById("taOutput").value = "";
         document.getElementById("taCST").value = "";
         document.getElementById("taAST").value = "";
+        document.getElementById("taSA").value = "";
         // Set the initial values for our globals.
         tokens = [];
         lexCheck = true;
@@ -137,6 +140,10 @@
     function putAST(msg) {
         document.getElementById("taAST").value += msg + "\n";
     }
+
+    function putSA(msg) {
+        document.getElementById("taSA").value += msg + "\n";
+    }
     
     function parse() {
         // Grab the next token.
@@ -148,9 +155,10 @@
         // Report the results.
         putMessage("Parsing found " + errorCount + " error(s).");  
         // Start Parsing CST and get AST 
-        ast = tree.DFS();
-        putAST(ast.toString());
         putMessage("\nStarting Semantic Analysis...");
+        ast = tree.DFS();
+        SA(ast,tree);
+        putAST(ast.toString());
     }
     
     function parseProg(programCount) {
@@ -163,13 +171,13 @@
             if (tokens.length > 0)
             {
                 putMessage("You have parsed program " + programCount  + " successfully!");
-                putCST("CST for Program " + programCount + " :");   
-                putCST(tree.toString());
-                putAST("AST for Program " + programCount + " :");
+                putMessage("Parsing Program " + programCount + " found " + errorCount + " error(s).");
+                putCST("CST for Program " + programCount + "\n-------------------------------");   
+                putCST(tree.toString());  
+                putMessage("\nStarting Semantic Analysis on program " + programCount + "...\n");
+                putAST("AST for Program " + programCount + "\n-------------------------------");
                 ast = tree.DFS();
                 putAST(tree.toString());
-                putMessage("Parsing Program " + programCount + " found " + errorCount + " error(s).");  
-                putMessage("\nStarting Semantic Analysis on program " + programCount + "...\n");
                 tree = new Tree();
                 tree.addNode("Program","branch");
                 programCount++;  
@@ -179,9 +187,9 @@
             {
                 putMessage("You have parsed program " + programCount  + " successfully!");
                 putMessage("You have parsed successfully");
-                putCST("CST for Program " + programCount + " :")
+                putCST("CST for Program " + programCount + "\n-------------------------------")
                 putCST(tree.toString());
-                putAST("AST for Program " + programCount + " :");
+                putAST("AST for Program " + programCount + "\n-------------------------------");
             }
         }
         else
