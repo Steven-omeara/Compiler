@@ -47,13 +47,14 @@ function SymbolTable() {
             variables: [],//used to hold variables
 
             //adding new Key/Val pairs to the table
-            addKeyValPair : function(currKey,currType,currScope)
+            addKeyValPair : function(currKey,currType,currScope,currln)
             {
                 //create the value object, ADD LINE NUM
                 var currValues = 
                 {
                     type: currType,
-                    scope: currScope
+                    scope: currScope,
+                    lineNum: currln,
                 }
                 //create the pair object
                 var pair = 
@@ -61,7 +62,7 @@ function SymbolTable() {
                     key: currKey,
                     value: currValues
                 }
-
+                var currLength = this.variables.length;
                 if (this.variables.length == 0)
                 {
                     this.variables.push(pair);
@@ -69,11 +70,11 @@ function SymbolTable() {
                 }
                 else
                 {
-                    for (i = 0; i < this.variables.length; i++)
+                    for (i = 0; i < currLength; i++)
                     {
                         if (this.variables[i].key == pair.key)
                         {
-                            this.variables[i].value = pair.value;
+                            putSA("ERROR on line " + pair.lineNum + " already found a varibale of id " + pair.key);
                         }
                         else if (i == (this.variables.length - 1) && this.variables[i].key != pair.key)
                         {
@@ -88,8 +89,9 @@ function SymbolTable() {
                 var currSymTable = "";
                 for (i = 0; i < this.variables.length; i++)
                 {
-                    currSymTable += "Name: " + this.variables[i].key + "  Type: " + this.variables[i].value.type + "  Scope: " + this.variables[i].value.scope + "\n";
+                    currSymTable += "Name: " + this.variables[i].key + "  Type: " + this.variables[i].value.type + "  Scope: " + this.variables[i].value.scope + "  Line Number: " + this.variables[i].value.lineNum + "\n";
                 }
+                //this.variables[i].value.lineNum
                 //console.log(this.variables[1].key);
                 return currSymTable;
             },

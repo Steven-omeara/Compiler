@@ -19,11 +19,12 @@ function Tree() {
     // -- ------- --
 
     // Add a node: kind in {branch, leaf}.
-    this.addNode = function(name, kind) {
+    this.addNode = function(name, kind, ln) {
         // Construct the node object.
         var node = { name: name,
                      children: [],
-                     parent: {}
+                     parent: {},
+                     lineNum: ln
                    };
 
         // Check to see if it needs to be the root node.
@@ -117,28 +118,28 @@ function Tree() {
             {
                 if(node.name == "PrintStmt")
                 {
-                    AST.addNode("Print","branch");
+                    AST.addNode("Print","branch",node.lineNum);
                     checkExpr(node.children[2]);
                     AST.endChildren();
                 }
                 else if(node.name == "varDecl")
                 {
-                    AST.addNode("varDecl","branch");
-                    AST.addNode(node.children[0].name,"leaf");
-                    AST.addNode(node.children[1].children[0].name,"leaf");
+                    AST.addNode("varDecl","branch",node.lineNum);
+                    AST.addNode(node.children[0].name,"leaf",node.children[0].lineNum);
+                    AST.addNode(node.children[1].children[0].name,"leaf",node.children[1].children[0].lineNum);
                     AST.endChildren();
                 }
                 else if(node.name == "Assign")
                 {
                     //Could also be =, instead of assign
-                    AST.addNode("Assign","branch");
-                    AST.addNode(node.children[0].children[0].name,"leaf");
+                    AST.addNode("Assign","branch",node.lineNum);
+                    AST.addNode(node.children[0].children[0].name,"leaf",node.children[0].children[0].lineNum);
                     checkExpr(node.children[2]);
                     AST.endChildren();
                 }
                 else if(node.name == "If")
                 {
-                    AST.addNode("If","branch");
+                    AST.addNode("If","branch",node.lineNum);
                     ifwhileBooleanCheck(node.children[1]);
                     ifwhileCheck = true;
                     //addBlock();
@@ -148,7 +149,7 @@ function Tree() {
                 }
                 else if(node.name == "While")
                 {
-                    AST.addNode("While","branch");
+                    AST.addNode("While","branch",node.lineNum);
                     ifwhileBooleanCheck(node.children[1]);
                     //addBlock();
                     //checkStatementList(node.children[2].children[1].children[0]);
@@ -158,14 +159,14 @@ function Tree() {
                 // && notFirst == false
                 else if (node.name == "Block")
                 {
-                    addBlock();
+                    AST.addNode("Block","branch",node.lineNum);
                     //notFirst = true;
                 }
             }
 
             function addBlock()
             {
-                AST.addNode("Block","branch");
+                AST.addNode("Block","branch",node.lineNum);
             }
 
             function checkExpr(node)
@@ -173,7 +174,7 @@ function Tree() {
                 //console.log(node.children[0].name);
                 if(node.children[0].name == "Id")
                 {
-                    AST.addNode(node.children[0].children[0].name,"leaf");
+                    AST.addNode(node.children[0].children[0].name,"leaf",node.children[0].children[0].lineNum);
                 }
                 else if(node.children[0].name == "BooleanExpr")
                 {
@@ -186,19 +187,19 @@ function Tree() {
                 //Change StringExpr to return string not null in lex
                 else if (node.children[0].name == "StringExpr")
                 {
-                    AST.addNode(node.children[0].children[0].name,"leaf");
+                    AST.addNode(node.children[0].children[0].name,"leaf",node.children[0].children[0].lineNum);
                 }   
             }
             function booleanCheck(node)
             {
                 if(node.children[0].name == "True" || node.children[0].name == "False")
                 {
-                    AST.addNode(node.children[0].name,"leaf");
+                    AST.addNode(node.children[0].name,"leaf",node.children[0].lineNum);
                 }
                 else
                 {
                     //This is currently set to "!="/"==", can change it to compare or whatever if needed
-                    AST.addNode(node.children[2].name,"branch");
+                    AST.addNode(node.children[2].name,"branch",node.children[2].lineNum);
                     checkExpr(node.children[1]);
                     checkExpr(node.children[3]);
                     AST.endChildren();
@@ -208,14 +209,14 @@ function Tree() {
             {
                 if(node.children[0].name == "True" || node.children[0].name == "False")
                 {
-                    AST.addNode("Cond","branch");
-                    AST.addNode(node.children[0].name,"leaf");
+                    AST.addNode("Cond","branch",node.lineNum);
+                    AST.addNode(node.children[0].name,"leaf",node.children[0].lineNum);
                     AST.endChildren();
                 }
                 else
                 {
                     //This is currently set to "!="/"==", can change it to compare or whatever if needed
-                    AST.addNode("Cond","branch");
+                    AST.addNode("Cond","branch",node.lineNum);
                     checkExpr(node.children[1]);
                     checkExpr(node.children[3]);
                     AST.endChildren();
@@ -226,14 +227,14 @@ function Tree() {
                 if (node.children.length > 1)
                 {
                     //Currently putting in +, can put in Add if need be
-                    AST.addNode(node.children[1].name,"branch");
-                    AST.addNode(node.children[0].name,"leaf");
+                    AST.addNode(node.children[1].name,"branch",node.children[1].lineNum);
+                    AST.addNode(node.children[0].name,"leaf",node.children[0].lineNum);
                     checkExpr(node.children[2]);
                     AST.endChildren();
                 }
                 else
                 {
-                    AST.addNode(node.children[0].name,"leaf");
+                    AST.addNode(node.children[0].name,"leaf",node.children[0].lineNum);
                 }
             }
 

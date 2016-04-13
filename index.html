@@ -149,7 +149,7 @@
         // Grab the next token.
         currentToken = tokens.shift();
         // A valid parse derives the G(oal) production, so begin there.
-        tree.addNode("Program","branch");
+        tree.addNode("Program","branch",currentToken.getLN());
         var programCount = 1;
         var endCount = parseProg(programCount);
         // Report the results.
@@ -177,9 +177,11 @@
                 putMessage("\nStarting Semantic Analysis on program " + programCount + "...\n");
                 putAST("AST for Program " + programCount + "\n-------------------------------");
                 ast = tree.DFS();
+                putSA("Symbol Table for Program " + programCount + "\n-------------------------------");
+                SA(ast,tree);
                 putAST(tree.toString());
                 tree = new Tree();
-                tree.addNode("Program","branch");
+                tree.addNode("Program","branch",currentToken.getLN());
                 programCount++;  
                 parseProg(programCount);
             }
@@ -190,6 +192,7 @@
                 putCST("CST for Program " + programCount + "\n-------------------------------")
                 putCST(tree.toString());
                 putAST("AST for Program " + programCount + "\n-------------------------------");
+                putSA("Symbol Table for Program " + programCount + "\n-------------------------------");
             }
         }
         else
@@ -200,7 +203,7 @@
     }
 
     function parseBlock() {
-        tree.addNode("Block","branch");
+        tree.addNode("Block","branch",currentToken.getLN());
         if (currentToken.getType() == "LBraceToken")
         {
             match("LBraceToken");
@@ -223,7 +226,7 @@
     {
         if (currentToken.getType() == "PrintToken")
         {
-            tree.addNode("StmtList","branch");
+            tree.addNode("StmtList","branch",currentToken.getLN());
             parsePrint();
             parseStmtList();
             tree.endChildren();
@@ -231,8 +234,8 @@
         }
         else if (currentToken.getType() == "IdToken")
         {
-            tree.addNode("StmtList","branch");
-            tree.addNode("Assign","branch");
+            tree.addNode("StmtList","branch",currentToken.getLN());
+            tree.addNode("Assign","branch",currentToken.getLN());
             parseId();
             match("SetEqualsToken");
             parseExpr();
@@ -243,8 +246,8 @@
         }
         else if (currentToken.getType() == "TypeToken")
         {
-            tree.addNode("StmtList","branch");
-            tree.addNode("varDecl","branch");
+            tree.addNode("StmtList","branch",currentToken.getLN());
+            tree.addNode("varDecl","branch",currentToken.getLN());
             match("TypeToken");
             parseId();
             tree.endChildren();
@@ -254,7 +257,7 @@
         }
         else if(currentToken.getType() == "LBraceToken")
         {
-            tree.addNode("StmtList","branch");
+            tree.addNode("StmtList","branch",currentToken.getLN());
             parseBlock();
             parseStmtList();
             tree.endChildren();
@@ -262,8 +265,8 @@
         }
         else if(currentToken.getType() == "WhileToken")
         {
-            tree.addNode("StmtList","branch");
-            tree.addNode("While","branch");
+            tree.addNode("StmtList","branch",currentToken.getLN());
+            tree.addNode("While","branch",currentToken.getLN());
             match("WhileToken");
             parseBooleanExpr();
             parseBlock();
@@ -274,8 +277,8 @@
         }
         else if (currentToken.getType() == "IfToken")
         {
-            tree.addNode("StmtList","branch");
-            tree.addNode("If","branch");
+            tree.addNode("StmtList","branch",currentToken.getLN());
+            tree.addNode("If","branch",currentToken.getLN());
             match("IfToken");
             parseBooleanExpr();
             parseBlock();
@@ -294,7 +297,7 @@
     {
         if(currentToken.getType() == "PrintToken")
         {
-            tree.addNode("PrintStmt","branch");
+            tree.addNode("PrintStmt","branch",currentToken.getLN());
             match("PrintToken");
             match("LParenToken");
             parseExpr();
@@ -310,7 +313,7 @@
 
     function parseExpr()
     {
-        tree.addNode("Expr","branch");
+        tree.addNode("Expr","branch",currentToken.getLN());
         if(currentToken.getType() == "IdToken")
         {
             parseId();
@@ -344,7 +347,7 @@
 
     function parseId()
     {
-        tree.addNode("Id","branch");
+        tree.addNode("Id","branch",currentToken.getLN());
         match("IdToken");
         tree.endChildren();
         return;
@@ -352,7 +355,7 @@
 
     function parseStringExp()
     {
-    	tree.addNode("StringExpr","branch");
+    	tree.addNode("StringExpr","branch",currentToken.getLN());
     	match("StringExpToken");
     	tree.endChildren();
         return;
@@ -360,7 +363,7 @@
 
     function parseIntExp()
     {
-        tree.addNode("IntExpr","branch");
+        tree.addNode("IntExpr","branch",currentToken.getLN());
         match("NumberToken");
         if (currentToken.getType() == "PlusToken")
         {
@@ -375,7 +378,7 @@
 
     function parseBooleanExpr()
     {
-        tree.addNode("BooleanExpr","branch");
+        tree.addNode("BooleanExpr","branch",currentToken.getLN());
         if (currentToken.getType() == "LParenToken")
         {
             match("LParenToken");
@@ -409,7 +412,7 @@
             {
                 putMessage("A " +currentToken.getType() + " token? I-I-I-I don't even know what that- what is that? Is that a lot?\n");    
             }
-            tree.addNode(currentToken.getValue(),"leaf")
+            tree.addNode(currentToken.getValue(),"leaf",currentToken.getLN());
             if (tokens.length != 0)
             {
                 currentToken = tokens.shift();
@@ -423,11 +426,6 @@
             }
             errorCount++;
         }
-    }
-
-    function CSTtoAST()
-    {
-       putAST("Congrats Faggot, you are here");
     }
     </script>
 </body>

@@ -21,13 +21,13 @@ function SA(AST,CST)
 	        {
 	        	if (node.name == "varDecl")
         		{
-        			ST.cur.hashTable.addKeyValPair(node.children[1].children[0].name,node.children[0].name,scope);
+        			ST.cur.hashTable.addKeyValPair(node.children[1].children[0].name,node.children[0].name,scope,node.lineNum);
         		}
         		if (node.name == "Block")
         		{
         			scope++;
         			ST.addNode("Scope " + scope,"branch");
-        			console.log("table");
+        			//console.log("table");
         		}
 	            // .. recursively expand them.
 	            for (var i = 0; i < node.children.length; i++)
