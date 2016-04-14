@@ -30,7 +30,7 @@
         <br>
         <input type="button" id="btnCompile" value="Compile" onclick="btnCompile_click();"/>
         <input type="checkbox"  id="verboseoutput" value="Verbose Output"/> Verbose Output
-        <input type="checkbox"  id="rickandmorty" value="RickandMorty"/> Rick and Morty Mode
+        <!-- <input type="checkbox"  id="rickandmorty" value="RickandMorty"/> Rick and Morty Mode -->
     </div>
     <!-- Footer -->
     <!-- Client-side code down here, per the YSlow advice. 
@@ -408,10 +408,10 @@
             {
                 putMessage("Got " +currentToken.getType() + " token.");
             }
-            else if(document.getElementById("rickandmorty").checked == true && errorCount < 1)
+            /*else if(document.getElementById("rickandmorty").checked == true && errorCount < 1)
             {
                 putMessage("A " +currentToken.getType() + " token? I-I-I-I don't even know what that- what is that? Is that a lot?\n");    
-            }
+            }*/
             tree.addNode(currentToken.getValue(),"leaf",currentToken.getLN());
             if (tokens.length != 0)
             {

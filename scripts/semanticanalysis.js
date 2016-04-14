@@ -124,7 +124,7 @@ function SA(AST,CST)
         			{
         				console.log("Not doing + yet");
         			}
-        			if(node.children[1].name == "!=" || node.children[1].name == "==")
+        			else if(node.children[1].name == "!=" || node.children[1].name == "==")
         			{
         				console.log("not looking into boolop yet");
         			}
@@ -135,20 +135,24 @@ function SA(AST,CST)
         					nodeType = "Boolean";
         					symTable.cur.hashTable.typeCheck(symTable.cur,node.children[0].name,nodeType,node.lineNum);
         				}
-        				if(Number.isInteger(parseInt(node.children[1].name.valueOf())) == true)
+        				else if(Number.isInteger(parseInt(node.children[1].name.valueOf())) == true)
         				{
         					//console.log(symTable.cur.name);
         					nodeType = "Int";
         					symTable.cur.hashTable.typeCheck(symTable.cur,node.children[0].name,nodeType,node.lineNum);
         				}
-        				if(node.children[1].name.charAt(0) == '"')
+        				else if(node.children[1].name.charAt(0) == '"')
         				{
         					nodeType = "String";
         					symTable.cur.hashTable.typeCheck(symTable.cur,node.children[0].name,nodeType,node.lineNum);
         				}
         				else
         				{
-
+        					var nodeType = symTable.cur.hashTable.findIdType(symTable.cur,node.children[1].name,node.lineNum);
+        					if (nodeType != false)
+        					{
+        						symTable.cur.hashTable.typeCheck(symTable.cur,node.children[0].name,nodeType,node.lineNum);
+        					}
         				}
         				
         			}

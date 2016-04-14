@@ -124,33 +124,39 @@ function SymbolTable() {
                 checkParents(currNode);
             },
 
-            findIdType : function(currNode,currID,currentType)
+            findIdType : function(currNode,currID,lineNumb)
             {
-                 function checkParents(currNode)
+                var currType;
+                function checkParents(currNode)
                 {
+                    var complete = false;  
                     if (currNode.name == undefined)
                     {
-                        
+                        console.log("ERROR on line " + lineNumb + ": There is no variable," + currID + " in the given scope");
+                        currType = false;
                     }
                     else
                     {
-                        //console.log(currNode.name);
                         for(i = 0; i < currNode.hashTable.variables.length; i++)
                         {
                             if(currID == currNode.hashTable.variables[i].key)
                             {
-                                if(currentType == currNode.hashTable.variables[i].value.type)
-                                {
-                                    console.log("Found ID, the type is " + currentType);
-                                }
-                            }
+                                console.log("successfully found id " + currID + " it is of type, " + currNode.hashTable.variables[i].value.type);
+                                //console.log("Pass");
+                                currType = currNode.hashTable.variables[i].value.type;
+                                complete = true;
+                                break;
+                            }                         
                         }
-                        if(currNode.parent != null)
-                        {
-                            checkParents(currNode.parent);
+                        if(complete == false)
+                        {    
+                            checkParents(currNode.parent);  
                         }
                     }
                 }
+                checkParents(currNode);
+
+                return currType;
             },
 
             printTable : function()
