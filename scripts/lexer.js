@@ -175,12 +175,15 @@
 		
 		//Check error state
 		var errorState = false;
+
+		//save String
+		var theString = '';
 		
 		//Check for valid characters in the language
 		var nonValidChar = false;
 
 		//For keywords, may use later
-		var checkThings = "";
+		var checkThings = '';
 
 		//for loop that loops through the entire source code to tokenize it		
 		for (i = 0; i < SC.length; i++)
@@ -1461,7 +1464,6 @@
 							currState = q0;
 							break;
 						}
-					
 					case q46:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#' || lookAhead == '@')
@@ -1475,6 +1477,9 @@
 							currState = q0;
 							break;
 						}
+					case q47:
+						theString = theString + curr;
+						break;
 					case q48:
 						lookAhead = SC.charAt(i + 1);
 						if (lookAhead == '#' || lookAhead == '@')
@@ -1484,7 +1489,9 @@
 						else
 						{
 							//putMessage("Found a String Expression token");
-							tokens.push(new Token(null,"StringExpToken",lineNumber));
+							theString = theString + '"';
+							tokens.push(new Token(theString,"StringExpToken",lineNumber));
+							theString = "";
 							currState = q0;
 							break;
 						}	
