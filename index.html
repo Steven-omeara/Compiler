@@ -151,14 +151,14 @@
         // A valid parse derives the G(oal) production, so begin there.
         tree.addNode("Program","branch",currentToken.getLN());
         var programCount = 1;
-        var endCount = parseProg(programCount);
+        parseProg(programCount);
         // Report the results.
-        putMessage("Parsing found " + errorCount + " error(s).");  
+        /*putMessage("Parsing found " + errorCount + " error(s).");  
         // Start Parsing CST and get AST 
         putMessage("\nStarting Semantic Analysis...");
         ast = tree.DFS();
         SA(ast,tree);
-        putAST(ast.toString());
+        putAST(ast.toString());*/
     }
     
     function parseProg(programCount) {
@@ -179,20 +179,40 @@
                 ast = tree.DFS();
                 putSA("Symbol Table for Program " + programCount + "\n-------------------------------");
                 SA(ast,tree);
-                putAST(tree.toString());
-                tree = new Tree();
-                tree.addNode("Program","branch",currentToken.getLN());
-                programCount++;  
-                parseProg(programCount);
+                if(errorCount == 0)
+                {
+                    putAST(tree.toString());
+                    putMessage("Symantic Analysis on Program " + programCount + " successful");
+                    tree = new Tree();
+                    tree.addNode("Program","branch",currentToken.getLN());
+                    programCount++;  
+                    parseProg(programCount);
+                }
+                else
+                {
+                    putMessage("Semantic Analysis on Program " + programCount + " found " + errorCount + " error(s).");
+                }
             }
             else
             {
                 putMessage("You have parsed program " + programCount  + " successfully!");
-                putMessage("You have parsed successfully");
+                putMessage("Parsing found " + errorCount + " error(s).");  
                 putCST("CST for Program " + programCount + "\n-------------------------------")
                 putCST(tree.toString());
                 putAST("AST for Program " + programCount + "\n-------------------------------");
                 putSA("Symbol Table for Program " + programCount + "\n-------------------------------");
+                putMessage("\nStarting Semantic Analysis...");
+                ast = tree.DFS();
+                SA(ast,tree);
+                if (errorCount == 0)
+                {
+                    putAST(ast.toString());
+                    putMessage("Semantic Analysis on Program " + programCount + " successful");   
+                }
+                else
+                {
+                    putMessage("Semantic Analysis on Program " + programCount + " found " + errorCount + " error(s).");
+                }
             }
         }
         else

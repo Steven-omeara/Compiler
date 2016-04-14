@@ -74,10 +74,15 @@ function SymbolTable() {
                     {
                         if (this.variables[i].key == pair.key)
                         {
-                            putSA("ERROR on line " + pair.value.lineNum + " already found a variable of id " + pair.key + " in this scope");
+                            putMessage("ERROR on line " + pair.value.lineNum + " already found a variable of id " + pair.key + " in this scope");
+                            errorCount = errorCount + 1;
                         }
                         else if (i == (this.variables.length - 1) && this.variables[i].key != pair.key)
                         {
+                            if(document.getElementById("verboseoutput").checked == true && errorCount < 1)
+                            {
+                                putMessage("Successfully inserted pair, (" + pair.key + "," + pair.value.type +")" )
+                            }
                             this.variables.push(pair);
                         }
                     }
@@ -92,7 +97,8 @@ function SymbolTable() {
                     var complete = false;
                     if (currNode.name == undefined)
                     {
-                        console.log("ERROR on line " + lineNumb + ": There is no variable," + currID + " in the given scope");
+                        putMessage("ERROR on line " + lineNumb + ": There is no variable," + currID + " in the given scope");
+                        errorCount = errorCount + 1;
                     }
                     else
                     {
@@ -102,14 +108,17 @@ function SymbolTable() {
                             {
                                 if(currentType == currNode.hashTable.variables[i].value.type)
                                 {
-                                    console.log("Successfully matched " + currentType + " " + currID + " LineNum: " + lineNumb + " hash line num: " + currNode.hashTable.variables[i].value.lineNum);
-                                    //console.log("Pass");
+                                    if(document.getElementById("verboseoutput").checked == true && errorCount < 1)
+                                    {                   
+                                        ("Successfully matched " + currentType + " " + currID + " LineNum: " + lineNumb + " hash line num: " + currNode.hashTable.variables[i].value.lineNum);
+                                    }
                                     complete = true;
                                     break;
                                 }
                                 else
                                 {
-                                    console.log("ERROR: expecting " + currNode.hashTable.variables[i].value.type + " for ID: " + currID + ", got " + currentType);
+                                    putMessage("ERROR: expecting " + currNode.hashTable.variables[i].value.type + " for ID: " + currID + ", got " + currentType);
+                                    errorCount = errorCount + 1;
                                     complete = true;
                                     break;
                                 }
@@ -133,6 +142,7 @@ function SymbolTable() {
                     if (currNode.name == undefined)
                     {
                         console.log("ERROR on line " + lineNumb + ": There is no variable," + currID + " in the given scope");
+                        errorCount = errorCount + 1;
                         currType = false;
                     }
                     else
@@ -141,8 +151,10 @@ function SymbolTable() {
                         {
                             if(currID == currNode.hashTable.variables[i].key)
                             {
-                                console.log("successfully found id " + currID + " it is of type, " + currNode.hashTable.variables[i].value.type);
-                                //console.log("Pass");
+                                if(document.getElementById("verboseoutput").checked == true && errorCount < 1)
+                                {
+                                    putMessage("Successfully found id " + currID + " it is of type, " + currNode.hashTable.variables[i].value.type);
+                                }
                                 currType = currNode.hashTable.variables[i].value.type;
                                 complete = true;
                                 break;
