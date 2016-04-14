@@ -84,38 +84,43 @@ function SymbolTable() {
                 }
             },
 
-            typeCheck : function(currNode,currID,currentType)
+            typeCheck : function(currNode,currID,currentType,lineNumb)
             {
+                
                 function checkParents(currNode)
                 {
+                    var complete = false;
                     if (currNode.name == undefined)
                     {
-                        console.log("ERROR on line : There is no variable," + currID + " in the given scope");
+                        console.log("ERROR on line " + lineNumb + ": There is no variable," + currID + " in the given scope");
                     }
                     else
                     {
-                        //console.log(currNode.name);
                         for(i = 0; i < currNode.hashTable.variables.length; i++)
                         {
                             if(currID == currNode.hashTable.variables[i].key)
                             {
                                 if(currentType == currNode.hashTable.variables[i].value.type)
                                 {
-                                    console.log("Successfully matched " + currentType + " " + currID);
+                                    console.log("Successfully matched " + currentType + " " + currID + " LineNum: " + lineNumb + " hash line num: " + currNode.hashTable.variables[i].value.lineNum);
+                                    //console.log("Pass");
+                                    complete = true;
+                                    break;
                                 }
                                 else
                                 {
                                     console.log("ERROR: expecting " + currNode.hashTable.variables[i].value.type + " for ID: " + currID + ", got " + currentType);
+                                    complete = true;
+                                    break;
                                 }
-                            }
+                            }                         
                         }
-                        if(currNode.parent != null)
-                        {
-                            checkParents(currNode.parent);
+                        if(complete == false)
+                        {    
+                            checkParents(currNode.parent);  
                         }
                     }
                 }
-
                 checkParents(currNode);
             },
 

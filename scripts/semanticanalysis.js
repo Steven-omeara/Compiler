@@ -86,6 +86,7 @@ function SA(AST,CST)
         	{
         		scope++;
         		symTable.addNode("Scope " + scope,"branch");
+        		//console.log("table");
         		for (var i = 0; i < node.children.length; i++)
             	{
                 	checkStmtList(node.children[i],scope);
@@ -132,17 +133,24 @@ function SA(AST,CST)
         				if(node.children[1].name == "True" || node.children[1].name == "False")
         				{
         					nodeType = "Boolean";
-
+        					symTable.cur.hashTable.typeCheck(symTable.cur,node.children[0].name,nodeType,node.lineNum);
         				}
         				if(Number.isInteger(parseInt(node.children[1].name.valueOf())) == true)
         				{
+        					//console.log(symTable.cur.name);
         					nodeType = "Int";
+        					symTable.cur.hashTable.typeCheck(symTable.cur,node.children[0].name,nodeType,node.lineNum);
+        				}
+        				if(node.children[1].name.charAt(0) == '"')
+        				{
+        					nodeType = "String";
+        					symTable.cur.hashTable.typeCheck(symTable.cur,node.children[0].name,nodeType,node.lineNum);
         				}
         				else
         				{
-        					
+
         				}
-        				symTable.cur.hashTable.typeCheck(symTable.cur,node.children[0].name,nodeType);
+        				
         			}
         		}
         	}
