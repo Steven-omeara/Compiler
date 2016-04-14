@@ -125,7 +125,7 @@ function SA(AST,CST)
         			}
         			if(node.children[1].name == "!=" || node.children[1].name == "==")
         			{
-        				console.log("not looking into this bool op yet");
+        				console.log("not looking into boolop yet");
         			}
         			else
         			{
@@ -137,6 +137,10 @@ function SA(AST,CST)
         				if(Number.isInteger(parseInt(node.children[1].name.valueOf())) == true)
         				{
         					nodeType = "Int";
+        				}
+        				else
+        				{
+        					
         				}
         				symTable.cur.hashTable.typeCheck(symTable.cur,node.children[0].name,nodeType);
         			}

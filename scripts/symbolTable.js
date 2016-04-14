@@ -90,7 +90,7 @@ function SymbolTable() {
                 {
                     if (currNode.name == undefined)
                     {
-                        
+                        console.log("ERROR on line : There is no variable," + currID + " in the given scope");
                     }
                     else
                     {
@@ -117,6 +117,35 @@ function SymbolTable() {
                 }
 
                 checkParents(currNode);
+            },
+
+            findIdType : function(currNode,currID,currentType)
+            {
+                 function checkParents(currNode)
+                {
+                    if (currNode.name == undefined)
+                    {
+                        
+                    }
+                    else
+                    {
+                        //console.log(currNode.name);
+                        for(i = 0; i < currNode.hashTable.variables.length; i++)
+                        {
+                            if(currID == currNode.hashTable.variables[i].key)
+                            {
+                                if(currentType == currNode.hashTable.variables[i].value.type)
+                                {
+                                    console.log("Found ID, the type is " + currentType);
+                                }
+                            }
+                        }
+                        if(currNode.parent != null)
+                        {
+                            checkParents(currNode.parent);
+                        }
+                    }
+                }
             },
 
             printTable : function()
