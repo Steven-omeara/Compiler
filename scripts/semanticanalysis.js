@@ -51,7 +51,7 @@ function SA(AST,CST)
         			{
                         //check the variable
                         nodeType = "Int";
-                        symTable.cur.hashTable.findIdType(symTable.cur,node.children[0].name,nodeType,node.lineNum);
+                        nodeType = symTable.cur.hashTable.findIdType(symTable.cur,node.children[0].name,nodeType,node.children[0].lineNum);
 
                         //function to check each node(place ifIBreak here if break)
                         function checkIntExpr(currNode)
@@ -78,7 +78,7 @@ function SA(AST,CST)
                                 }
                                 else if(currNode.children[1].name == "!=" || currNode.children[1].name == "==")
                                 {
-                                    
+                                    putMessage('Error in SA, intExpr expected int but got boolval');
                                 }
                                 else
                                 {
@@ -91,11 +91,69 @@ function SA(AST,CST)
                             }
                         }  
 
-                        checkIntExpr(node);
+                        if (nodeType == "Int")
+                        {
+                            checkIntExpr(node);
+                        }
+                        else
+                        {
+                            putMessage("Error: the current ID " + node.children[0].name + " on line " + node.children[0].lineNum + " is not of type int");
+                            errorCount = errorCount + 1;
+                        }
+                        
         			}
         			else if(node.children[1].name == "!=" || node.children[1].name == "==")
         			{
-        				console.log("not looking into boolop yet");
+                        //Check if the identifier is a boolean first, do later
+
+                        //Overaching BoolVal check
+                        function checkBoolVal(currNode)
+                        {
+                            var checkExp1;
+                            var checkExp2;
+                            checkExp1 = checkExpr(currNode.children[0]);
+                            checkExp2 = checkExpr(currNode.children[1]);
+                            if (checkExp1 == checkExp2)
+                            {
+                                console.log("True");
+                                return checkExp1;
+                            }
+                        }
+
+                        //checking each expr in boolval
+                        function checkExpr(leNode)
+                        {
+                            var currExprType;
+                            if (leNode.name == "True" || leNode.name == "False")
+                            {
+                                currExprType = "Boolean";
+                            }
+                            else if(Number.isInteger(parseInt(leNode.name.valueOf())) == true)
+                            {
+                                currExprType = "Number";
+                            }
+                            else if(leNode.name.charAt(0) == '"')
+                            {
+                                currExprType = "String";
+                            }
+                            else if(leNode.name == "!=" || leNode.name == "==")
+                            {
+                                currExprType = checkBoolVal(leNode);
+                            }
+                            else
+                            {                               
+                                var currExprType = symTable.cur.hashTable.findIdType(symTable.cur,leNode.name,leNode.lineNum);
+                                if (currExprType == false)
+                                {
+                                    errorCount = errorCount + 1;
+                                }
+                            }
+                            console.log(currExprType);
+                            return currExprType;
+                        }
+
+                        //inital call
+                        checkBoolVal(node.children[1]);
         			}
         			else
         			{
@@ -118,6 +176,7 @@ function SA(AST,CST)
         				else
         				{
         					var nodeType = symTable.cur.hashTable.findIdType(symTable.cur,node.children[1].name,node.lineNum);
+                            console.log(nodeType);
         					if (nodeType != false)
         					{
         						symTable.cur.hashTable.typeCheck(symTable.cur,node.children[0].name,nodeType,node.lineNum);
