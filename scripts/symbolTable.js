@@ -74,7 +74,7 @@ function SymbolTable() {
                     {
                         if (this.variables[i].key == pair.key)
                         {
-                            putSA("ERROR on line " + pair.lineNum + " already found a varibale of id " + pair.key);
+                            putSA("ERROR on line " + pair.value.lineNum + " already found a variable of id " + pair.key + " in this scope");
                         }
                         else if (i == (this.variables.length - 1) && this.variables[i].key != pair.key)
                         {
@@ -82,6 +82,41 @@ function SymbolTable() {
                         }
                     }
                 }
+            },
+
+            typeCheck : function(currNode,currID,currentType)
+            {
+                function checkParents(currNode)
+                {
+                    if (currNode.name == undefined)
+                    {
+                        
+                    }
+                    else
+                    {
+                        //console.log(currNode.name);
+                        for(i = 0; i < currNode.hashTable.variables.length; i++)
+                        {
+                            if(currID == currNode.hashTable.variables[i].key)
+                            {
+                                if(currentType == currNode.hashTable.variables[i].value.type)
+                                {
+                                    console.log("Successfully matched " + currentType + " " + currID);
+                                }
+                                else
+                                {
+                                    console.log("ERROR: expecting " + currNode.hashTable.variables[i].value.type + " for ID: " + currID + ", got " + currentType);
+                                }
+                            }
+                        }
+                        if(currNode.parent != null)
+                        {
+                            checkParents(currNode.parent);
+                        }
+                    }
+                }
+
+                checkParents(currNode);
             },
 
             printTable : function()
