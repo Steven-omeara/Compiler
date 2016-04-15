@@ -65,6 +65,10 @@ function SymbolTable() {
                 var currLength = this.variables.length;
                 if (this.variables.length == 0)
                 {
+                    if(document.getElementById("verboseoutput").checked == true && errorCount < 1)
+                    {
+                        putMessage("Successfully inserted pair, (" + pair.key + "," + pair.value.type +") on line number " + pair.value.lineNum);
+                    }
                     this.variables.push(pair);
                     //console.log(pair.key);
                 }
@@ -81,7 +85,7 @@ function SymbolTable() {
                         {
                             if(document.getElementById("verboseoutput").checked == true && errorCount < 1)
                             {
-                                putMessage("Successfully inserted pair, (" + pair.key + "," + pair.value.type +")" )
+                                putMessage("Successfully inserted pair, (" + pair.key + "," + pair.value.type +") on line number " + pair.value.lineNum);
                             }
                             this.variables.push(pair);
                         }
@@ -117,7 +121,7 @@ function SymbolTable() {
                                 }
                                 else
                                 {
-                                    putMessage("ERROR: expecting " + currNode.hashTable.variables[i].value.type + " for ID: " + currID + ", got " + currentType);
+                                    putMessage("ERROR on line number " + currNode.hashTable.variables[i].value.lineNum + " : expecting " + currNode.hashTable.variables[i].value.type + " for ID: " + currID + ", got " + currentType);
                                     errorCount = errorCount + 1;
                                     complete = true;
                                     break;
