@@ -113,11 +113,73 @@ function SA(AST,CST)
                             var checkExp2;
                             checkExp1 = checkExpr(currNode.children[0]);
                             checkExp2 = checkExpr(currNode.children[1]);
+                            //console.log(checkExp1);
+                            //console.log(checkExp2);
                             if (checkExp1 == checkExp2)
                             {
-                                console.log("True");
+                                //console.log("True");
                                 return checkExp1;
                             }
+                            else if (checkExp1 != checkExp2)
+                            {
+                                //console.log("False");
+                                putMessage("Error in SA on line " + currNode.lineNum + " got two diffrent types in a bool statement, " + checkExp1 + " and " + checkExp2);
+                                errorCount = errorCount + 1;
+                                return checkExp1;
+                            }
+                        }
+
+                        function boolValIntExpCheck(leCheck)
+                        {
+                            var intExprType;
+
+                            function runChecker(nodeCheck)
+                            {
+                                if (nodeCheck.children[1].name == "+")
+                                {
+                                    runChecker(nodeCheck.children[1]);                                   
+                                }
+                                else if (nodeCheck.children[1].name != "+")
+                                {
+                                    if(nodeCheck.children[1].name == "True" || nodeCheck.children[1].name == "False")
+                                    {
+                                        putMessage('Error in SA, intExpr expected int got boolean');
+                                        errorCount = errorCount + 1;
+                                    }
+                                    else if(Number.isInteger(parseInt(nodeCheck.children[1].name.valueOf())) == true)
+                                    {
+                                        putMessage('Succesfully matched with int');
+                                        intExprType = "Int";
+                                    }
+                                    else if(nodeCheck.children[1].name.charAt(0) == '"')
+                                    {
+                                        putMessage('Error in SA, intExpr expected int got string');
+                                        errorCount = errorCount + 1;
+                                    }
+                                    else if(nodeCheck.children[1].name == "!=" || nodeCheck.children[1].name == "==")
+                                    {
+                                        putMessage('Error in SA, intExpr expected int but got boolval');
+                                    }
+                                    else
+                                    {
+                                        var nodeType = symTable.cur.hashTable.findIdType(symTable.cur,nodeCheck.children[1].name,node.lineNum);
+                                        if (nodeType != "Int" && nodeType != false)
+                                        {
+                                            putMessage("Error, expecting a int, got a " + nodeType);
+                                            errorCount = errorCount + 1;
+                                        }
+                                        else if (nodeType == "Int")
+                                        {
+                                            putMessage("Got it");
+                                            intExprType = "Int";  
+                                        }
+                                    } 
+                                }
+                                return intExprType;
+                            }
+                            
+                            intExprType = runChecker(leCheck);
+                            return intExprType;
                         }
 
                         //checking each expr in boolval
@@ -140,6 +202,10 @@ function SA(AST,CST)
                             {
                                 currExprType = checkBoolVal(leNode);
                             }
+                            else if(leNode.name == "+")
+                            {
+                                currExprType = boolValIntExpCheck(leNode);
+                            }
                             else
                             {                               
                                 var currExprType = symTable.cur.hashTable.findIdType(symTable.cur,leNode.name,leNode.lineNum);
@@ -147,11 +213,9 @@ function SA(AST,CST)
                                 {
                                     errorCount = errorCount + 1;
                                 }
-                            }
-                            console.log(currExprType);
+                            }    
                             return currExprType;
                         }
-
                         //inital call
                         checkBoolVal(node.children[1]);
         			}
@@ -176,7 +240,7 @@ function SA(AST,CST)
         				else
         				{
         					var nodeType = symTable.cur.hashTable.findIdType(symTable.cur,node.children[1].name,node.lineNum);
-                            console.log(nodeType);
+                            //console.log(nodeType);
         					if (nodeType != false)
         					{
         						symTable.cur.hashTable.typeCheck(symTable.cur,node.children[0].name,nodeType,node.lineNum);
