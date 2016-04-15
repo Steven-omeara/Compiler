@@ -141,7 +141,7 @@ function SymbolTable() {
                     var complete = false;  
                     if (currNode.name == undefined)
                     {
-                        console.log("ERROR on line " + lineNumb + ": There is no variable," + currID + " in the given scope");
+                        putMessage("ERROR on line " + lineNumb + ": There is no variable," + currID + " in the given scope");
                         errorCount = errorCount + 1;
                         currType = false;
                     }

@@ -64,28 +64,33 @@ function SA(AST,CST)
                             {
                                 if(currNode.children[1].name == "True" || currNode.children[1].name == "False")
                                 {
-                                    putMessage('Error in SA, intExpr expected int got boolean');
+                                    putMessage('Error in SA on line,' + currNode.lineNum + ' intExpr expected int got boolean');
                                     errorCount = errorCount + 1;
                                 }
                                 else if(Number.isInteger(parseInt(currNode.children[1].name.valueOf())) == true)
                                 {
-                                    putMessage('Succesfully matched with int');
+                                    if(document.getElementById("verboseoutput").checked == true && errorCount < 1)
+                                    {
+                                        putMessage('Succesfully matched with int on line,' + currNode.lineNum);
+                                    }
                                 }
                                 else if(currNode.children[1].name.charAt(0) == '"')
                                 {
-                                    putMessage('Error in SA, intExpr expected int got string');
+                                    putMessage('Error in SA on line,' + currNode.lineNum + ' intExpr expected int got string');
                                     errorCount = errorCount + 1;
                                 }
                                 else if(currNode.children[1].name == "!=" || currNode.children[1].name == "==")
                                 {
-                                    putMessage('Error in SA, intExpr expected int but got boolval');
+                                    putMessage('Error in SA on line,' + currNode.lineNum + ' intExpr expected int but got boolval');
+                                    errorCount = errorCount + 1;
                                 }
                                 else
                                 {
-                                    var nodeType = symTable.cur.hashTable.findIdType(symTable.cur,currNode.children[1].name,node.lineNum);
+                                    var nodeType = symTable.cur.hashTable.findIdType(symTable.cur,currNode.children[1].name,currNode.lineNum);
                                     if (nodeType != "Int" && nodeType != false)
                                     {
-                                        putMessage("Error, expecting a int, got a " + nodeType);
+                                        putMessage("Error on line," + currNode.lineNum + " expecting a int, got a " + nodeType);
+                                        errorCount = errorCount + 1;
                                     }
                                 }
                             }
@@ -118,6 +123,10 @@ function SA(AST,CST)
                             if (checkExp1 == checkExp2)
                             {
                                 //console.log("True");
+                                if(document.getElementById("verboseoutput").checked == true && errorCount < 1)
+                                    {
+                                        putMessage("Successfully compared bools on line " + currNode.lineNum + " got two of same type in a bool statement, " + checkExp1 + " and " + checkExp2);
+                                    }
                                 return checkExp1;
                             }
                             else if (checkExp1 != checkExp2)
@@ -143,34 +152,41 @@ function SA(AST,CST)
                                 {
                                     if(nodeCheck.children[1].name == "True" || nodeCheck.children[1].name == "False")
                                     {
-                                        putMessage('Error in SA, intExpr expected int got boolean');
+                                        putMessage('Error in SA, intExpr expected int got boolean on line ' + nodeCheck.lineNum);
                                         errorCount = errorCount + 1;
                                     }
                                     else if(Number.isInteger(parseInt(nodeCheck.children[1].name.valueOf())) == true)
                                     {
-                                        putMessage('Succesfully matched with int');
+                                        if(document.getElementById("verboseoutput").checked == true && errorCount < 1)
+                                        {
+                                            putMessage('Succesfully matched with int on line' + nodeCheck.lineNum);
+                                        }
                                         intExprType = "Int";
                                     }
                                     else if(nodeCheck.children[1].name.charAt(0) == '"')
                                     {
-                                        putMessage('Error in SA, intExpr expected int got string');
+                                        putMessage('Error in SA, intExpr expected int got string on line ' + nodeCheck.lineNum);
                                         errorCount = errorCount + 1;
                                     }
                                     else if(nodeCheck.children[1].name == "!=" || nodeCheck.children[1].name == "==")
                                     {
-                                        putMessage('Error in SA, intExpr expected int but got boolval');
+                                        putMessage('Error in SA, intExpr expected int but got boolval on line ' + nodeCheck.lineNum);
+                                        errorCount = errorCount + 1;
                                     }
                                     else
                                     {
                                         var nodeType = symTable.cur.hashTable.findIdType(symTable.cur,nodeCheck.children[1].name,node.lineNum);
                                         if (nodeType != "Int" && nodeType != false)
                                         {
-                                            putMessage("Error, expecting a int, got a " + nodeType);
+                                            putMessage("Error, expecting a int, got a " + nodeType + " on line " + nodeCheck.lineNum);
                                             errorCount = errorCount + 1;
                                         }
                                         else if (nodeType == "Int")
                                         {
-                                            putMessage("Got it");
+                                            if(document.getElementById("verboseoutput").checked == true && errorCount < 1)
+                                            {
+                                                putMessage('Succesfully matched with int on line' + nodeCheck.lineNum);
+                                            }
                                             intExprType = "Int";  
                                         }
                                     } 
@@ -192,7 +208,7 @@ function SA(AST,CST)
                             }
                             else if(Number.isInteger(parseInt(leNode.name.valueOf())) == true)
                             {
-                                currExprType = "Number";
+                                currExprType = "Int";
                             }
                             else if(leNode.name.charAt(0) == '"')
                             {
