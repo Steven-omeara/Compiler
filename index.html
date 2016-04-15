@@ -175,13 +175,14 @@
                 putCST("CST for Program " + programCount + "\n-------------------------------");   
                 putCST(tree.toString());  
                 putMessage("\nStarting Semantic Analysis on program " + programCount + "...\n");
-                ast = tree.DFS();              
+                ast = tree.DFS();
+                putSA("Symbol Table for Program " + programCount + "\n-------------------------------");              
                 SA(ast,tree);
                 if(errorCount == 0)
                 { 
                     putAST("AST for Program " + programCount + "\n-------------------------------");
                     putAST(tree.toString());
-                    putSA("Symbol Table for Program " + programCount + "\n-------------------------------");
+                    
                     putMessage("Symantic Analysis on Program " + programCount + " successful");
                     tree = new Tree();
                     tree.addNode("Program","branch",currentToken.getLN());
