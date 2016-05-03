@@ -27,6 +27,7 @@
         <textarea id="taCST" cols="45" rows="25"></textarea>
         <textarea id="taAST" cols="45" rows="25"></textarea>
         <textarea id="taSA" cols="55" rows="25"></textarea>
+        <textarea id="taST" cols="45" rows="25"></textarea>
         <br>
         <input type="button" id="btnCompile" value="Compile" onclick="btnCompile_click();"/>
         <input type="checkbox"  id="verboseoutput" value="Verbose Output"/> Verbose Output
@@ -40,6 +41,7 @@
     <script type="text/javascript" src="scripts/tree.js"></script>
     <script type="text/javascript" src="scripts/semanticanalysis.js"></script>
     <script type="text/javascript" src="scripts/symbolTable.js"></script>
+    <script type="text/javascript" src="scripts/codegen.js"></script>
     <script type="text/javascript">
     // Global variables
     var tokens = [];
@@ -51,6 +53,7 @@
     var errorCount = 0;
     var tree;
     var ast;
+    var rte;
     var EOF = "$";
 
     function init() {
@@ -59,6 +62,7 @@
         document.getElementById("taCST").value = "";
         document.getElementById("taAST").value = "";
         document.getElementById("taSA").value = "";
+        document.getElementById("taST").value = "";
         // Set the initial values for our globals.
         tokens = [];
         lexCheck = true;
@@ -68,6 +72,7 @@
         lookaheadToken;
         tree = new Tree();
         ast = new Tree();
+        rte = [];
         errorCount = 0;        
     }
     
@@ -101,7 +106,7 @@
         if (clicked == "Program1")
         {
             document.getElementById("taSourceCode").value = "";
-            putProgram("{}$");
+            putProgram("{\n\tint a\n\tint b\n\ta = 1\n\tb = 2\n\ta = b\n\tprint(a)\n}$");
         }    
         else if (clicked == "Program2")
         {
@@ -129,6 +134,10 @@
         document.getElementById("taOutput").value += msg + "\n";
     }
 
+    function putRTE(msg){
+    	 document.getElementById("taOutput").value += msg
+    }
+
     function putProgram(msg) {
         document.getElementById("taSourceCode").value += msg + "\n";
     }
@@ -143,6 +152,10 @@
 
     function putSA(msg) {
         document.getElementById("taSA").value += msg + "\n";
+    }
+
+    function putST(msg) {
+    	document.getElementById("taST").value += msg + "\n";
     }
     
     function parse() {
@@ -182,7 +195,6 @@
                 { 
                     putAST("AST for Program " + programCount + "\n-------------------------------");
                     putAST(tree.toString());
-                    
                     putMessage("Symantic Analysis on Program " + programCount + " successful");
                     tree = new Tree();
                     tree.addNode("Program","branch",currentToken.getLN());
@@ -208,7 +220,10 @@
                 if (errorCount == 0)
                 {
                     putAST(ast.toString());
-                    putMessage("Semantic Analysis on Program " + programCount + " successful");   
+                    putMessage("Semantic Analysis on Program " + programCount + " successful");
+                    putMessage("\nRuntime Enviroment:")
+                    rte = codegen(ast);
+                	printruntime(rte);   
                 }
                 else
                 {
@@ -448,6 +463,23 @@
             errorCount++;
         }
     }
+
+    function printruntime(prt)
+	{
+		var newpara = 7;
+		for (var i = 0; i < prt.length; i++)
+		{
+			if(i == 7 || (i - newpara) == 8)
+			{
+				newpara = i;
+				putRTE(prt[i] + "\n")
+			}
+			else
+			{
+				putRTE(prt[i] + " ");
+			}
+		}
+	}
     </script>
 </body>
 </html>

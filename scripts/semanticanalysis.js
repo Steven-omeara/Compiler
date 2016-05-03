@@ -528,7 +528,7 @@ function SA(AST,CST)
         		}
                 if (node.name == "Print")
                 {
-                    console.log(node.children[0].name);
+                    //console.log(node.children[0].name);
                     if(node.children[0].name == "+")
                     {
                         //function to check each node(place ifIBreak here if break)
@@ -722,7 +722,7 @@ function SA(AST,CST)
                             if (nodeType != false)
                             {
                                 //found the right node
-                                console.log("success!");
+                                //console.log("success!");
                             }
                         }
                         
