@@ -80,6 +80,16 @@ function codegen(AST)
         				currTregister += 1;
         				addByte("XX");
         			}
+        			else if(node.children[0].name == "Boolean")
+        			{
+        				statictable.push(new staticentry("T" + currTregister + "XX", node.children[1].name, "+" + currlocation));
+        				addByte("A9");
+        				addByte("00");
+        				addByte("8D");
+        				addByte("T" + currTregister);
+        				currTregister += 1;
+        				addByte("XX");
+        			}
         		}
         		if(node.name == "Block")
         		{
@@ -101,15 +111,26 @@ function codegen(AST)
         			}
      				else
      				{
-     					if(node.children[1].name == "True" || node.children[1].name == "False")
+     					if(node.children[1].name == "True")
         				{
-        				
+        					addByte("A9");
+        					addByte("01");
+        					addByte("8D");
+        					addByte(scanST(node.children[0].name));
+        					addByte("XX");
+        				}
+        				else if(node.children[1].name == "False")
+        				{
+        					addByte("A9");
+        					addByte("00");
+        					addByte("8D");
+        					addByte(scanST(node.children[0].name));
+        					addByte("XX");
         				}
         				else if(Number.isInteger(parseInt(node.children[1].name.valueOf())) == true)
         				{
         					addByte("A9");
         					addByte("0" + node.children[1].name);
-        					console.log(node.children[1].name);
         					addByte("8D");
         					addByte(scanST(node.children[0].name));
         					addByte("XX");
@@ -137,9 +158,21 @@ function codegen(AST)
         			}
      				else
      				{
-     					if(node.children[0].name == "True" || node.children[0].name == "False")
+     					if(node.children[0].name == "True")
         				{
-        				
+        					addByte("A0");
+        					addByte("01");
+        					addByte("A2");
+        					addByte("01");
+        					addByte("FF");
+        				}
+        				else if (node.children[0].name == "False")
+        				{
+        					addByte("A0");
+        					addByte("00");
+        					addByte("A2");
+        					addByte("01");
+        					addByte("FF");
         				}
         				else if(Number.isInteger(parseInt(node.children[0].name.valueOf())) == true)
         				{
@@ -181,7 +214,6 @@ function codegen(AST)
         		}
                 
         	}
-
         	if(node.name == "Block")
         	{
         		block(node);
@@ -195,7 +227,16 @@ function codegen(AST)
         	for (j = 0; j < statictable.length; j++)
         	{
         		currlocation++;
-        		currhex = currlocation.toString(16);
+        		if (currlocation < 16)
+        		{
+        			currhex = currlocation.toString(16);
+        			currhex = "0" + currhex.toUpperCase();
+        		}
+        		else
+        		{
+        			currhex = currlocation.toString(16);
+        			currhex.toUpperCase();
+        		}
         		statictable[j].setAddress(currhex + " 00");		
         		for(k = 0; k < runtime.length; k++)
         		{
