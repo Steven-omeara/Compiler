@@ -24,6 +24,10 @@ function codegen(AST)
 		{
 			return this.address;
 		};
+		this.setAddress = function(address)
+		{
+			this.address = address;
+		};
 	}
 
 	function scanST(varname)
@@ -105,6 +109,7 @@ function codegen(AST)
         				{
         					addByte("A9");
         					addByte("0" + node.children[1].name);
+        					console.log(node.children[1].name);
         					addByte("8D");
         					addByte(scanST(node.children[0].name));
         					addByte("XX");
@@ -189,8 +194,9 @@ function codegen(AST)
         {
         	for (j = 0; j < statictable.length; j++)
         	{
-        		currhex = currlocation.toString(16);
         		currlocation++;
+        		currhex = currlocation.toString(16);
+        		statictable[j].setAddress(currhex + " 00");		
         		for(k = 0; k < runtime.length; k++)
         		{
         			if(statictable[j].getTemp().substring(0,2) == runtime[k])
