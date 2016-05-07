@@ -3,7 +3,7 @@ function codegen(AST)
 	var runtime = [];
 	var statictable = [];
 	var currlocation = 0;
-	var currTregister = 0;
+	var currTregister = 2;
 	var currStaticEntry = new staticentry();
 
 	function staticentry(temp, vara, address)
@@ -154,7 +154,91 @@ function codegen(AST)
                 {           
                 	if (node.children[0].name == "+")
         			{
-        				
+        				currNode = node.children[0];
+        				//sumofleft = 0;
+        				//finalhex = "";
+        				passthroughs = 0;
+
+        				addByte("A9");
+        				addByte("0" + currNode.children[0].name);
+        				addByte("8D");
+        				addByte("T0");
+        				addByte("XX");
+
+        				function addints(currNode)
+        				{
+        					if (currNode.children[1].name == "+")
+        					{
+        						//sumofleft += currNode.children[0].name;
+        						//Load the accumulator with new value
+        						addByte("A9");
+        						addByte("0" + currNode.children[0].name);
+        						addByte("8D");
+        						addByte("T1");
+        						addByte("XX");
+        						//Add the values together and set T0 as the result
+        						addByte("AD");
+        						addByte("T0");
+        						addByte("XX");
+        						addByte("6D");
+        						addByte("T1");
+        						addByte("XX");
+        						addByte("8D");
+        						addByte("T0");
+        						addByte("XX");
+        						passthroughs++;
+        						addints(currNode.children[1]);
+        					}
+        					else
+        					{
+        						if(Number.isInteger(parseInt(currNode.children[1].name.valueOf())) == true)
+        						{
+        							if(passthroughs == 0)
+        							{
+        								//Load the accumulator with right value
+        								addByte("A9");
+        								addByte("0" + currNode.children[1].name);
+        								addByte("8D");
+        								addByte("T1");
+        								addByte("XX");
+        								//Do the final addition
+        								addByte("AD");
+        								addByte("T1");
+        								addByte("XX");
+        								addByte("6D");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("T0");
+        								addByte("XX");
+        								//Print T0
+        								addByte("AC");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("A2");
+        								addByte("01");
+        								addByte("FF");
+        							}
+        							//sumofleft += parseInt(currNode.children[0].name) + parseInt(currNode.children[1].name);
+        							//finalhex = sumofleft.toString(16);
+        							//Print the final answer
+        							//if (finalhex.length < 2)
+        							//{
+        								//finalhex = "0" + finalhex.toUpperCase();
+        							//}
+     								//addByte("A0");
+        							//addByte(finalhex);
+        							//addByte("A2");
+        							//addByte("01");
+        							//addByte("FF");
+        						}
+        						//My type check will only let ints and variables through here
+        						else
+        						{
+
+        						}
+        					}
+        				}
+        				addints(currNode);
         			}
      				else
      				{
@@ -176,7 +260,11 @@ function codegen(AST)
         				}
         				else if(Number.isInteger(parseInt(node.children[0].name.valueOf())) == true)
         				{
-
+        					addByte("A0");
+        					addByte("0" + node.children[0].name);
+        					addByte("A2");
+        					addByte("01");
+        					addByte("FF");
         				}
         				else if(node.children[0].name.charAt(0) == '"')
         				{
@@ -192,27 +280,7 @@ function codegen(AST)
         					addByte("FF");
         				}
         			}
-                }
-        		else
-        		{
-        			if(node.children[1].name == "True" || node.children[1].name == "False")
-        			{
-        				
-        			}
-        			else if(Number.isInteger(parseInt(node.children[1].name.valueOf())) == true)
-        			{
-        				
-        			}
-        			else if(node.children[1].name.charAt(0) == '"')
-        			{
-        				
-        			}
-        			else
-        			{
-        				
-        			}
-        		}
-                
+                }               
         	}
         	if(node.name == "Block")
         	{
