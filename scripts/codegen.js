@@ -47,6 +47,9 @@ function codegen(AST)
 		runtime[i] = "00";
 	}
 
+	statictable.push(new staticentry("T0XX", "Temp0", "none"));
+	statictable.push(new staticentry("T1XX", "Temp1", "none"));
+
 	function addByte(bytename)
 	{
 		runtime[currlocation] = bytename;
@@ -170,23 +173,22 @@ function codegen(AST)
         					if (currNode.children[1].name == "+")
         					{
         						//sumofleft += currNode.children[0].name;
-        						//Load the accumulator with new value
-        						addByte("A9");
-        						addByte("0" + currNode.children[0].name);
-        						addByte("8D");
-        						addByte("T1");
-        						addByte("XX");
-        						//Add the values together and set T0 as the result
-        						addByte("AD");
-        						addByte("T0");
-        						addByte("XX");
-        						addByte("6D");
-        						addByte("T1");
-        						addByte("XX");
-        						addByte("8D");
-        						addByte("T0");
-        						addByte("XX");
-        						passthroughs++;
+        						//Load the accumulator with new value and add it to previous value
+        						if(passthroughs == 0)
+        						{
+        							passthroughs++;
+        						}
+        						else
+        						{
+        							addByte("A9");
+        							addByte("0" + currNode.children[0].name);
+        							addByte("6D");
+        							addByte("T0");
+        							addByte("XX");
+        							addByte("8D");
+        							addByte("T0");
+        							addByte("XX");
+        						}
         						addints(currNode.children[1]);
         					}
         					else
@@ -198,24 +200,46 @@ function codegen(AST)
         								//Load the accumulator with right value
         								addByte("A9");
         								addByte("0" + currNode.children[1].name);
-        								addByte("8D");
-        								addByte("T1");
-        								addByte("XX");
-        								//Do the final addition
-        								addByte("AD");
-        								addByte("T1");
-        								addByte("XX");
         								addByte("6D");
         								addByte("T0");
         								addByte("XX");
-        								addByte("T0");
-        								addByte("XX");
-        								//Print T0
-        								addByte("AC");
+        								//Do the final addition
+        								addByte("8D");
         								addByte("T0");
         								addByte("XX");
         								addByte("A2");
         								addByte("01");
+        								addByte("AC");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("FF");
+        							}
+        							else
+        							{
+        								//Load the accumulator with the value, add it and store it in T0
+        								addByte("A9");
+        								addByte("0" + currNode.children[0].name);
+        								addByte("6D");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("8D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Do this again
+        								addByte("A9");
+        								addByte("0" + currNode.children[1].name);
+        								addByte("6D");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("8D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Load the x value with 1, and load the acumulator with the value of t1 and print
+        								addByte("A2");
+        								addByte("01");
+        								addByte("AC");
+        								addByte("T0");
+        								addByte("XX");
         								addByte("FF");
         							}
         							//sumofleft += parseInt(currNode.children[0].name) + parseInt(currNode.children[1].name);
