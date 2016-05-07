@@ -158,8 +158,6 @@ function codegen(AST)
                 	if (node.children[0].name == "+")
         			{
         				currNode = node.children[0];
-        				//sumofleft = 0;
-        				//finalhex = "";
         				passthroughs = 0;
 
         				addByte("A9");
@@ -242,23 +240,59 @@ function codegen(AST)
         								addByte("XX");
         								addByte("FF");
         							}
-        							//sumofleft += parseInt(currNode.children[0].name) + parseInt(currNode.children[1].name);
-        							//finalhex = sumofleft.toString(16);
-        							//Print the final answer
-        							//if (finalhex.length < 2)
-        							//{
-        								//finalhex = "0" + finalhex.toUpperCase();
-        							//}
-     								//addByte("A0");
-        							//addByte(finalhex);
-        							//addByte("A2");
-        							//addByte("01");
-        							//addByte("FF");
         						}
         						//My type check will only let ints and variables through here
         						else
         						{
-
+        							if(passthroughs == 0)
+        							{
+        								//Load the accumulator with right value
+        								addByte("AD");
+        								addByte(scanST(currNode.children[1].name));
+        								addByte("XX");
+        								addByte("6D");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("8D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Set up print
+        								addByte("A2");
+        								addByte("01");
+        								addByte("AC");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("FF");
+        							}
+        							else
+        							{
+        								//Add the left number to the current number
+        								addByte("A9");
+        								addByte("0" + currNode.children[0].name);
+        								addByte("6D");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("8D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Load the accumulator with right value
+        								addByte("AD");
+        								addByte(scanST(currNode.children[1].name));
+        								addByte("XX");
+        								addByte("6D");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("8D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Set up print
+        								addByte("A2");
+        								addByte("01");
+        								addByte("AC");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("FF");
+        							}
         						}
         					}
         				}
