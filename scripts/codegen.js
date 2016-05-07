@@ -110,7 +110,161 @@ function codegen(AST)
         		{
         			if (node.children[1].name == "+")
         			{
-
+        				assignid = scanST(node.children[0].name);
+        				currNode = node.children[1];
+        				passthroughs = 0;
+        				
+        				function addints(currNode)
+        				{
+        					if (currNode.children[1].name == "+")
+        					{
+        						//Load the accumulator with new value and add it to previous value
+        						if(passthroughs == 0)
+        						{
+        							//Gotta add in first byte
+        							addByte("A9");
+        							addByte("0" + currNode.children[0].name);
+        							addByte("8D");
+        							addByte("T0");
+        							addByte("XX");
+        							passthroughs++;
+        						}
+        						else
+        						{
+        							addByte("A9");
+        							addByte("0" + currNode.children[0].name);
+        							addByte("6D");
+        							addByte("T0");
+        							addByte("XX");
+        							addByte("8D");
+        							addByte("T0");
+        							addByte("XX");
+        						}
+        						addints(currNode.children[1]);
+        					}
+        					else
+        					{
+        						if(Number.isInteger(parseInt(currNode.children[1].name.valueOf())) == true)
+        						{
+        							if(passthroughs == 0)
+        							{
+        								//Gotta add in first byte
+        								addByte("A9");
+        								addByte("0" + currNode.children[0].name);
+        								addByte("8D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Load the accumulator with right value
+        								addByte("A9");
+        								addByte("0" + currNode.children[1].name);
+        								addByte("6D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Do the final addition
+        								addByte("8D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Assign the final value to the id of the var
+        								addByte("AD");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("8D");
+        								addByte(assignid);
+        								addByte("XX");
+        							}
+        							else
+        							{
+        								//Gotta add in first byte
+        								addByte("A9");
+        								addByte("0" + currNode.children[0].name);
+        								addByte("6D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Do the addition
+        								addByte("8D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Load the accumulator with right value
+        								addByte("A9");
+        								addByte("0" + currNode.children[1].name);
+        								addByte("6D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Do the final addition
+        								addByte("8D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Assign the final value to the id of the var
+        								addByte("AD");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("8D");
+        								addByte(assignid);
+        								addByte("XX");
+        							}
+        						}
+        						//My type check will only let ints and variables through here
+        						else
+        						{
+        							if(passthroughs == 0)
+        							{
+        								//Gotta add in first byte
+        								addByte("A9");
+        								addByte("0" + currNode.children[0].name);
+        								addByte("8D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Load the accumulator with right value
+        								addByte("AD");
+        								addByte(scanST(currNode.children[1].name));
+        								addByte("XX");
+        								addByte("6D");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("8D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Set up the add
+        								addByte("AD");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("8D");
+        								addByte(assignid);
+        								addByte("XX");
+        							}
+        							else
+        							{
+        								//Add the left number to the current number
+        								addByte("A9");
+        								addByte("0" + currNode.children[0].name);
+        								addByte("6D");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("8D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Load the accumulator with right value
+        								addByte("AD");
+        								addByte(scanST(currNode.children[1].name));
+        								addByte("XX");
+        								addByte("6D");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("8D");
+        								addByte("T0");
+        								addByte("XX");
+        								//Set up print
+        								addByte("AD");
+        								addByte("T0");
+        								addByte("XX");
+        								addByte("8D");
+        								addByte(assignid);
+        								addByte("XX");
+        							}
+        						}
+        					}
+        				}
+        				addints(currNode);
         			}
      				else
      				{
@@ -170,7 +324,6 @@ function codegen(AST)
         				{
         					if (currNode.children[1].name == "+")
         					{
-        						//sumofleft += currNode.children[0].name;
         						//Load the accumulator with new value and add it to previous value
         						if(passthroughs == 0)
         						{
