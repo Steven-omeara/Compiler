@@ -4,13 +4,15 @@ function codegen(AST)
 	var statictable = [];
 	var currlocation = 0;
 	var currTregister = 2;
+	var currheaplocation = 255;
 	var currStaticEntry = new staticentry();
 
-	function staticentry(temp, vara, address)
+	function staticentry(temp, vara, address, type)
 	{
 		this.temp = temp;
 		this.vara = vara;
 		this.address = address;
+		this.type = type;
 
 		this.getTemp = function()
 		{
@@ -28,6 +30,10 @@ function codegen(AST)
 		{
 			this.address = address;
 		};
+		this.getType = function()
+		{
+			return this.type;
+		};
 	}
 
 	function scanST(varname)
@@ -42,13 +48,25 @@ function codegen(AST)
 		}
 	}
 
+	function scanSTforType(varname)
+	{
+		for(i = 0; i < statictable.length; i++)
+		{
+			if (varname == statictable[i].getVara())
+			{
+				return statictable[i].getType();
+				break;
+			}
+		}
+	}
+
 	for (var i = 0; i < 256; i++)
 	{
 		runtime[i] = "00";
 	}
 
-	statictable.push(new staticentry("T0XX", "Temp0", "none"));
-	statictable.push(new staticentry("T1XX", "Temp1", "none"));
+	statictable.push(new staticentry("T0XX", "Temp0", "none", "Int"));
+	statictable.push(new staticentry("T1XX", "Temp1", "none", "Int"));
 
 	function addByte(bytename)
 	{
@@ -75,7 +93,7 @@ function codegen(AST)
         		{
         			if(node.children[0].name == "Int")
         			{
-        				statictable.push(new staticentry("T" + currTregister + "XX", node.children[1].name, "+" + currlocation));
+        				statictable.push(new staticentry("T" + currTregister + "XX", node.children[1].name, "+" + currlocation, "Int"));
         				addByte("A9");
         				addByte("00");
         				addByte("8D");
@@ -85,13 +103,17 @@ function codegen(AST)
         			}
         			else if(node.children[0].name == "Boolean")
         			{
-        				statictable.push(new staticentry("T" + currTregister + "XX", node.children[1].name, "+" + currlocation));
+        				statictable.push(new staticentry("T" + currTregister + "XX", node.children[1].name, "+" + currlocation, "Boolean"));
         				addByte("A9");
         				addByte("00");
         				addByte("8D");
         				addByte("T" + currTregister);
         				currTregister += 1;
         				addByte("XX");
+        			}
+        			else if(node.children[0].name == "String")
+        			{
+        				statictable.push(new staticentry("T" + currTregister + "XX", node.children[1].name, "None", "String"));
         			}
         		}
         		if(node.name == "Block")
@@ -294,7 +316,20 @@ function codegen(AST)
         				}
         				else if(node.children[1].name.charAt(0) == '"')
         				{
-        				
+        					var theString = node.children[1].name.substring(1,(node.children[1].name.length - 1));
+        					runtime[currheaplocation] == "00";
+        					currheaplocation--;
+        					for (i = (theString.length - 1); i >= 0; i--)
+        					{
+        						stringtohex = theString.charCodeAt(i).toString(16);
+        						runtime[currheaplocation] = stringtohex;
+        						currheaplocation--;
+        					}
+        					addByte("A9");
+        					addByte((currheaplocation + 1).toString(16));
+        					addByte("8D");
+        					addByte(scanST(node.children[0].name));
+        					addByte("XX");
         				}
         				else
         				{
@@ -479,16 +514,41 @@ function codegen(AST)
         				}
         				else if(node.children[0].name.charAt(0) == '"')
         				{
-        				
+        					var theString = node.children[0].name.substring(1,(node.children[0].name.length - 1));
+        					runtime[currheaplocation] == "00";
+        					currheaplocation--;
+        					for (i = (theString.length - 1); i >= 0; i--)
+        					{
+        						stringtohex = theString.charCodeAt(i).toString(16);
+        						runtime[currheaplocation] = stringtohex;
+        						currheaplocation--;
+        					}
+        					addByte("A0");
+        					addByte((currheaplocation + 1).toString(16));
+        					addByte("A2");
+        					addByte("02");
+        					addByte("FF");
         				}
         				else
         				{
-        					addByte("AC");
-        					addByte(scanST(node.children[0].name));
-        					addByte("XX");
-        					addByte("A2");
-        					addByte("01");
-        					addByte("FF");
+        					if(scanSTforType(node.children[0].name) == "String")
+        					{
+        						addByte("AC");
+        						addByte(scanST(node.children[0].name));
+        						addByte("XX");
+        						addByte("A2");
+        						addByte("02");
+        						addByte("FF");
+        					}
+        					else
+        					{
+        						addByte("AC");
+        						addByte(scanST(node.children[0].name));
+        						addByte("XX");
+        						addByte("A2");
+        						addByte("01");
+        						addByte("FF");
+        					}
         				}
         			}
                 }               
