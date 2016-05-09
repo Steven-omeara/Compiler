@@ -2,10 +2,12 @@ function codegen(AST)
 {
 	var runtime = [];
 	var statictable = [];
+	var jumptable = [];
 	var currlocation = 0;
 	var currTregister = 2;
 	var currheaplocation = 255;
 	var currStaticEntry = new staticentry();
+	var jcounter = 0;
 
 	function staticentry(temp, vara, address, type)
 	{
@@ -34,6 +36,35 @@ function codegen(AST)
 		{
 			return this.type;
 		};
+	}
+
+	function addtojump(templocation, newaddress)
+	{
+		for (j = 0; j < jumptable.length; j++)
+        {
+        	if(jumptable[j].getTemp() == templocation)
+        	{
+        		jumptable[j].setDist(newaddress);
+        	}	
+        } 
+	}
+
+	function addjump(temp, dist)
+	{
+		this.temp = temp;
+		this.dist = dist;
+		this.getTemp = function()
+		{
+			return this.temp;
+		};
+		this.setDist = function(dist)
+		{
+			this.dist = dist;
+		}
+		this.getDist = function()
+		{
+			return this.dist;
+		}
 	}
 
 	function scanST(varname)
@@ -122,7 +153,17 @@ function codegen(AST)
         		}
         		if(node.name == "If")
         		{
-                       
+        			var doblock = evaluateBoolExpr(node);
+        			jumptable.push(new addjump("J" + jcounter, 0));
+        			jumpstart = currlocation;
+        			addByte("J" + jcounter);
+        			jcounter++;
+        			if(doblock == true)
+        			{
+        				block(node.children[1]);
+        				finallocation = ((currlocation - 1) - jumpstart).toString(16);
+        				addtojump("J" + (jcounter - 1),finallocation);
+        			}
         		}
         		if(node.name == "While")
         		{
@@ -590,7 +631,181 @@ function codegen(AST)
 
         backpatch(statictable, runtime);
 
+        function backpatchJump(jumptable, runtime)
+        {
+        	for (j = 0; j < jumptable.length; j++)
+        	{
+        		//console.log(jumptable[j].getDist()); 
+        		//console.log(jumptable[j].getTemp());
+        		runtimeJump = jumptable[j].getDist();
+        		if (runtimeJump < 16)
+        		{
+        			currhex = runtimeJump.toString(16);
+        			currhex = "0" + currhex.toUpperCase();
+        		}
+        		else
+        		{
+        			currhex = runtimeJump.toString(16);
+        			currhex.toUpperCase();
+        		}
+        		for(k = 0; k < runtime.length; k++)
+        		{
+        			if(jumptable[j].getTemp() == runtime[k])
+        			{
+        				runtime[k] = currhex;
+        			}
+        		}
+        	}
+        }
+
+        backpatchJump(jumptable, runtime);
+
 	}
+
+	function evaluateBoolExpr(node)
+	{
+		var doblock = true;
+        var jumpstart;
+        var finallocation;
+        //Add the values into the temp registers, first children
+        if(node.children[0].children[0].name == "True")
+        {
+        	addByte("A9");
+        	addByte("01");
+        	addByte("8D");
+        	addByte("T0");
+        	addByte("XX");
+        }
+        else if(node.children[0].children[0].name == "False")
+        {
+        	addByte("A9");
+        	addByte("00");
+        	addByte("8D");
+        	addByte("T0");
+        	addByte("XX");
+        }
+        else if(Number.isInteger(parseInt(node.children[0].children[0].name.valueOf())) == true)
+        {
+        	addByte("A9");
+        	addByte("0" + node.children[0].children[0].name.toUpperCase());
+        	addByte("8D");
+        	addByte("T0");
+        	addByte("XX");
+        }
+        else if(node.children[0].children[0].name.charAt(0) == '"')
+        {
+        	
+        }
+
+        //Add the values to the temp registers, second children
+        if(node.children[0].children[1].name == "True")
+        {
+        	addByte("A9");
+        	addByte("01");
+        	addByte("8D");
+        	addByte("T1");
+        	addByte("XX");
+        }
+        else if(node.children[0].children[1].name == "False")
+        {
+        	addByte("A9");
+        	addByte("00");
+        	addByte("8D");
+        	addByte("T1");
+        	addByte("XX");
+        }
+        else if(Number.isInteger(parseInt(node.children[0].children[1].name.valueOf())) == true)
+        {
+        	addByte("A9");
+        	addByte("0" + node.children[0].children[1].name.toUpperCase());
+        	addByte("8D");
+        	addByte("T1");
+        	addByte("XX");
+        }
+        else if(node.children[0].children[1].name.charAt(0) == '"')
+        {
+        	
+        }
+
+        //This is for comparing the registers
+        if(node.children[0].children[0].name == "True")
+        {
+        	addByte("AE");
+        	addByte("T0");
+        	addByte("XX");
+        	addByte("EC");
+        }
+        else if(node.children[0].children[0].name == "False")
+        {
+        	addByte("AE");
+        	addByte("T0");
+        	addByte("XX");
+        	addByte("EC");
+        }
+        else if(Number.isInteger(parseInt(node.children[0].children[0].name.valueOf())) == true)
+        {
+        	addByte("AE");
+        	addByte("T0");
+        	addByte("XX");
+        	addByte("EC");
+        }
+        else if(node.children[0].children[0].name.charAt(0) == '"')
+        {
+        	doblock = false;
+        }
+        else
+        {
+        	if(scanSTforType(node.children[0].name) == "String")
+        	{
+        		doblock = false;
+       		}	
+        	else
+        	{
+        		addByte("AE");
+        		addByte(scanST(node.children[0].children[0].name));
+        		addByte("XX");
+        		addByte("EC");
+        	}
+        }
+
+        //Same of the other child
+        if(node.children[0].children[1].name == "True")
+        {
+        	addByte("T1");
+        	addByte("XX");
+        	addByte("D0");
+        }
+        else if(node.children[0].children[1].name == "False")
+        {
+        	addByte("T1");
+        	addByte("XX");
+        	addByte("D0");
+        }
+        else if(Number.isInteger(parseInt(node.children[0].children[1].name.valueOf())) == true)
+        {
+        	addByte("T1");
+        	addByte("XX");
+        	addByte("D0");		
+        }
+        else if(node.children[0].children[1].name.charAt(0) == '"')
+        {
+        	doblock = false;
+        }
+        else
+        {
+        	if(scanSTforType(node.children[0].name) == "String")
+        	{
+        		doblock = false;
+        	}
+        	else
+        	{
+        		addByte(scanST(node.children[0].children[1].name));
+        		addByte("XX");
+        		addByte("D0");
+        	}
+        }
+        return doblock;
+    }
 
 	function printST(stattable)
 	{
