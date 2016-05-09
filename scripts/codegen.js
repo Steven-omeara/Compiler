@@ -180,8 +180,8 @@ function codegen(AST)
 
         			//Evalutate block normally
         			block(node.children[1]);
-        			finallocation = ((currlocation - 1) - jumpstart);
-        			addtojump("J" + (jcounter - 1),finallocation);
+        			//finallocation = ((currlocation - 1) - jumpstart);
+        			//addtojump("J" + (jcounter - 1),finallocation);
 
         			//Add the return
         			addByte("A2");
@@ -193,6 +193,8 @@ function codegen(AST)
         			whileReturn = (256 + theStart) - currlocation - 1;
         			whileReturn = whileReturn.toString(16).toUpperCase();
         			addByte(whileReturn);
+                    finallocation = ((currlocation - 1) - jumpstart);
+                    addtojump("J" + (jcounter - 1),finallocation);
         		}
         		if(node.name == "Assign")
         		{
