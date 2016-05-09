@@ -44,6 +44,7 @@ function codegen(AST)
         {
         	if(jumptable[j].getTemp() == templocation)
         	{
+        		console.log(jumptable[j].getTemp() + " " + newaddress);
         		jumptable[j].setDist(newaddress);
         	}	
         } 
@@ -119,7 +120,6 @@ function codegen(AST)
         		for (var i = 0; i < node.children.length; i++)
             	{
                 	checkStmtList(node.children[i]);
-                	console.log(node.children[i].name);
             	}
         	}
 
@@ -172,9 +172,10 @@ function codegen(AST)
         		}
         		if(node.name == "While")
         		{
-        			console.log("Here");
                     var theStart = evaluateBoolExpr(node);
+                    console.log(theStart);
                     jumptable.push(new addjump("J" + jcounter, 0));
+                    currJvalue = jcounter;
         			jumpstart = currlocation;
         			addByte("J" + jcounter);
         			jcounter++;
@@ -191,11 +192,12 @@ function codegen(AST)
         			addByte("FF");
         			addByte("00");
         			addByte("D0");
-        			whileReturn = (256 + theStart) - currlocation - 1;
+        			whileReturn = (256 + theStart) - currlocation + 1;
+        			console.log(whileReturn + " " + (currlocation - 1) + " " + theStart);
         			whileReturn = whileReturn.toString(16).toUpperCase();
         			addByte(whileReturn);
                     finallocation = ((currlocation - 1) - jumpstart);
-                    addtojump("J" + (jcounter - 1),finallocation);
+                    addtojump("J" + currJvalue,finallocation);
         		}
         		if(node.name == "Assign")
         		{
@@ -663,8 +665,6 @@ function codegen(AST)
         {
         	for (j = 0; j < jumptable.length; j++)
         	{
-        		//console.log(jumptable[j].getDist()); 
-        		//console.log(jumptable[j].getTemp());
         		runtimeJump = jumptable[j].getDist();
         		if (runtimeJump < 16)
         		{
