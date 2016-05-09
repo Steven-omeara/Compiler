@@ -174,7 +174,6 @@ function codegen(AST)
                     var theStart = evaluateBoolExpr(node);
                     jumptable.push(new addjump("J" + jcounter, 0));
         			jumpstart = currlocation;
-        			console.log(jumpstart);
         			addByte("J" + jcounter);
         			jcounter++;
 
@@ -376,7 +375,6 @@ function codegen(AST)
         				}
         				else if(Number.isInteger(parseInt(node.children[1].name.valueOf())) == true)
         				{
-        					console.log("im here");
         					addByte("A9");
         					addByte("0" + node.children[1].name);
         					addByte("8D");
