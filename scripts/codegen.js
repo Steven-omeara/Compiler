@@ -119,6 +119,7 @@ function codegen(AST)
         		for (var i = 0; i < node.children.length; i++)
             	{
                 	checkStmtList(node.children[i]);
+                	console.log(node.children[i].name);
             	}
         	}
 
@@ -171,6 +172,7 @@ function codegen(AST)
         		}
         		if(node.name == "While")
         		{
+        			console.log("Here");
                     var theStart = evaluateBoolExpr(node);
                     jumptable.push(new addjump("J" + jcounter, 0));
         			jumpstart = currlocation;

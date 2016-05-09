@@ -151,6 +151,7 @@ function Tree() {
                 {
                     AST.addNode("While","branch",node.lineNum);
                     ifwhileBooleanCheck(node.children[1]);
+                    ifwhileCheck = true;
                     //addBlock();
                     //checkStatementList(node.children[2].children[1].children[0]);
                     //AST.endChildren();
