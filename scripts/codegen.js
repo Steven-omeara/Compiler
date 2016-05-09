@@ -44,7 +44,7 @@ function codegen(AST)
         {
         	if(jumptable[j].getTemp() == templocation)
         	{
-        		console.log(jumptable[j].getTemp() + " " + newaddress);
+        		//console.log(jumptable[j].getTemp() + " " + newaddress);
         		jumptable[j].setDist(newaddress);
         	}	
         } 
@@ -167,7 +167,8 @@ function codegen(AST)
         			
         			//Evaluate the block
         			block(node.children[1]);
-        			finallocation = ((currlocation - 1) - jumpstart).toString(16);
+        			//finallocation = ((currlocation - 1) - jumpstart).toString(16);
+        			finallocation = ((currlocation - 1) - jumpstart);
         			addtojump("J" + (jcounter - 1),finallocation);
         		}
         		if(node.name == "While")
@@ -192,12 +193,16 @@ function codegen(AST)
         			addByte("FF");
         			addByte("00");
         			addByte("D0");
-        			whileReturn = (256 + theStart) - currlocation + 1;
-        			console.log(whileReturn + " " + (currlocation - 1) + " " + theStart);
+        			whileReturn = (255 + theStart) - currlocation;
+
+        			//console.log(whileReturn + " " + (currlocation - 1) + " " + theStart);
         			whileReturn = whileReturn.toString(16).toUpperCase();
         			addByte(whileReturn);
+        			//fix
                     finallocation = ((currlocation - 1) - jumpstart);
                     addtojump("J" + currJvalue,finallocation);
+                    console.log(currlocation);
+        			console.log(runtime[currlocation]);
         		}
         		if(node.name == "Assign")
         		{
