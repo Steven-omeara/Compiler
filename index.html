@@ -196,6 +196,10 @@
                     putAST("AST for Program " + programCount + "\n-------------------------------");
                     putAST(tree.toString());
                     putMessage("Symantic Analysis on Program " + programCount + " successful");
+                    putMessage("");
+                    rte = codegen(ast);
+                    putMessage("\nRuntime Enviroment:")
+                    printruntime(rte); 
                     tree = new Tree();
                     tree.addNode("Program","branch",currentToken.getLN());
                     programCount++;  
@@ -221,8 +225,9 @@
                 {
                     putAST(ast.toString());
                     putMessage("Semantic Analysis on Program " + programCount + " successful");
-                    putMessage("\nRuntime Enviroment:")
+                    putMessage("");
                     rte = codegen(ast);
+                    putMessage("\nRuntime Enviroment:")
                 	printruntime(rte);   
                 }
                 else

@@ -102,6 +102,10 @@ function codegen(AST)
 	function addByte(bytename)
 	{
 		runtime[currlocation] = bytename;
+		if (document.getElementById("verboseoutput").checked == true && errorCount < 1)
+		{
+			putMessage("Added " + bytename + " to the runtime");
+		}
 		currlocation++;
 	}
 
@@ -153,21 +157,41 @@ function codegen(AST)
         		}
         		if(node.name == "If")
         		{
-        			var doblock = evaluateBoolExpr(node);
+        			evaluateBoolExpr(node);
         			jumptable.push(new addjump("J" + jcounter, 0));
         			jumpstart = currlocation;
         			addByte("J" + jcounter);
         			jcounter++;
-        			if(doblock == true)
-        			{
-        				block(node.children[1]);
-        				finallocation = ((currlocation - 1) - jumpstart).toString(16);
-        				addtojump("J" + (jcounter - 1),finallocation);
-        			}
+        			
+        			//Evaluate the block
+        			block(node.children[1]);
+        			finallocation = ((currlocation - 1) - jumpstart).toString(16);
+        			addtojump("J" + (jcounter - 1),finallocation);
         		}
         		if(node.name == "While")
         		{
-                   
+                    var theStart = evaluateBoolExpr(node);
+                    jumptable.push(new addjump("J" + jcounter, 0));
+        			jumpstart = currlocation;
+        			console.log(jumpstart);
+        			addByte("J" + jcounter);
+        			jcounter++;
+
+        			//Evalutate block normally
+        			block(node.children[1]);
+        			finallocation = ((currlocation - 1) - jumpstart);
+        			addtojump("J" + (jcounter - 1),finallocation);
+
+        			//Add the return
+        			addByte("A2");
+        			addByte("01");
+        			addByte("EC");
+        			addByte("FF");
+        			addByte("00");
+        			addByte("D0");
+        			whileReturn = (256 + theStart) - currlocation - 1;
+        			whileReturn = whileReturn.toString(16).toUpperCase();
+        			addByte(whileReturn);
         		}
         		if(node.name == "Assign")
         		{
@@ -349,6 +373,7 @@ function codegen(AST)
         				}
         				else if(Number.isInteger(parseInt(node.children[1].name.valueOf())) == true)
         				{
+        					console.log("im here");
         					addByte("A9");
         					addByte("0" + node.children[1].name);
         					addByte("8D");
@@ -615,7 +640,7 @@ function codegen(AST)
         		else
         		{
         			currhex = currlocation.toString(16);
-        			currhex.toUpperCase();
+        			currhex = currhex.toUpperCase();
         		}
         		statictable[j].setAddress(currhex + " 00");		
         		for(k = 0; k < runtime.length; k++)
@@ -664,9 +689,8 @@ function codegen(AST)
 
 	function evaluateBoolExpr(node)
 	{
-		var doblock = true;
+		var theStart;
         var jumpstart;
-        var finallocation;
         //Add the values into the temp registers, first children
         if(node.children[0].children[0].name == "True")
         {
@@ -730,6 +754,7 @@ function codegen(AST)
         //This is for comparing the registers
         if(node.children[0].children[0].name == "True")
         {
+        	var theStart = currlocation;
         	addByte("AE");
         	addByte("T0");
         	addByte("XX");
@@ -737,6 +762,7 @@ function codegen(AST)
         }
         else if(node.children[0].children[0].name == "False")
         {
+        	var theStart = currlocation;
         	addByte("AE");
         	addByte("T0");
         	addByte("XX");
@@ -744,6 +770,7 @@ function codegen(AST)
         }
         else if(Number.isInteger(parseInt(node.children[0].children[0].name.valueOf())) == true)
         {
+        	var theStart = currlocation;
         	addByte("AE");
         	addByte("T0");
         	addByte("XX");
@@ -751,16 +778,17 @@ function codegen(AST)
         }
         else if(node.children[0].children[0].name.charAt(0) == '"')
         {
-        	doblock = false;
+        	
         }
         else
         {
         	if(scanSTforType(node.children[0].name) == "String")
         	{
-        		doblock = false;
+        		
        		}	
         	else
         	{
+        		var theStart = currlocation;
         		addByte("AE");
         		addByte(scanST(node.children[0].children[0].name));
         		addByte("XX");
@@ -789,13 +817,13 @@ function codegen(AST)
         }
         else if(node.children[0].children[1].name.charAt(0) == '"')
         {
-        	doblock = false;
+        	
         }
         else
         {
         	if(scanSTforType(node.children[0].name) == "String")
         	{
-        		doblock = false;
+        		
         	}
         	else
         	{
@@ -804,7 +832,7 @@ function codegen(AST)
         		addByte("D0");
         	}
         }
-        return doblock;
+        return theStart;
     }
 
 	function printST(stattable)
