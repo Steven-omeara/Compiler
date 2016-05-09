@@ -149,6 +149,7 @@ function codegen(AST)
         			else if(node.children[0].name == "String")
         			{
         				statictable.push(new staticentry("T" + currTregister + "XX", node.children[1].name, "None", "String"));
+                        currTregister += 1;
         			}
         		}
         		if(node.name == "Block")
