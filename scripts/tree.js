@@ -217,7 +217,7 @@ function Tree() {
                 else
                 {
                     //This is currently set to "!="/"==", can change it to compare or whatever if needed
-                    AST.addNode("Cond","branch",node.lineNum);
+                    AST.addNode(node.children[2].name,"branch",node.lineNum);
                     checkExpr(node.children[1]);
                     checkExpr(node.children[3]);
                     AST.endChildren();

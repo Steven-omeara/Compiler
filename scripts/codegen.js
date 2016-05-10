@@ -161,6 +161,9 @@ function codegen(AST)
         		{
         			jumpstart = currlocation;
         			evaluateBoolExpr(node);
+					addByte("D0"); 
+					console.log("The Jumpstart: " + beforeblock);
+
         			jumptable.push(new addjump("J" + jcounter, 0));
         			addByte("J" + jcounter);
         			jcounter++;
@@ -169,16 +172,21 @@ function codegen(AST)
         			block(node.children[1]);
         			//finallocation = ((currlocation - 1) - jumpstart).toString(16);
         			finallocation = ((currlocation - 1) - jumpstart);
+        			console.log("The currlocation: " + currlocation);
         			addtojump("J" + (jcounter - 1),finallocation);
         		}
         		if(node.name == "While")
         		{
+        			console.log(node.children[0].name);
         			//Get start of loop
                     var theStart = currlocation;
                     console.log("The Start: " +theStart);
 
                     //Evaluate Bool expr
-                    evaluateBoolExpr(node);  
+                    evaluateBoolExpr(node);
+
+                    //add the D0
+                    addByte("D0"); 
 
                     //Add new J to table                 
                     jumptable.push(new addjump("J" + jcounter, 0));
@@ -212,6 +220,8 @@ function codegen(AST)
                     console.log("The final location: " + finallocation);
                     console.log("The currlocation: " + currlocation);
                     addtojump("J" + currJvalue,finallocation);
+
+                 
         		}
         		if(node.name == "Assign")
         		{
@@ -818,19 +828,16 @@ function codegen(AST)
         {
         	addByte("T1");
         	addByte("XX");
-        	addByte("D0");
         }
         else if(node.children[0].children[1].name == "False")
         {
         	addByte("T1");
         	addByte("XX");
-        	addByte("D0");
         }
         else if(Number.isInteger(parseInt(node.children[0].children[1].name.valueOf())) == true)
         {
         	addByte("T1");
         	addByte("XX");
-        	addByte("D0");		
         }
         else if(node.children[0].children[1].name.charAt(0) == '"')
         {
@@ -846,9 +853,25 @@ function codegen(AST)
         	{
         		addByte(scanST(node.children[0].children[1].name));
         		addByte("XX");
-        		addByte("D0");
         	}
         }
+        addByte("A9");
+	    addByte("00");
+	    addByte("D0");
+	    addByte("02");
+	    addByte("A9");
+	    addByte("01");
+	    if(node.children[0].name== "!=")
+	    {
+	        addByte("A2");
+	        addByte("00");
+	        addByte("8D");
+	        addByte("T0");
+	        addByte("XX");
+	        addByte("EC");
+	        addByte("T0");
+	        addByte("XX");
+	    }
         return theStart;
     }
 
