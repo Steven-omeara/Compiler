@@ -159,9 +159,9 @@ function codegen(AST)
         		}
         		if(node.name == "If")
         		{
+        			jumpstart = currlocation;
         			evaluateBoolExpr(node);
         			jumptable.push(new addjump("J" + jcounter, 0));
-        			jumpstart = currlocation;
         			addByte("J" + jcounter);
         			jcounter++;
         			
@@ -173,18 +173,25 @@ function codegen(AST)
         		}
         		if(node.name == "While")
         		{
-                    var theStart = evaluateBoolExpr(node);
-                    console.log(theStart);
+        			//Get start of loop
+                    var theStart = currlocation;
+                    console.log("The Start: " +theStart);
+
+                    //Evaluate Bool expr
+                    evaluateBoolExpr(node);  
+
+                    //Add new J to table                 
                     jumptable.push(new addjump("J" + jcounter, 0));
-                    currJvalue = jcounter;
-        			jumpstart = currlocation;
+                    currJvalue = jcounter;        			
         			addByte("J" + jcounter);
         			jcounter++;
 
+        			//Get the jumpstart
+					beforeblock = currlocation;
+					console.log("The Jumpstart: " + beforeblock);
+
         			//Evalutate block normally
         			block(node.children[1]);
-        			//finallocation = ((currlocation - 1) - jumpstart);
-        			//addtojump("J" + (jcounter - 1),finallocation);
 
         			//Add the return
         			addByte("A2");
@@ -193,16 +200,18 @@ function codegen(AST)
         			addByte("FF");
         			addByte("00");
         			addByte("D0");
-        			whileReturn = (255 + theStart) - currlocation;
 
-        			//console.log(whileReturn + " " + (currlocation - 1) + " " + theStart);
+        			//Get the return back
+        			whileReturn = (255 + theStart) - currlocation;
         			whileReturn = whileReturn.toString(16).toUpperCase();
         			addByte(whileReturn);
+
         			//fix
-                    finallocation = ((currlocation - 1) - jumpstart);
+                    console.log("The jumpstart: " + beforeblock);
+                    finallocation = (currlocation - beforeblock);
+                    console.log("The final location: " + finallocation);
+                    console.log("The currlocation: " + currlocation);
                     addtojump("J" + currJvalue,finallocation);
-                    console.log(currlocation);
-        			console.log(runtime[currlocation]);
         		}
         		if(node.name == "Assign")
         		{
