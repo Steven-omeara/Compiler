@@ -167,7 +167,7 @@ function codegen(AST)
 					
 					//Add new J
         			jumptable.push(new addjump("J" + jcounter, 0));
-        			currJvalue1 = jcounter;
+        			var currJvalue1 = jcounter;
         			addByte("J" + jcounter);
         			jcounter++;
         			
@@ -196,7 +196,7 @@ function codegen(AST)
 
                     //Add new J to table                 
                     jumptable.push(new addjump("J" + jcounter, 0));
-                    currJvalue = jcounter;        			
+                    var currJvalue = jcounter;        			
         			addByte("J" + jcounter);
         			jcounter++;
 
@@ -695,6 +695,7 @@ function codegen(AST)
         {
         	for (j = 0; j < jumptable.length; j++)
         	{
+        		console.log("Jump index: " + jumptable[j].getTemp() + " Dist: " + jumptable[j].getDist());
         		runtimeJump = jumptable[j].getDist();
         		if (runtimeJump < 16)
         		{
