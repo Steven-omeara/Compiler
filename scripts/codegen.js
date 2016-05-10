@@ -158,29 +158,35 @@ function codegen(AST)
         			block(node);
         		}
         		if(node.name == "If")
-        		{
-        			jumpstart = currlocation;
+        		{	
+        			//Evalueate Bool	
         			evaluateBoolExpr(node);
-					addByte("D0"); 
-					console.log("The Jumpstart: " + beforeblock);
 
+        			//add the D0
+					addByte("D0"); 
+					
+					//Add new J
         			jumptable.push(new addjump("J" + jcounter, 0));
+        			currJvalue1 = jcounter;
         			addByte("J" + jcounter);
         			jcounter++;
         			
+        			
+        			jumpstart = currlocation;
+        			//console.log("The Jumpstart(IF): " + jumpstart);
+
         			//Evaluate the block
         			block(node.children[1]);
-        			//finallocation = ((currlocation - 1) - jumpstart).toString(16);
-        			finallocation = ((currlocation - 1) - jumpstart);
-        			console.log("The currlocation: " + currlocation);
-        			addtojump("J" + (jcounter - 1),finallocation);
+
+        			finallocation = (currlocation - jumpstart);
+        			//console.log("The currlocation(IF): " + currlocation);
+        			addtojump("J" + currJvalue1,finallocation);
         		}
         		if(node.name == "While")
         		{
-        			console.log(node.children[0].name);
         			//Get start of loop
                     var theStart = currlocation;
-                    console.log("The Start: " +theStart);
+                    //console.log("The Start: " +theStart);
 
                     //Evaluate Bool expr
                     evaluateBoolExpr(node);
@@ -196,7 +202,7 @@ function codegen(AST)
 
         			//Get the jumpstart
 					beforeblock = currlocation;
-					console.log("The Jumpstart: " + beforeblock);
+					//console.log("The Jumpstart: " + beforeblock);
 
         			//Evalutate block normally
         			block(node.children[1]);
