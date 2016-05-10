@@ -197,12 +197,15 @@
                     putAST(tree.toString());
                     putMessage("Symantic Analysis on Program " + programCount + " successful");
                     putMessage("");
+                    putMessage("Starting Code Gen on Program " + programCount + "...");
                     rte = codegen(ast);
                     putMessage("\nRuntime Enviroment:")
                     printruntime(rte); 
+                    putMessage("");
                     tree = new Tree();
                     tree.addNode("Program","branch",currentToken.getLN());
-                    programCount++;  
+                    programCount++; 
+                    putMessage("Parsing Program " + programCount + "...") 
                     parseProg(programCount);
                 }
                 else
@@ -218,7 +221,7 @@
                 putCST(tree.toString());
                 putAST("AST for Program " + programCount + "\n-------------------------------");
                 putSA("Symbol Table for Program " + programCount + "\n-------------------------------");
-                putMessage("\nStarting Semantic Analysis...");
+                putMessage("\nStarting Semantic Analysis on Program " + programCount + "...");
                 ast = tree.DFS();
                 SA(ast,tree);
                 if (errorCount == 0)
@@ -226,6 +229,7 @@
                     putAST(ast.toString());
                     putMessage("Semantic Analysis on Program " + programCount + " successful");
                     putMessage("");
+                    putMessage("Starting Code Gen on Program " + programCount + "...");
                     rte = codegen(ast);
                     putMessage("\nRuntime Enviroment:")
                 	printruntime(rte);   

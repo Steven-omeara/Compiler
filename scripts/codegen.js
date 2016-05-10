@@ -127,6 +127,10 @@ function codegen(AST)
         	{
         		if(node.name == "varDecl")
         		{
+        			if (document.getElementById("verboseoutput").checked == true && errorCount < 1)
+					{
+						putMessage("Starting Vardecl, adding bytes...");
+					}
         			if(node.children[0].name == "Int")
         			{
         				statictable.push(new staticentry("T" + currTregister + "XX", node.children[1].name, "+" + currlocation, "Int"));
@@ -159,6 +163,10 @@ function codegen(AST)
         		}
         		if(node.name == "If")
         		{	
+        			if (document.getElementById("verboseoutput").checked == true && errorCount < 1)
+					{
+						putMessage("Starting If, adding bytes...");
+					}
         			//Evalueate Bool	
         			evaluateBoolExpr(node);
 
@@ -184,6 +192,10 @@ function codegen(AST)
         		}
         		if(node.name == "While")
         		{
+        			if (document.getElementById("verboseoutput").checked == true && errorCount < 1)
+					{
+						putMessage("Starting While, adding bytes...");
+					}
         			//Get start of loop
                     var theStart = currlocation;
                     //console.log("The Start: " +theStart);
@@ -222,16 +234,20 @@ function codegen(AST)
 
         			//fix
         			var afterblock = currlocation;
-                    console.log("The jumpstart: " + beforeblock);
+                    //console.log("The jumpstart: " + beforeblock);
                     var finallocation = (afterblock - beforeblock);
-                    console.log("The final location: " + finallocation);
-                    console.log("The currlocation: " + currlocation);
+                    //console.log("The final location: " + finallocation);
+                    //console.log("The currlocation: " + currlocation);
                     addtojump("J" + currJvalue,finallocation);
 
                  
         		}
         		if(node.name == "Assign")
         		{
+        			if (document.getElementById("verboseoutput").checked == true && errorCount < 1)
+					{
+						putMessage("Starting Assign, adding bytes...");
+					}
         			if (node.children[1].name == "+")
         			{
         				assignid = scanST(node.children[0].name);
@@ -445,7 +461,11 @@ function codegen(AST)
         			}
         		}
         		if (node.name == "Print")
-                {           
+                {     
+                	if (document.getElementById("verboseoutput").checked == true && errorCount < 1)
+					{
+						putMessage("Starting Print, adding bytes...");
+					}      
                 	if (node.children[0].name == "+")
         			{
         				currNode = node.children[0];
@@ -665,6 +685,12 @@ function codegen(AST)
 
         function backpatch(statictable, runtime)
         {
+        	if (document.getElementById("verboseoutput").checked == true && errorCount < 1)
+			{
+				putMessage("\nStarting backtrack...");
+				putMessage("Backtracking the statictable");
+				putMessage("");
+			}
         	for (j = 0; j < statictable.length; j++)
         	{
         		currlocation++;
@@ -678,11 +704,16 @@ function codegen(AST)
         			currhex = currlocation.toString(16);
         			currhex = currhex.toUpperCase();
         		}
-        		statictable[j].setAddress(currhex + " 00");		
+        		statictable[j].setAddress(currhex + " 00");
+        		if (document.getElementById("verboseoutput").checked == true && errorCount < 1)
+				{
+					putMessage("Replacing " + statictable[j].getVara() + " with " + currhex + " 00");
+				}		
         		for(k = 0; k < runtime.length; k++)
         		{
         			if(statictable[j].getTemp().substring(0,2) == runtime[k])
         			{
+        				
         				runtime[k] = currhex;
         				runtime[k + 1] = "00";
         			}
@@ -694,9 +725,14 @@ function codegen(AST)
 
         function backpatchJump(jumptable, runtime)
         {
+        	if (document.getElementById("verboseoutput").checked == true && errorCount < 1)
+			{
+				putMessage("\nBacktracking the Jump table");
+				putMessage("");
+			}
         	for (j = 0; j < jumptable.length; j++)
         	{
-        		console.log("Jump index: " + jumptable[j].getTemp() + " Dist: " + jumptable[j].getDist());
+        		//console.log("Jump index: " + jumptable[j].getTemp() + " Dist: " + jumptable[j].getDist());
         		runtimeJump = jumptable[j].getDist();
         		if (runtimeJump < 16)
         		{
@@ -706,8 +742,12 @@ function codegen(AST)
         		else
         		{
         			currhex = runtimeJump.toString(16);
-        			currhex.toUpperCase();
+        			currhex = currhex.toUpperCase();
         		}
+        		if (document.getElementById("verboseoutput").checked == true && errorCount < 1)
+				{
+					putMessage("Replacing " + jumptable[j].getTemp() + " with " + currhex);
+				}
         		for(k = 0; k < runtime.length; k++)
         		{
         			if(jumptable[j].getTemp() == runtime[k])
