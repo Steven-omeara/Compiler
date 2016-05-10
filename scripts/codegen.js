@@ -172,13 +172,13 @@ function codegen(AST)
         			jcounter++;
         			
         			
-        			jumpstart = currlocation;
+        			var jumpstart = currlocation;
         			//console.log("The Jumpstart(IF): " + jumpstart);
 
         			//Evaluate the block
         			block(node.children[1]);
 
-        			finallocation = (currlocation - jumpstart);
+        			var finallocation = (currlocation - jumpstart);
         			//console.log("The currlocation(IF): " + currlocation);
         			addtojump("J" + currJvalue1,finallocation);
         		}
@@ -201,7 +201,7 @@ function codegen(AST)
         			jcounter++;
 
         			//Get the jumpstart
-					beforeblock = currlocation;
+					var beforeblock = currlocation;
 					//console.log("The Jumpstart: " + beforeblock);
 
         			//Evalutate block normally
@@ -221,8 +221,9 @@ function codegen(AST)
         			addByte(whileReturn);
 
         			//fix
+        			var afterblock = currlocation;
                     console.log("The jumpstart: " + beforeblock);
-                    finallocation = (currlocation - beforeblock);
+                    var finallocation = (afterblock - beforeblock);
                     console.log("The final location: " + finallocation);
                     console.log("The currlocation: " + currlocation);
                     addtojump("J" + currJvalue,finallocation);
